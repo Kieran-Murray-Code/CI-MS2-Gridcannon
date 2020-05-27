@@ -1,7 +1,18 @@
-.card{
+
+.card-slot , .card-slot-royal, .deck-slot{
     padding-top: 100%;
 	width: 100%;
     background-color: blue;
+    border-radius: 5px;
+    border: solid 2px black;
+}
+
+.card-slot-royal{
+    background-color: red;
+}
+
+.deck-slot{
+    background-color: green;
 }
 
 .grid{
@@ -9,4 +20,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.deck-area{
+    margin-top: 16.6666666667vw;
 }
