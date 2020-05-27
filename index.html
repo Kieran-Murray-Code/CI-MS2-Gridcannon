@@ -17,138 +17,157 @@
 
     <header class="container-fluid p-0">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-              </button>
+            </button>
             <a class="navbar-brand" href="#">Gridcannon</a>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">Play <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">How To Play</a>
-                </li>
-              </ul>
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Play <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">How To Play</a>
+                    </li>
+                </ul>
             </div>
-          </nav>
+        </nav>
     </header>
 
     <!-- Gameboard Grid -->
     <div class="container-fluid p-0 grid">
-        <!-- Grid Row 1 -->
         <div class="row no-gutters">
-            <div class="col-2 offset-3">
-                <div class="card-slot-royal"></div>
-            </div>
-            <div class="col-2">
-                <div class="card-slot-royal"></div>
-            </div>
-            <div class="col-2">
-                <div class="card-slot-royal"></div>
-            </div>
-        </div>
-        <!-- Grid Row 2 -->
-        <div class="row no-gutters">
-            <div class="col-2 offset-1">
-                <div class="card-slot-royal"></div>
-            </div>
-            <div class="col-2">
-                <div class="card-slot"></div>
-            </div>
-            <div class="col-2">
-                <div class="card-slot"></div>
-            </div>
-            <div class="col-2">
-                <div class="card-slot"></div>
-            </div>
-            <div class="col-2">
-                <div class="card-slot-royal"></div>
-            </div>
-        </div>
-        <!-- Grid Row 3 -->
-        <div class="row no-gutters">
-            <div class="col-2 offset-1">
-                <div class="card-slot-royal"></div>
-            </div>
-            <div class="col-2">
-                <div class="card-slot"></div>
-            </div>
-            <div class="col-2">
-                <div class="card-slot"></div>
-            </div>
-            <div class="col-2">
-                <div class="card-slot"></div>
-            </div>
-            <div class="col-2">
-                <div class="card-slot-royal"></div>
-            </div>
-        </div>
-        <!-- Grid Row 4 -->
-        <div class="row no-gutters">
-            <div class="col-2 offset-1">
-                <div class="card-slot-royal"></div>
-            </div>
-            <div class="col-2">
-                <div class="card-slot"></div>
-            </div>
-            <div class="col-2">
-                <div class="card-slot"></div>
-            </div>
-            <div class="col-2">
-                <div class="card-slot"></div>
-            </div>
-            <div class="col-2">
-                <div class="card-slot-royal"></div>
-            </div>
-        </div>
-        <!-- Grid Row 5 -->
-        <div class="row no-gutters">
-            <div class="col-2 offset-3">
-                <div class="card-slot-royal"></div>
-            </div>
-            <div class="col-2">
-                <div class="card-slot-royal"></div>
-            </div>
-            <div class="col-2">
-                <div class="card-slot-royal"></div>
-            </div>
-        </div>
-        <!-- Decks Area -->
-        <div class="row no-gutters deck-area">
-            <div class="col-2 offset-1">
-                <div class="deck-slot">
-                    <div><svg class="slot-label" viewBox="0 0 100 100">
-                            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Discard</text>
-                        </svg></div>
+            <div class="col col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
+                <!-- Blank Row -->
+                <div class="row no-gutters deck-area">
+                    <div class="col-2 offset-5">
+                        <div class="blank-tile">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-2">
-                <div class="deck-slot">
-                    <div><svg class="slot-label" viewBox="0 0 100 100">
-                            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Deck</text>
-                        </svg></div>
+                <!-- Grid Row 1 -->
+                <div class="row no-gutters">
+                    <div class="col-2 offset-3">
+                        <div class="card-slot-royal"></div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card-slot-royal"></div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card-slot-royal"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-2">
-                <div class="deck-slot">
-                    <div><svg class="slot-label" viewBox="0 0 100 100">
-                            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Hand</text>
-                        </svg></div>
+                <!-- Grid Row 2 -->
+                <div class="row no-gutters">
+                    <div class="col-2 offset-1">
+                        <div class="card-slot-royal"></div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card-slot"></div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card-slot"></div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card-slot"></div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card-slot-royal"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-2">
-                <div class="deck-slot">
-                    <div><svg class="slot-label" viewBox="0 0 100 100">
-                            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Aces</text>
-                        </svg></div>
+                <!-- Grid Row 3 -->
+                <div class="row no-gutters">
+                    <div class="col-2 offset-1">
+                        <div class="card-slot-royal"></div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card-slot"></div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card-slot"></div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card-slot"></div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card-slot-royal"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-2">
-                <div class="deck-slot">
-                    <div><svg class="slot-label" viewBox="0 0 100 100">
-                            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Jokers</text>
-                        </svg></div>
+                <!-- Grid Row 4 -->
+                <div class="row no-gutters">
+                    <div class="col-2 offset-1">
+                        <div class="card-slot-royal"></div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card-slot"></div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card-slot"></div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card-slot"></div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card-slot-royal"></div>
+                    </div>
+                </div>
+                <!-- Grid Row 5 -->
+                <div class="row no-gutters">
+                    <div class="col-2 offset-3">
+                        <div class="card-slot-royal"></div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card-slot-royal"></div>
+                    </div>
+                    <div class="col-2">
+                        <div class="card-slot-royal"></div>
+                    </div>
+                </div>
+                <!-- Blank Row -->
+                <div class="row no-gutters deck-area">
+                    <div class="col-2 offset-5">
+                        <div class="blank-tile">
+                        </div>
+                    </div>
+                </div>
+                <!-- Decks Area -->
+                <div class="row no-gutters deck-area">
+                    <div class="col-2 offset-1">
+                        <div class="deck-slot">
+                            <div><svg class="slot-label" viewBox="0 0 100 100">
+                                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Discard</text>
+                                </svg></div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="deck-slot">
+                            <div><svg class="slot-label" viewBox="0 0 100 100">
+                                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Deck</text>
+                                </svg></div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="deck-slot">
+                            <div><svg class="slot-label" viewBox="0 0 100 100">
+                                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Hand</text>
+                                </svg></div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="deck-slot">
+                            <div><svg class="slot-label" viewBox="0 0 100 100">
+                                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Aces</text>
+                                </svg></div>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="deck-slot">
+                            <div><svg class="slot-label" viewBox="0 0 100 100">
+                                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Jokers</text>
+                                </svg></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

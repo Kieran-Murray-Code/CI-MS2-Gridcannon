@@ -17,6 +17,12 @@
     text-align: center;
 }
 
+.blank-tile{
+    padding-top: 100%;
+	width: 100%;
+    background-color: transparent;
+}
+
 .slot-label{
     position: absolute;
     top: 0;
@@ -27,12 +33,11 @@
 }
 
 .grid{
-    position: absolute;
+    /* position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
 }
 
 .deck-area{
-    margin-top: 16.6666666667vw;
 }
