@@ -12,7 +12,18 @@
 }
 
 .deck-slot{
+    position: relative;
     background-color: green;
+    text-align: center;
+}
+
+.slot-label{
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    font-weight: 500;
 }
 
 .grid{
