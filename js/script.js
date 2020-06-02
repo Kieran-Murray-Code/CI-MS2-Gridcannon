@@ -1,94 +1,102 @@
 const cardSuits = ["clubs", "spades", "hearts", "diamonds"];
-const deck = [];
 const numberOfJokers = 2;
-let cardInHand;
+let drawnCard;
 
-function createDeck() {
-  let card;
-  for (let i = 0; i < cardSuits.length; i++) {
-
-    for(let j = 1; j < 14 ; j ++)
-    {
-        if(j === 1){
-            card = new aceCard();
-            card.suit = cardSuits[i];
-            card.cardType = "ace";
-        }
-        else if(j > 1 && j < 11)
+// Deck
+let deck = {
+  cards: [],
+  shuffle: function () {
+    //fisher-yates shuffle
+    for (let i = deck.cards.length - 1; i > 0; i--) {
+      let randomIndex = Math.floor(Math.random() * (i + 1));
+      let firstCard = deck.cards[i];
+      let secondCard = deck.cards[randomIndex];
+      deck.cards[i] = secondCard;
+      deck.cards[randomIndex] = firstCard;
+    }
+  },
+  drawCard: function () {
+      if(this.cards.length > 0)
+      {
+        if(!drawnCard)
         {
-            card = new numberCard;
-            card.value = j;
-            card.suit = cardSuits[i];
-            card.cardType = "numbered";
+            drawnCard = this.cards.pop();
+            console.log(drawnCard);
         }
         else
         {
-            card = new royalCard;
-            card.value = j;
-            card.health = j;
-            card.suit = cardSuits[i];
-            card.cardType = "royal";
+            console.log("Card already in hand, cant draw another");
         }
 
-        deck.push(card);
-    }
-  }
+      }
+      else
+      {
+          console.log("No cards left in deck")
+      }
+    
+  },
+  initialise: function () {
+    let card;
+    for (let i = 0; i < cardSuits.length; i++) {
+      for (let j = 1; j < 14; j++) {
+        if (j === 1) {
+          card = new aceCard();
+          card.suit = cardSuits[i];
+          card.cardType = "ace";
+        } else if (j > 1 && j < 11) {
+          card = new numberCard();
+          card.value = j;
+          card.suit = cardSuits[i];
+          card.cardType = "numbered";
+        } else {
+          card = new royalCard();
+          card.value = j;
+          card.health = j;
+          card.suit = cardSuits[i];
+          card.cardType = "royal";
+        }
 
-  for(let i = 0 ; i <  numberOfJokers; i ++)
-  {
+        this.cards.push(card);
+      }
+    }
+
+    for (let i = 0; i < numberOfJokers; i++) {
       card = new jokerCard();
       card.suit = "joker";
-      card.cardType =  "joker";
-      deck.push(card);
-  }
-
-}
-
-function shuffleDeck(){
-    //fisher-yates shuffle
-    for(let i =  deck.length-1 ; i > 0; i--){
-        let randomIndex = Math.floor(Math.random() * (i+1));
-        let firstCard = deck[i];
-        let secondCard = deck[randomIndex];
-        deck[i] = secondCard;
-        deck[randomIndex] = firstCard;
+      card.cardType = "joker";
+      this.cards.push(card);
     }
-}
+  },
+};
 
-function drawCard(){
-    cardInHand = deck.pop();
-}
-
+// Card Variables
 let generalCardProperties = {
   suit: "",
   value: 0,
   canBeMoved: "false",
-  cardType: ""
+  cardType: "",
 };
-
 let royalCardProperties = {
   armor: 0,
   health: 0,
 };
 
+// Card Functions
 function moveCard() {
   return {
     moveCard: () => console.log("the card moved"),
   };
 }
-
 function placeCard() {
   return {
     placeCard: () => console.log("the card placed"),
   };
 }
-
 function selectCard() {
   return {
     selectCard: () => console.log("the card was selected"),
   };
 }
-
 function numberCard() {
   return {
     ...generalCardProperties,
@@ -97,7 +105,6 @@ function numberCard() {
     ...selectCard(),
   };
 }
-
 function royalCard() {
   return {
     ...generalCardProperties,
@@ -107,7 +114,6 @@ function royalCard() {
     ...selectCard(),
   };
 }
-
 function aceCard() {
   return {
     ...generalCardProperties,
@@ -116,7 +122,6 @@ function aceCard() {
     ...selectCard(),
   };
 }
-
 function jokerCard() {
   return {
     ...generalCardProperties,
@@ -126,9 +131,14 @@ function jokerCard() {
   };
 }
 
-createDeck();
-shuffleDeck();
-console.log(deck);
-drawCard();
-console.log(cardInHand);
-console.log(deck);
+deck.initialise();
+deck.shuffle();
+
+$(document).on("keypress", function (e) {
+    if(String.fromCharCode(e.which) === "d")
+    {
+        deck.drawCard();
+    }
+});
+
+
