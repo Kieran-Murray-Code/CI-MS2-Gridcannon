@@ -10,7 +10,6 @@ function createDeck() {
     {
         if(j === 1){
             card = new aceCard();
-            card.value = j;
             card.suit = cardSuits[i];
             card.cardType = "ace";
         }
@@ -25,6 +24,7 @@ function createDeck() {
         {
             card = new royalCard;
             card.value = j;
+            card.health = j;
             card.suit = cardSuits[i];
             card.cardType = "royal";
         }
@@ -36,10 +36,22 @@ function createDeck() {
   for(let i = 0 ; i <  numberOfJokers; i ++)
   {
       card = new jokerCard();
+      card.suit = "joker";
       card.cardType =  "joker";
       deck.push(card);
   }
 
+}
+
+function suffleDeck(){
+    //fisher-yates shuffle
+    for(let i =  deck.length-1 ; i > 0; i--){
+        let randomIndex = Math.floor(Math.random() * (i+1));
+        let firstCard = deck[i];
+        let secondCard = deck[randomIndex];
+        deck[i] = secondCard;
+        deck[randomIndex] = firstCard;
+    }
 }
 
 let generalCardProperties = {
@@ -110,4 +122,5 @@ function jokerCard() {
 }
 
 createDeck();
+suffleDeck();
 console.log(deck);
