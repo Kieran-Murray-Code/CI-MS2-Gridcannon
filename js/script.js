@@ -1,6 +1,7 @@
 const cardSuits = ["clubs", "spades", "hearts", "diamonds"];
 const deck = [];
 const numberOfJokers = 2;
+let cardInHand;
 
 function createDeck() {
   let card;
@@ -43,7 +44,7 @@ function createDeck() {
 
 }
 
-function suffleDeck(){
+function shuffleDeck(){
     //fisher-yates shuffle
     for(let i =  deck.length-1 ; i > 0; i--){
         let randomIndex = Math.floor(Math.random() * (i+1));
@@ -52,6 +53,10 @@ function suffleDeck(){
         deck[i] = secondCard;
         deck[randomIndex] = firstCard;
     }
+}
+
+function drawCard(){
+    cardInHand = deck.pop();
 }
 
 let generalCardProperties = {
@@ -122,5 +127,8 @@ function jokerCard() {
 }
 
 createDeck();
-suffleDeck();
+shuffleDeck();
+console.log(deck);
+drawCard();
+console.log(cardInHand);
 console.log(deck);
