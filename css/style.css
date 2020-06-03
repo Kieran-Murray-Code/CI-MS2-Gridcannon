@@ -11,6 +11,32 @@
     background-color: red;
 }
 
+.card-royal, .card-numbered{
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-top: 100%;
+	width: 100%;
+    border-radius: 5px;
+    border: solid 2px black;
+    background-color: yellow;
+}
+
+.card-and-slot-highlight{
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-top: 100%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: solid 2px rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+}
+
+.card-numbered{
+    background-color: orange;
+}
+
 .deck-slot{
     position: relative;
     background-color: green;
