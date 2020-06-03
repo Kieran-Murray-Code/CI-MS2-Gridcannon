@@ -5,6 +5,8 @@
     background-color: blue;
     border-radius: 5px;
     border: solid 2px black;
+    touch-action: none;
+    user-select: none;
 }
 
 .card-slot-royal{
