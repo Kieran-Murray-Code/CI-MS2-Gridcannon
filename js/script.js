@@ -5,6 +5,7 @@ function numberedCardGridSlot() {
   this.cards = [];
   this.oppositeRoyalCardGridSlots = [];
   this.adjacentRoyalGridSlots = [];
+  this.element = [];
 }
 
 let royalCardGrid = [];
@@ -17,33 +18,44 @@ const gameManager = {
   // Generate a blank grid for number cards and link to them the royal card slots that they are able to attack.
   numberCardGrid: [],
   generateNumberedCardGrid: function () {
+    let numberedCardGridSlotElements =  $( ".card-slot-numbered" );
     this.numberCardGrid[0] = new numberedCardGridSlot();
     this.numberCardGrid[0].connectedRoyalCardGridSlots = [4, 9];
     this.numberCardGrid[0].adjacentRoyalGridSlots = [0, 3];
+    this.numberCardGrid[0].element = numberedCardGridSlotElements[0];
+    // this.numberCardGrid[0].element.getElementsByTagName("svg")[0].getElementsByTagName("text")[0].textContent = "1";
     this.numberCardGrid[1] = new numberedCardGridSlot();
     this.numberCardGrid[1].connectedRoyalCardGridSlots = [10];
     this.numberCardGrid[1].adjacentRoyalGridSlots = [1];
+    this.numberCardGrid[1].element = numberedCardGridSlotElements[1];
     this.numberCardGrid[2] = new numberedCardGridSlot();
     this.numberCardGrid[2].connectedRoyalCardGridSlots = [3, 11];
     this.numberCardGrid[2].adjacentRoyalGridSlots = [2, 4];
+    this.numberCardGrid[2].element = numberedCardGridSlotElements[2];
     this.numberCardGrid[3] = new numberedCardGridSlot();
     this.numberCardGrid[3].connectedRoyalCardGridSlots = [6];
     this.numberCardGrid[3].connectedRoyalCardGridSlots = [5];
+    this.numberCardGrid[3].element = numberedCardGridSlotElements[3];
     this.numberCardGrid[4] = new numberedCardGridSlot();
     this.numberCardGrid[4].connectedRoyalCardGridSlots = [];
     this.numberCardGrid[4].connectedRoyalCardGridSlots = [];
+    this.numberCardGrid[4].element = numberedCardGridSlotElements[4];
     this.numberCardGrid[5] = new numberedCardGridSlot();
     this.numberCardGrid[5].connectedRoyalCardGridSlots = [5];
     this.numberCardGrid[5].adjacentRoyalGridSlots = [6];
+    this.numberCardGrid[5].element = numberedCardGridSlotElements[5];
     this.numberCardGrid[6] = new numberedCardGridSlot();
     this.numberCardGrid[6].connectedRoyalCardGridSlots = [0, 8];
     this.numberCardGrid[6].connectedRoyalCardGridSlots = [7, 9];
+    this.numberCardGrid[6].element = numberedCardGridSlotElements[6];
     this.numberCardGrid[7] = new numberedCardGridSlot();
     this.numberCardGrid[7].connectedRoyalCardGridSlots = [1];
     this.numberCardGrid[7].adjacentRoyalGridSlots = [10];
+    this.numberCardGrid[7].element = numberedCardGridSlotElements[7];
     this.numberCardGrid[8] = new numberedCardGridSlot();
     this.numberCardGrid[8].connectedRoyalCardGridSlots = [2, 7];
     this.numberCardGrid[8].adjacentRoyalGridSlots = [8, 11];
+    this.numberCardGrid[8].element = numberedCardGridSlotElements[8];
   },
   populateNumberedCardGrid: function () {
     for (let i = 0; i < this.numberCardGrid.length; i++) {
@@ -57,6 +69,7 @@ const gameManager = {
           hand.cards.push(cardToPlace);
         } else {
           this.numberCardGrid[i].cards.push(cardToPlace);
+          this.numberCardGrid[i].element.getElementsByTagName("svg")[0].getElementsByTagName("text")[0].textContent = `${this.numberCardGrid[i].cards[0].cardValue} of ${this.numberCardGrid[i].cards[0].suit}`;
         }
       }
     }
@@ -276,12 +289,17 @@ function jokerCard() {
   };
 }
 
-deck.initialise();
-deck.shuffle();
-gameManager.generateNumberedCardGrid();
-gameManager.populateNumberedCardGrid();
-cardInHand = hand.cards[0];
-gameManager.findValidMoves();
+$(document).ready(onReady);
+
+function onReady() {
+  deck.initialise();
+  deck.shuffle();
+  gameManager.generateNumberedCardGrid();
+  gameManager.populateNumberedCardGrid();
+}
+
+// cardInHand = hand.cards[0];
+// gameManager.findValidMoves();
 
 // console.log("Deck");
 // console.log(deck.cards);
@@ -296,8 +314,8 @@ gameManager.findValidMoves();
 // console.log("Jokers");
 // console.log(jokerDeck.cards);
 
-$(document).on("keypress", function (e) {
-  if (String.fromCharCode(e.which) === "d") {
-    deck.drawCard();
-  }
-});
+// $(document).on("keypress", function (e) {
+//   if (String.fromCharCode(e.which) === "d") {
+//     deck.drawCard();
+//   }
+// });
