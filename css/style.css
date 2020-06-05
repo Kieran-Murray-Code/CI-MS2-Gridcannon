@@ -13,7 +13,7 @@
     background-color: red;
 }
 
-.card-royal, .card-numbered{
+.card-royal, .card{
     position: absolute;
     top: 0;
     left: 0;
@@ -35,7 +35,7 @@
     border-radius: 5px;
 }
 
-.card-numbered{
+.card{
     background-color: orange;
 }
 
@@ -60,16 +60,18 @@
     font-weight: 500;
 }
 
-.grid{
-    /* position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); */
-}
 
-.deck-area{
-}
+
+
 
 .hide-element{
     opacity: 0;
+}
+
+.drop-active {
+    border-color: #aaa;
+  }
+
+.clone{
+    opacity: 0.5;
 }

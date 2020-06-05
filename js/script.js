@@ -17,6 +17,10 @@ const gameManager = {
   state: "setup",
   // Generate a blank grid for number cards and link to them the royal card slots that they are able to attack.
   numberCardGrid: [],
+  handSetup: function () {
+    hand.slotElement = $("#hand");
+    hand.topCardElement = hand.slotElement[0].getElementsByClassName("card");
+  },
   generateNumberedCardGrid: function () {
     let numberedCardGridSlotElements = $(".card-slot-numbered");
     this.numberCardGrid[0] = new numberedCardGridSlot();
@@ -67,6 +71,11 @@ const gameManager = {
           acesDeck.cards.push(cardToPlace);
         } else if (cardToPlace.cardValue > 10) {
           hand.cards.push(cardToPlace);
+          hand.topCardElement[0]
+            .getElementsByTagName("svg")[0]
+            .getElementsByTagName(
+              "text"
+            )[0].textContent = `${hand.cards[0].cardValue} of ${hand.cards[0].suit}`;
         } else {
           this.numberCardGrid[i].cards.push(cardToPlace);
           this.numberCardGrid[i].element
@@ -159,6 +168,8 @@ const gameManager = {
 
 let hand = {
   cards: [],
+  slotElement: [],
+  topCardElement: [],
 };
 
 let jokerDeck = {
@@ -298,57 +309,99 @@ $(document).ready(onReady);
 function onReady() {
   deck.initialise();
   deck.shuffle();
+  gameManager.handSetup();
   gameManager.generateNumberedCardGrid();
   gameManager.populateNumberedCardGrid();
 
   interact(".draggable").draggable({
-    // enable inertial throwing
-    inertia: true,
-    // keep the element within the area of it's parent
-    modifiers: [
-      interact.modifiers.restrictRect({
-        restriction: "parent",
-        endOnly: true,
-      }),
-    ],
-    // enable autoScroll
-    autoScroll: true,
-
     listeners: {
-      // call this function on every dragmove event
-      move: dragMoveListener,
+      start(event) {
+        console.log(event.type, event.target);
+      },
+      move(event) {
+        event.target.style.transform.position.x += event.dx;
+        event.target.style.transform.position.y += event.dy;
+      },
+    },
+  });
 
+  let clone = null;
+  interact(".draggable").draggable({
+    listeners: {
+      start(event) {
+        if (!clone) {
+          clone = event.target.cloneNode(true);
+          clone.classList.add("clone");
+          event.target.append(clone);
+        }
+      },
+
+      move: dragMoveListener,
       // call this function on every dragend event
       end(event) {
-        var textEl = event.target.querySelector("p");
-
-        textEl &&
-          (textEl.textContent =
-            "moved a distance of " +
-            Math.sqrt(
-              (Math.pow(event.pageX - event.x0, 2) +
-                Math.pow(event.pageY - event.y0, 2)) |
-                0
-            ).toFixed(2) +
-            "px");
+        event.target.style.zIndex = 0;
       },
     },
   });
 
   function dragMoveListener(event) {
     var target = event.target;
+    clone.style.zIndex = 1;
     // keep the dragged position in the data-x/data-y attributes
-    var x = (parseFloat(target.getAttribute("data-x")) || 0) + event.dx;
-    var y = (parseFloat(target.getAttribute("data-y")) || 0) + event.dy;
-
+    var x = (parseFloat(clone.getAttribute("data-x")) || 0) + event.dx;
+    var y = (parseFloat(clone.getAttribute("data-y")) || 0) + event.dy;
     // translate the element
-    target.style.webkitTransform = target.style.transform =
+    clone.style.webkitTransform = clone.style.transform =
       "translate(" + x + "px, " + y + "px)";
-
     // update the posiion attributes
-    target.setAttribute("data-x", x);
-    target.setAttribute("data-y", y);
+    clone.setAttribute("data-x", x);
+    clone.setAttribute("data-y", y);
   }
+
+  interact(".dropzone").dropzone({
+    // only accept elements matching this CSS selector
+    accept: ".card",
+    // Require a 75% element overlap for a drop to be possible
+    overlap: 0.75,
+
+    // listen for drop related events:
+
+    ondropactivate: function (event) {
+      // add active dropzone feedback
+      event.target.classList.add("drop-active");
+    },
+    ondragenter: function (event) {
+      var draggableElement = event.relatedTarget;
+      var dropzoneElement = event.target;
+      console.log("Drag Enter");
+
+      // feedback the possibility of a drop
+    },
+    ondragleave: function (event) {
+      // remove the drop feedback style
+      console.log("Drag Leave");
+    },
+    ondrop: function (event) {
+      let dropSlotGridIndex = event.currentTarget.getAttribute(
+        "data-grid-index"
+      );
+      console.log(royalCardGrid[dropSlotGridIndex]);
+      royalCardGrid[dropSlotGridIndex] = hand.cards[0];
+      console.log(
+        "Droped " +
+          " into " +
+          event.currentTarget.getAttribute("data-grid-index")
+      );
+      console.log(royalCardGrid[dropSlotGridIndex]);
+      // event.target.relatedTarget.parentNode = event.target.parentNode;
+    },
+    ondropdeactivate: function (event) {
+      // remove active dropzone feedback
+      console.log("Drop Deactive");
+      clone.remove();
+      clone = null;
+    },
+  });
 }
 
 // cardInHand = hand.cards[0];
