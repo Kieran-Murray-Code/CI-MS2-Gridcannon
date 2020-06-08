@@ -38,7 +38,7 @@
     <!-- Gameboard Grid -->
     <div id="gameboard" class="container-fluid p-0 grid">
         <div class="row no-gutters">
-            <div class="col col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
+            <div class="col col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-4 offset-lg-4 dropzone">
                 <!-- Blank Row -->
                 <div class="row no-gutters deck-area">
                     <div class="col-2 offset-5">
@@ -49,7 +49,7 @@
                 <!-- Grid Row 1 -->
                 <div class="row no-gutters">
                     <div class="col-2 offset-3">
-                        <div data-grid-index="11" class="card-slot-royal dropzone">
+                        <div data-grid-index="11" data-slot-type="royal" data-slot-type="royal" class="card-slot-royal ">
                             <div class="card-royal">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">K</text>
@@ -60,7 +60,7 @@
 
                     </div>
                     <div class="col-2">
-                        <div data-grid-index="10" class="card-slot-royal dropzone">
+                        <div data-grid-index="10" data-slot-type="royal" class="card-slot-royal ">
                             <div class="card-royal">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">K</text>
@@ -71,7 +71,7 @@
 
                     </div>
                     <div class="col-2">
-                        <div data-grid-index="9" class="card-slot-royal dropzone">
+                        <div data-grid-index="9" data-slot-type="royal" class="card-slot-royal ">
                             <div class="card-royal">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">K</text>
@@ -85,7 +85,7 @@
                 <!-- Grid Row 2 -->
                 <div class="row no-gutters">
                     <div class="col-2 offset-1">
-                        <div data-grid-index="8" class="card-slot-royal dropzone">
+                        <div data-grid-index="8" data-slot-type="royal" class="card-slot-royal ">
                             <div class="card-royal">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">K</text>
@@ -96,7 +96,7 @@
                     </div>
                     <div class="col-2">
                         <div id="card-slot-numbered-00" class="card-slot-numbered">
-                            <div class="card draggable">
+                            <div class="card ">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">10H</text>
                                     </svg></div>
@@ -106,7 +106,7 @@
                     </div>
                     <div class="col-2">
                         <div class="card-slot-numbered">
-                            <div class="card draggable">
+                            <div class="card ">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">10H</text>
                                     </svg></div>
@@ -116,7 +116,7 @@
                     </div>
                     <div class="col-2">
                         <div class="card-slot-numbered">
-                            <div class="card draggable">
+                            <div class="card ">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">10H</text>
                                     </svg></div>
@@ -125,7 +125,7 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <div data-grid-index="7" class="card-slot-royal dropzone">
+                        <div data-grid-index="7" data-slot-type="royal" class="card-slot-royal ">
                             <div class="card-royal">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">K</text>
@@ -138,7 +138,7 @@
                 <!-- Grid Row 3 -->
                 <div class="row no-gutters">
                     <div class="col-2 offset-1">
-                        <div data-grid-index="6" class="card-slot-royal dropzone">
+                        <div data-grid-index="6" data-slot-type="royal" class="card-slot-royal ">
                             <div class="card-royal">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">K</text>
@@ -149,7 +149,7 @@
                     </div>
                     <div class="col-2">
                         <div class="card-slot-numbered">
-                            <div class="card draggable">
+                            <div class="card ">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">10H</text>
                                     </svg></div>
@@ -159,7 +159,7 @@
                     </div>
                     <div class="col-2">
                         <div class="card-slot-numbered">
-                            <div class="card draggable">
+                            <div class="card ">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">10H</text>
                                     </svg></div>
@@ -169,7 +169,7 @@
                     </div>
                     <div class="col-2">
                         <div class="card-slot-numbered">
-                            <div class="card draggable">
+                            <div class="card ">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">10H</text>
                                     </svg></div>
@@ -178,7 +178,7 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <div data-grid-index="5" class="card-slot-royal dropzone">
+                        <div data-grid-index="5" data-slot-type="royal" class="card-slot-royal ">
                             <div class="card-royal">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">K</text>
@@ -191,7 +191,7 @@
                 <!-- Grid Row 4 -->
                 <div class="row no-gutters">
                     <div class="col-2 offset-1">
-                        <div data-grid-index="4" class="card-slot-royal dropzone">
+                        <div data-grid-index="4" data-slot-type="royal" class="card-slot-royal ">
                             <div class="card-royal">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">K</text>
@@ -202,7 +202,7 @@
                     </div>
                     <div class="col-2">
                         <div class="card-slot-numbered">
-                            <div class="card draggable">
+                            <div class="card ">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">10H</text>
                                     </svg></div>
@@ -212,7 +212,7 @@
                     </div>
                     <div class="col-2">
                         <div class="card-slot-numbered">
-                            <div class="card draggable">
+                            <div class="card ">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">10H</text>
                                     </svg></div>
@@ -222,7 +222,7 @@
                     </div>
                     <div class="col-2">
                         <div class="card-slot-numbered">
-                            <div class="card draggable">
+                            <div class="card ">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">10H</text>
                                     </svg></div>
@@ -231,7 +231,7 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <div data-grid-index="3" class="card-slot-royal dropzone">
+                        <div data-grid-index="3" data-slot-type="royal" class="card-slot-royal ">
                             <div class="card-royal">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">K</text>
@@ -244,7 +244,7 @@
                 <!-- Grid Row 5 -->
                 <div class="row no-gutters">
                     <div class="col-2 offset-3">
-                        <div data-grid-index="2" class="card-slot-royal dropzone">
+                        <div data-grid-index="2" data-slot-type="royal" class="card-slot-royal ">
                             <div class="card-royal">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">K</text>
@@ -254,7 +254,7 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <div data-grid-index="1" class="card-slot-royal dropzone">
+                        <div data-grid-index="1" data-slot-type="royal" class="card-slot-royal ">
                             <div class="card-royal">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">K</text>
@@ -264,7 +264,7 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <div data-grid-index="0" class="card-slot-royal dropzone">
+                        <div data-grid-index="0" data-slot-type="royal" class="card-slot-royal ">
                             <div class="card-royal">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">K</text>
@@ -288,7 +288,7 @@
                             <div><svg class="slot-label" viewBox="0 0 100 100">
                                     <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Discard</text>
                                 </svg></div>
-                            <div class="card draggable">
+                            <div class="card ">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">10H</text>
                                     </svg></div>
@@ -304,11 +304,11 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <div id="hand" class="deck-slot">
+                        <div data-grid-index="0" data-slot-type="hand" id="hand" class="deck-slot">
                             <div><svg class="slot-label" viewBox="0 0 100 100">
                                     <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Hand</text>
                                 </svg></div>
-                                <div class="card draggable">
+                                <div class="card draggable ">
                                     <div><svg class="slot-label" viewBox="0 0 100 100">
                                             <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">10H</text>
                                         </svg></div>

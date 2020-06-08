@@ -8,25 +8,46 @@ function numberedCardGridSlot() {
   this.element = [];
 }
 
-function royalCardGridSlot() {
-  this.cards = [];
-  this.element = [];
-  this.topCardElement = [];
-  this.overlayElement = [];
+class gridSlot {
+  constructor() {
+    this.cards = [],
+    this.element,
+    this.topCardElement,
+    this.overlayElement
+  }
+
+  updateCardVisuals() {
+    if (this.cards.length > 0) {
+      this.topCardElement.classList.remove("hide-element");
+      this.topCardElement
+        .getElementsByTagName("svg")[0]
+        .getElementsByTagName(
+          "text"
+        )[0].textContent = `${this.cards[0].cardValue} of ${this.cards[0].suit}`;
+    } else {
+      this.topCardElement.classList.add("hide-element");
+    }
+  }
+}
+
+class royalCardGridSlot extends gridSlot{
+
 }
 
 let royalCardGrid = [];
 
 let cardInHand;
 
-// Game Manager
 const gameManager = {
   state: "setup",
-  // Generate a blank grid for number cards and link to them the royal card slots that they are able to attack.
+
   numberCardGrid: [],
   handSetup: function () {
-    hand.slotElement = $("#hand");
-    hand.topCardElement = hand.slotElement[0].getElementsByClassName("card");
+    hand = new gridSlot();
+    hand.element = Array.from($("#hand"))[0];
+    hand.topCardElement = hand.element.getElementsByClassName(
+      "card"
+    )[0];
   },
   generateNumberedCardGrid: function () {
     let numberedCardGridSlotElements = $(".card-slot-numbered");
@@ -34,7 +55,7 @@ const gameManager = {
     this.numberCardGrid[0].connectedRoyalCardGridSlots = [4, 9];
     this.numberCardGrid[0].adjacentRoyalGridSlots = [0, 3];
     this.numberCardGrid[0].element = numberedCardGridSlotElements[0];
-    // this.numberCardGrid[0].element.getElementsByTagName("svg")[0].getElementsByTagName("text")[0].textContent = "1";
+
     this.numberCardGrid[1] = new numberedCardGridSlot();
     this.numberCardGrid[1].connectedRoyalCardGridSlots = [10];
     this.numberCardGrid[1].adjacentRoyalGridSlots = [1];
@@ -68,17 +89,17 @@ const gameManager = {
     this.numberCardGrid[8].adjacentRoyalGridSlots = [8, 11];
     this.numberCardGrid[8].element = numberedCardGridSlotElements[8];
   },
-  generateRoyalCardGrid: function (){
+  generateRoyalCardGrid: function () {
     let cardsSlotRoyalElements = $(".card-slot-royal");
-    console.log(cardsSlotRoyalElements);
-    for(let i = 0; i < cardsSlotRoyalElements.length; i ++)
-    {
+    for (let i = 0; i < cardsSlotRoyalElements.length; i++) {
       let newRoyalCardGridSlot = new royalCardGridSlot();
       newRoyalCardGridSlot.element = cardsSlotRoyalElements[i];
-      newRoyalCardGridSlot.topCardElement = newRoyalCardGridSlot.element.getElementsByClassName("card-royal")[0];
+      newRoyalCardGridSlot.topCardElement = newRoyalCardGridSlot.element.getElementsByClassName(
+        "card-royal"
+      )[0];
+      newRoyalCardGridSlot.updateCardVisuals();
       royalCardGrid.unshift(newRoyalCardGridSlot);
     }
-    console.log(royalCardGrid);
   },
   populateNumberedCardGrid: function () {
     for (let i = 0; i < this.numberCardGrid.length; i++) {
@@ -90,7 +111,7 @@ const gameManager = {
           acesDeck.cards.push(cardToPlace);
         } else if (cardToPlace.cardValue > 10) {
           hand.cards.push(cardToPlace);
-          hand.topCardElement[0]
+          hand.topCardElement
             .getElementsByTagName("svg")[0]
             .getElementsByTagName(
               "text"
@@ -107,13 +128,12 @@ const gameManager = {
     }
   },
 
-
   findValidMoves: function () {
     if (cardInHand) {
       if (cardInHand.cardType === "royal") {
         console.log(cardInHand);
         console.log("Checking For Highest Value Of Matching Suit");
-        // find highest value card of same suit
+
         let highestValueMatchingSlot = new numberedCardGridSlot();
         for (let i = 0; i < this.numberCardGrid.length; i++) {
           console.log(
@@ -136,7 +156,7 @@ const gameManager = {
 
         if (highestValueMatchingSlot.cards.length === 0) {
           console.log("Checking For Highest Value Colour");
-          // Check for hightest value card of the same colour
+
           for (let i = 0; i < this.numberCardGrid.length; i++) {
             if (
               this.numberCardGrid[i].cards[0].cardColour ===
@@ -158,7 +178,7 @@ const gameManager = {
 
         if (highestValueMatchingSlot.cards.length === 0) {
           console.log("Checking For Highest Value of any colour");
-          // Check for hightest value card of any colour
+
           for (let i = 0; i < this.numberCardGrid.length; i++) {
             if (highestValueMatchingSlot.cards.length > 0) {
               if (
@@ -181,9 +201,6 @@ const gameManager = {
 };
 
 let hand = {
-  cards: [],
-  slotElement: [],
-  topCardElement: [],
 };
 
 let jokerDeck = {
@@ -193,11 +210,9 @@ let acesDeck = {
   cards: [],
 };
 
-// Deck
 let deck = {
   cards: [],
   shuffle: function () {
-    //fisher-yates shuffle
     for (let i = deck.cards.length - 1; i > 0; i--) {
       let randomIndex = Math.floor(Math.random() * (i + 1));
       let firstCard = deck.cards[i];
@@ -253,7 +268,6 @@ let deck = {
   },
 };
 
-// Card Variables
 let generalCardProperties = {
   suit: "",
   cardValue: 0,
@@ -266,7 +280,6 @@ let royalCardProperties = {
   health: 0,
 };
 
-// Card Functions
 function moveCard() {
   return {
     moveCard: () => console.log("the card moved"),
@@ -283,7 +296,6 @@ function selectCard() {
   };
 }
 
-// Card Composite Objects
 function numberCard() {
   return {
     ...generalCardProperties,
@@ -344,15 +356,11 @@ function onReady() {
   interact(".draggable").draggable({
     listeners: {
       start(event) {
-        // if (!clone) {
-        //   clone = event.target.cloneNode(true);
-        //   clone.classList.add("clone");
-        //   event.target.parentNode.append(clone);
-        // }
+        event.target.style.zIndex = 1;
       },
 
       move: dragMoveListener,
-      // call this function on every dragend event
+
       end(event) {
         event.target.style.zIndex = 0;
       },
@@ -361,85 +369,60 @@ function onReady() {
 
   function dragMoveListener(event) {
     var target = event.target;
-    //clone.style.zIndex = 1;
-    // keep the dragged position in the data-x/data-y attributes
+
     var x = (parseFloat(target.getAttribute("data-x")) || 0) + event.dx;
     var y = (parseFloat(target.getAttribute("data-y")) || 0) + event.dy;
-    // translate the element
+
     target.style.webkitTransform = target.style.transform =
       "translate(" + x + "px, " + y + "px)";
-    // update the posiion attributes
+
     target.setAttribute("data-x", x);
     target.setAttribute("data-y", y);
   }
 
   interact(".dropzone").dropzone({
-    // only accept elements matching this CSS selector
     accept: ".card",
-    // Require a 75% element overlap for a drop to be possible
+
     overlap: 0.75,
 
-    // listen for drop related events:
-
     ondropactivate: function (event) {
-      // add active dropzone feedback
       event.target.classList.add("drop-active");
     },
     ondragenter: function (event) {
       var draggableElement = event.relatedTarget;
       var dropzoneElement = event.target;
-      console.log("Drag Enter");
-
-      // feedback the possibility of a drop
     },
-    ondragleave: function (event) {
-      // remove the drop feedback style
-      console.log("Drag Leave");
-    },
+    ondragleave: function (event) {},
     ondrop: function (event) {
       let dropSlotGridIndex = event.currentTarget.getAttribute(
         "data-grid-index"
       );
-      royalCardGrid[dropSlotGridIndex].cards.unshift(hand.cards[0]);
-      console.log(`${royalCardGrid[dropSlotGridIndex].cards[0].cardValue} of ${royalCardGrid[dropSlotGridIndex].cards[0].suit}`);
-      royalCardGrid[dropSlotGridIndex].topCardElement.getElementsByTagName("svg")[0]
-      .getElementsByTagName(
-        "text"
-      )[0].textContent = `${royalCardGrid[dropSlotGridIndex].cards[0].cardValue} of ${royalCardGrid[dropSlotGridIndex].cards[0].suit}`;
+      let dropSlotType = event.currentTarget.getAttribute("data-slot-type");
+
+      let dropItemParentSlotIndex = event.relatedTarget.parentNode.getAttribute(
+        "data-grid-index"
+      );
+      let dropItemParentSlotType = event.relatedTarget.parentNode.getAttribute(
+        "data-slot-type"
+      );
+
+      if (dropSlotType === "royal") {
+        if (dropItemParentSlotType === "hand") {
+          royalCardGrid[dropSlotGridIndex].cards.unshift(hand.cards.shift());
+          console.log(royalCardGrid[dropSlotGridIndex]);
+          console.log(hand);
+          royalCardGrid[dropSlotGridIndex].updateCardVisuals();
+          hand.updateCardVisuals();
+
+        }
+      }
     },
     ondropdeactivate: function (event) {
-      // remove active dropzone feedback
-      console.log("Drop Deactive");
       event.relatedTarget.style.transform =
         "translate(" + 0 + "px, " + 0 + "px)";
-      // update the posiion attributes
+
       event.relatedTarget.setAttribute("data-x", 0);
       event.relatedTarget.setAttribute("data-y", 0);
-      // clone.remove();
-      // clone = null;
-      // event.relatedTarget =  null;
     },
   });
 }
-
-// cardInHand = hand.cards[0];
-// gameManager.findValidMoves();
-
-// console.log("Deck");
-// console.log(deck.cards);
-// console.log("Number Grid");
-// console.log(gameManager.numberCardGrid);
-// console.log("Royal Grid");
-// console.log(royalCardGrid);
-// console.log("Hand");
-// console.log(hand.cards);
-// console.log("Aces");
-// console.log(acesDeck.cards);
-// console.log("Jokers");
-// console.log(jokerDeck.cards);
-
-// $(document).on("keypress", function (e) {
-//   if (String.fromCharCode(e.which) === "d") {
-//     deck.drawCard();
-//   }
-// });
