@@ -8,6 +8,13 @@ function numberedCardGridSlot() {
   this.element = [];
 }
 
+function royalCardGridSlot() {
+  this.cards = [];
+  this.element = [];
+  this.topCardElement = [];
+  this.overlayElement = [];
+}
+
 let royalCardGrid = [];
 
 let cardInHand;
@@ -61,6 +68,18 @@ const gameManager = {
     this.numberCardGrid[8].adjacentRoyalGridSlots = [8, 11];
     this.numberCardGrid[8].element = numberedCardGridSlotElements[8];
   },
+  generateRoyalCardGrid: function (){
+    let cardsSlotRoyalElements = $(".card-slot-royal");
+    console.log(cardsSlotRoyalElements);
+    for(let i = 0; i < cardsSlotRoyalElements.length; i ++)
+    {
+      let newRoyalCardGridSlot = new royalCardGridSlot();
+      newRoyalCardGridSlot.element = cardsSlotRoyalElements[i];
+      newRoyalCardGridSlot.topCardElement = newRoyalCardGridSlot.element.getElementsByClassName("card-royal")[0];
+      royalCardGrid.unshift(newRoyalCardGridSlot);
+    }
+    console.log(royalCardGrid);
+  },
   populateNumberedCardGrid: function () {
     for (let i = 0; i < this.numberCardGrid.length; i++) {
       while (this.numberCardGrid[i].cards.length === 0) {
@@ -87,12 +106,7 @@ const gameManager = {
       }
     }
   },
-  populateRoyalCardGrid: function () {
-    for (let i = 0; i < hand.cards.length; i++) {
-      royalCardGrid.push(hand.cards[i]);
-    }
-    hand.cards = [];
-  },
+
 
   findValidMoves: function () {
     if (cardInHand) {
@@ -312,6 +326,7 @@ function onReady() {
   gameManager.handSetup();
   gameManager.generateNumberedCardGrid();
   gameManager.populateNumberedCardGrid();
+  gameManager.generateRoyalCardGrid();
 
   interact(".draggable").draggable({
     listeners: {
@@ -329,11 +344,11 @@ function onReady() {
   interact(".draggable").draggable({
     listeners: {
       start(event) {
-        if (!clone) {
-          clone = event.target.cloneNode(true);
-          clone.classList.add("clone");
-          event.target.append(clone);
-        }
+        // if (!clone) {
+        //   clone = event.target.cloneNode(true);
+        //   clone.classList.add("clone");
+        //   event.target.parentNode.append(clone);
+        // }
       },
 
       move: dragMoveListener,
@@ -346,16 +361,16 @@ function onReady() {
 
   function dragMoveListener(event) {
     var target = event.target;
-    clone.style.zIndex = 1;
+    //clone.style.zIndex = 1;
     // keep the dragged position in the data-x/data-y attributes
-    var x = (parseFloat(clone.getAttribute("data-x")) || 0) + event.dx;
-    var y = (parseFloat(clone.getAttribute("data-y")) || 0) + event.dy;
+    var x = (parseFloat(target.getAttribute("data-x")) || 0) + event.dx;
+    var y = (parseFloat(target.getAttribute("data-y")) || 0) + event.dy;
     // translate the element
-    clone.style.webkitTransform = clone.style.transform =
+    target.style.webkitTransform = target.style.transform =
       "translate(" + x + "px, " + y + "px)";
     // update the posiion attributes
-    clone.setAttribute("data-x", x);
-    clone.setAttribute("data-y", y);
+    target.setAttribute("data-x", x);
+    target.setAttribute("data-y", y);
   }
 
   interact(".dropzone").dropzone({
@@ -385,21 +400,24 @@ function onReady() {
       let dropSlotGridIndex = event.currentTarget.getAttribute(
         "data-grid-index"
       );
-      console.log(royalCardGrid[dropSlotGridIndex]);
-      royalCardGrid[dropSlotGridIndex] = hand.cards[0];
-      console.log(
-        "Droped " +
-          " into " +
-          event.currentTarget.getAttribute("data-grid-index")
-      );
-      console.log(royalCardGrid[dropSlotGridIndex]);
-      // event.target.relatedTarget.parentNode = event.target.parentNode;
+      royalCardGrid[dropSlotGridIndex].cards.unshift(hand.cards[0]);
+      console.log(`${royalCardGrid[dropSlotGridIndex].cards[0].cardValue} of ${royalCardGrid[dropSlotGridIndex].cards[0].suit}`);
+      royalCardGrid[dropSlotGridIndex].topCardElement.getElementsByTagName("svg")[0]
+      .getElementsByTagName(
+        "text"
+      )[0].textContent = `${royalCardGrid[dropSlotGridIndex].cards[0].cardValue} of ${royalCardGrid[dropSlotGridIndex].cards[0].suit}`;
     },
     ondropdeactivate: function (event) {
       // remove active dropzone feedback
       console.log("Drop Deactive");
-      clone.remove();
-      clone = null;
+      event.relatedTarget.style.transform =
+        "translate(" + 0 + "px, " + 0 + "px)";
+      // update the posiion attributes
+      event.relatedTarget.setAttribute("data-x", 0);
+      event.relatedTarget.setAttribute("data-y", 0);
+      // clone.remove();
+      // clone = null;
+      // event.relatedTarget =  null;
     },
   });
 }
