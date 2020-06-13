@@ -1,12 +1,6 @@
 const cardSuits = ["clubs", "spades", "hearts", "diamonds"];
 const numberOfJokers = 2;
 
-function numberedCardGridSlot() {
-  this.cards = [];
-  this.oppositeRoyalCardGridSlots = [];
-  this.adjacentRoyalGridSlots = [];
-  this.element = [];
-}
 
 class gridSlot {
   constructor() {
@@ -28,6 +22,12 @@ class gridSlot {
 }
 
 class royalCardGridSlot extends gridSlot {}
+class numberedCardGridSlot extends gridSlot {
+  constructor() {
+  super();
+  this.oppositeRoyalCardGridSlots = [], this.adjacentRoyalGridSlots = [];
+  }
+}
 
 let royalCardGrid = [];
 
@@ -49,46 +49,75 @@ const gameManager = {
     this.numberCardGrid[0].oppositeRoyalCardGridSlots = [2, 7];
     this.numberCardGrid[0].adjacentRoyalGridSlots = [11, 8];
     this.numberCardGrid[0].element = numberedCardGridSlotElements[0];
+    this.numberCardGrid[0].topCardElement = this.numberCardGrid[0].element.getElementsByClassName(
+      "card"
+    )[0];
 
     this.numberCardGrid[1] = new numberedCardGridSlot();
     this.numberCardGrid[1].oppositeRoyalCardGridSlots = [1];
     this.numberCardGrid[1].adjacentRoyalGridSlots = [10];
     this.numberCardGrid[1].element = numberedCardGridSlotElements[1];
+    this.numberCardGrid[1].topCardElement = this.numberCardGrid[1].element.getElementsByClassName(
+      "card"
+    )[0];
 
     this.numberCardGrid[2] = new numberedCardGridSlot();
     this.numberCardGrid[2].oppositeRoyalCardGridSlots = [0, 8];
     this.numberCardGrid[2].adjacentRoyalGridSlots = [7, 9];
     this.numberCardGrid[2].element = numberedCardGridSlotElements[2];
+    this.numberCardGrid[2].topCardElement = this.numberCardGrid[2].element.getElementsByClassName(
+      "card"
+    )[0];
 
     this.numberCardGrid[3] = new numberedCardGridSlot();
     this.numberCardGrid[3].oppositeRoyalCardGridSlots = [5];
     this.numberCardGrid[3].adjacentRoyalGridSlots = [6];
     this.numberCardGrid[3].element = numberedCardGridSlotElements[3];
+    this.numberCardGrid[3].topCardElement = this.numberCardGrid[3].element.getElementsByClassName(
+      "card"
+    )[0];
 
     this.numberCardGrid[4] = new numberedCardGridSlot();
     this.numberCardGrid[4].oppositeRoyalCardGridSlots = [];
     this.numberCardGrid[4].adjacentRoyalGridSlots = [];
     this.numberCardGrid[4].element = numberedCardGridSlotElements[4];
+    this.numberCardGrid[4].topCardElement = this.numberCardGrid[4].element.getElementsByClassName(
+      "card"
+    )[0];
 
     this.numberCardGrid[5] = new numberedCardGridSlot();
     this.numberCardGrid[5].oppositeRoyalCardGridSlots = [6];
     this.numberCardGrid[5].adjacentRoyalGridSlots = [5];
     this.numberCardGrid[5].element = numberedCardGridSlotElements[5];
+    this.numberCardGrid[5].topCardElement = this.numberCardGrid[5].element.getElementsByClassName(
+      "card"
+    )[0];
 
     this.numberCardGrid[6] = new numberedCardGridSlot();
     this.numberCardGrid[6].oppositeRoyalCardGridSlots = [3, 11];
     this.numberCardGrid[6].adjacentRoyalGridSlots = [2, 4];
     this.numberCardGrid[6].element = numberedCardGridSlotElements[6];
+    this.numberCardGrid[6].topCardElement = this.numberCardGrid[6].element.getElementsByClassName(
+      "card"
+    )[0];
 
     this.numberCardGrid[7] = new numberedCardGridSlot();
     this.numberCardGrid[7].oppositeRoyalCardGridSlots = [10];
     this.numberCardGrid[7].adjacentRoyalGridSlots = [1];
     this.numberCardGrid[7].element = numberedCardGridSlotElements[7];
+    this.numberCardGrid[7].topCardElement = this.numberCardGrid[7].element.getElementsByClassName(
+      "card"
+    )[0];
 
     this.numberCardGrid[8] = new numberedCardGridSlot();
     this.numberCardGrid[8].oppositeRoyalCardGridSlots = [4, 9];
     this.numberCardGrid[8].adjacentRoyalGridSlots = [0, 3];
     this.numberCardGrid[8].element = numberedCardGridSlotElements[8];
+    this.numberCardGrid[8].topCardElement = this.numberCardGrid[8].element.getElementsByClassName(
+      "card"
+    )[0];
+
+    console.log(this.numberCardGrid);
   },
   generateRoyalCardGrid: function () {
     let cardsSlotRoyalElements = $(".card-slot-royal");
@@ -518,6 +547,14 @@ function onReady() {
         if (dropItemParentSlotType === "hand") {
           royalCardGrid[dropSlotGridIndex].cards.unshift(hand.cards.shift());
           royalCardGrid[dropSlotGridIndex].updateCardVisuals();
+          hand.updateCardVisuals();
+        }
+      }
+      else if (dropSlotType === "numbered") {
+        console.log("dropping numbered card");
+        if (dropItemParentSlotType === "hand") {
+          gameManager.numberCardGrid[dropSlotGridIndex].cards.unshift(hand.cards.shift());
+          gameManager.numberCardGrid[dropSlotGridIndex].updateCardVisuals();
           hand.updateCardVisuals();
         }
       }
