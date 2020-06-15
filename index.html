@@ -49,7 +49,7 @@
                 <!-- Grid Row 1 -->
                 <div class="row no-gutters">
                     <div class="col-2 offset-3">
-                        <div data-grid-index="8" data-slot-type="royal" class="card-slot-royal ">
+                        <div data-grid-index="11" data-slot-type="royal" class="card-slot-royal ">
                             <div class="card-royal">
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
                                         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">K</text>
@@ -284,7 +284,7 @@
                 <!-- Decks Area -->
                 <div class="row no-gutters deck-area">
                     <div class="col-2 offset-1">
-                        <div class="deck-slot">
+                        <div class="deck-slot" id="discard">
                             <div><svg class="slot-label" viewBox="0 0 100 100">
                                     <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Discard</text>
                                 </svg></div>
@@ -308,26 +308,38 @@
                             <div><svg class="slot-label" viewBox="0 0 100 100">
                                     <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Hand</text>
                                 </svg></div>
-                                <div class="card draggable ">
-                                    <div><svg class="slot-label" viewBox="0 0 100 100">
-                                            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">10H</text>
-                                        </svg></div>
-                                </div>
-                                <div class="card-and-slot-highlight hide-element"></div>
+                            <div class="card draggable ">
+                                <div><svg class="slot-label" viewBox="0 0 100 100">
+                                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">10H</text>
+                                    </svg></div>
+                            </div>
+                            <div class="card-and-slot-highlight hide-element"></div>
                         </div>
                     </div>
                     <div class="col-2">
-                        <div class="deck-slot">
+                        <div class="deck-slot" id="aces" data-slot-type="aces">
                             <div><svg class="slot-label" viewBox="0 0 100 100">
                                     <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Aces</text>
                                 </svg></div>
+                            <div class="card draggable ">
+                                <div><svg class="slot-label" viewBox="0 0 100 100">
+                                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">10H</text>
+                                    </svg></div>
+                            </div>
+                            <div class="card-and-slot-highlight hide-element"></div>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-2" id="jokers" data-slot-type="jokers">
                         <div class="deck-slot">
                             <div><svg class="slot-label" viewBox="0 0 100 100">
                                     <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Jokers</text>
                                 </svg></div>
+                            <div class="card draggable ">
+                                <div><svg class="slot-label" viewBox="0 0 100 100">
+                                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">10H</text>
+                                    </svg></div>
+                            </div>
+                            <div class="card-and-slot-highlight hide-element"></div>
                         </div>
                     </div>
                 </div>
