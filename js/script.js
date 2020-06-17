@@ -23,7 +23,19 @@ class gridSlot {
   }
 }
 
-class royalCardGridSlot extends gridSlot {}
+class royalCardGridSlot extends gridSlot {
+  applyDamage(damage){
+    console.log(damage);
+    if(damage >= (this.cards[0].cardValue + this.cards[0].armour))
+    {
+      this.element.classList.add("hide-element");
+    }
+    else
+    {
+      console.log("Not enough damage to kill the Royal");
+    }
+  }
+}
 class numberedCardGridSlot extends gridSlot {
   constructor() {
     super();
@@ -38,29 +50,157 @@ class numberedCardGridSlot extends gridSlot {
     this.attackRoyals();
   }
   attackRoyals() {
-    console.log(
-      `Attacking Royal Slots ${this.oppositeRoyalCardGridSlots[0]} & ${this.oppositeRoyalCardGridSlots[1]}`
-    );
-    if (this.verticalAttackSlots.length === 2) {
-      console.log(
-        `Vertical Damage = ${
-          gameManager.numberCardGrid[this.verticalAttackSlots[0]].cards[0]
-            .cardValue +
-          gameManager.numberCardGrid[this.verticalAttackSlots[1]].cards[0]
-            .cardValue
-        }`
-      );
+    let verticalRoyalGridSlot;
+    let verticalRoyalCard;
+    let horizontalRoyalGridSlot;
+    let horizontalRoyalCard;
+    let verticalAttackCards = [];
+    let horizontalAttackCards = [];
+    let verticalRoyalHealth = 0;
+    let verticalRoyalIndex;
+    let verticalDamage = 0;
+    let horizontalRoyalHealth = 0;
+    let horizontalRoyalIndex;
+    let horizontalDamage = 0;
+
+    if (this.oppositeRoyalCardGridSlots[0]) {
+      horizontalRoyalIndex = this.oppositeRoyalCardGridSlots[0];
+      if (royalCardGrid[horizontalRoyalIndex]) {
+        horizontalRoyalGridSlot = royalCardGrid[horizontalRoyalIndex];
+        if (royalCardGrid[horizontalRoyalIndex].cards.length > 0) {
+          horizontalRoyalCard = royalCardGrid[horizontalRoyalIndex].cards[0];
+          horizontalRoyalHealth =
+            royalCardGrid[horizontalRoyalIndex].cards[0].cardValue +
+            royalCardGrid[horizontalRoyalIndex].cards[0].armour;
+        }
+      }
+    }
+    if (this.oppositeRoyalCardGridSlots[1]) {
+      verticalRoyalIndex = this.oppositeRoyalCardGridSlots[1];
+      if (royalCardGrid[verticalRoyalIndex]) {
+        verticalRoyalGridSlot = royalCardGrid[verticalRoyalIndex];
+        if (royalCardGrid[verticalRoyalIndex].cards.length > 0) {
+          verticalRoyalCard = royalCardGrid[verticalRoyalIndex].cards[0];
+          verticalRoyalHealth =
+            royalCardGrid[verticalRoyalIndex].cards[0].cardValue +
+            royalCardGrid[verticalRoyalIndex].cards[0].armour;
+        }
+      }
     }
 
-    if (this.horizontalAttackSlots.length === 2) {
-      console.log(
-        `Horizontal Damage = ${
-          gameManager.numberCardGrid[this.horizontalAttackSlots[0]].cards[0]
-            .cardValue +
-          gameManager.numberCardGrid[this.horizontalAttackSlots[1]].cards[0]
-            .cardValue
-        }`
+    if (this.verticalAttackSlots.length !== 0) {
+      verticalAttackCards.unshift(
+        gameManager.numberCardGrid[this.verticalAttackSlots[0]].cards[0]
       );
+      verticalAttackCards.unshift(
+        gameManager.numberCardGrid[this.verticalAttackSlots[1]].cards[0]
+      );
+      verticalDamage =
+        gameManager.numberCardGrid[this.verticalAttackSlots[0]].cards[0]
+          .cardValue +
+        gameManager.numberCardGrid[this.verticalAttackSlots[1]].cards[0]
+          .cardValue;
+          console.log(verticalDamage);
+    }
+
+    if (this.horizontalAttackSlots.length != 0) {
+      horizontalAttackCards.unshift(
+        gameManager.numberCardGrid[this.horizontalAttackSlots[0]].cards[0]
+      );
+      horizontalAttackCards.unshift(
+        gameManager.numberCardGrid[this.horizontalAttackSlots[1]].cards[0]
+      );
+      horizontalDamage =
+        gameManager.numberCardGrid[this.horizontalAttackSlots[0]].cards[0]
+          .cardValue +
+        gameManager.numberCardGrid[this.horizontalAttackSlots[1]].cards[0]
+          .cardValue;
+          console.log(horizontalDamage);
+    }
+
+    //Check if Royal is a Jack, King Queen or empty
+    //If it's a Jack then then the attack power must be greater or equal to the value + armour
+    //If it's a Queen then the two attack cards must equal the Queens colour
+    //If it's a Kind then the two attack cards must equal the Kings suit.
+    if (verticalRoyalCard) {
+      if (verticalAttackCards.length == 2) {
+        if (verticalRoyalCard.royalType === "jack") {
+          console.log("Apply Damage To Jack");
+          verticalRoyalGridSlot.applyDamage(verticalDamage);
+        } else if (verticalRoyalCard.royalType === "queen") {
+          if (
+            verticalRoyalCard.cardColour ===
+              verticalAttackCards[0].cardColour &&
+            verticalRoyalCard.cardColour === verticalAttackCards[1].cardColour
+          ) {
+            console.log("Apply Damage To Queen");
+            verticalRoyalGridSlot.applyDamage(verticalDamage);
+          }
+          else{
+            console.log("Attack cards don't match the Queen's colour");
+          }
+        } else {
+          if(verticalRoyalCard.suit === verticalAttackCards[0].suit && verticalRoyalCard.suit === verticalAttackCards[1].suit)
+          {
+            console.log("Apply Damage To King");
+            verticalRoyalGridSlot.applyDamage(verticalDamage);
+          }
+          else{
+            console.log("Attack cards don't match the King's suit");
+          }
+        }
+      }
+      else{
+        console.log("Vertical attack doesn't have 2 attack cards");
+      }
+    } else {
+      console.log("no royal on the vertical axis");
+    }
+
+    if (horizontalRoyalCard) {
+      if (horizontalAttackCards.length == 2) {
+        if (horizontalRoyalCard.royalType === "jack") {
+          console.log("Apply Damage To Jack");
+          horizontalRoyalGridSlot.applyDamage(horizontalDamage);
+        } else if (horizontalRoyalCard.royalType === "queen") {
+          if (
+            horizontalRoyalCard.cardColour ===
+              horizontalAttackCards[0].cardColour &&
+            horizontalRoyalCard.cardColour === horizontalAttackCards[1].cardColour
+          ) {
+            console.log("Apply Damage To Queen");
+            horizontalRoyalGridSlot.applyDamage(horizontalDamage);
+          }
+          else{
+            console.log("Attack cards don't match the Queen's colour");
+          }
+        } else {
+          if(horizontalRoyalCard.suit === horizontalAttackCards[0].suit && horizontalRoyalCard.suit === horizontalAttackCards[1].suit)
+          {
+            console.log("Apply Damage To King");
+            horizontalRoyalGridSlot.applyDamage(horizontalDamage);
+          }
+          else{
+            console.log("Attack cards don't match the King's suit");
+          }
+        }
+      }
+      else{
+        console.log("Horizonal attack doesn't have 2 attack cards");
+      }
+    } else {
+      console.log("no royal on the horizontal axis");
+    }
+    
+    
+    if (horizontalDamage != 0 && horizontalRoyalHealth != 0) {
+      if (horizontalDamage >= horizontalRoyalHealth) {
+      }
+    }
+
+    if (verticalDamage != 0 && verticalRoyalHealth != 0) {
+      if (verticalDamage >= verticalRoyalHealth) {
+      }
     }
   }
 }
@@ -117,7 +257,7 @@ const gameManager = {
     this.numberCardGrid[0].verticalAttackSlots = [3, 6];
     this.numberCardGrid[0].horizontalAttackSlots = [1, 2];
 
-    this.numberCardGrid[1].oppositeRoyalCardGridSlots = [1];
+    this.numberCardGrid[1].oppositeRoyalCardGridSlots = [null,1];
     this.numberCardGrid[1].adjacentRoyalGridSlots = [10];
     this.numberCardGrid[1].verticalAttackSlots = [4, 7];
 
@@ -126,11 +266,11 @@ const gameManager = {
     this.numberCardGrid[2].verticalAttackSlots = [5, 8];
     this.numberCardGrid[2].horizontalAttackSlots = [0, 1];
 
-    this.numberCardGrid[3].oppositeRoyalCardGridSlots = [5];
+    this.numberCardGrid[3].oppositeRoyalCardGridSlots = [5,null];
     this.numberCardGrid[3].adjacentRoyalGridSlots = [6];
     this.numberCardGrid[3].horizontalAttackSlots = [4, 5];
 
-    this.numberCardGrid[5].oppositeRoyalCardGridSlots = [6];
+    this.numberCardGrid[5].oppositeRoyalCardGridSlots = [6, null];
     this.numberCardGrid[5].adjacentRoyalGridSlots = [5];
     this.numberCardGrid[5].horizontalAttackSlots = [3, 4];
 
@@ -139,7 +279,7 @@ const gameManager = {
     this.numberCardGrid[6].verticalAttackSlots = [0, 3];
     this.numberCardGrid[6].horizontalAttackSlots = [7, 8];
 
-    this.numberCardGrid[7].oppositeRoyalCardGridSlots = [10];
+    this.numberCardGrid[7].oppositeRoyalCardGridSlots = [null,10];
     this.numberCardGrid[7].adjacentRoyalGridSlots = [1];
     this.numberCardGrid[7].verticalAttackSlots = [1, 4];
 
@@ -330,9 +470,6 @@ const gameManager = {
         }
 
         if (matchFound === false) {
-          console.log(
-            "No numbered card match found, must be added to a royal as armour"
-          );
           //Find the lowest royal of matching suit
           let lowestMatchingRoyalSlot;
           for (let i = 0; i < royalCardGrid.length; i++) {
@@ -448,6 +585,13 @@ let deck = {
           card.health = j;
           card.suit = cardSuits[i];
           card.cardType = "royal";
+          if (j === 11) {
+            card.royalType = "jack";
+          } else if (j === 12) {
+            card.royalType = "queen";
+          } else {
+            card.royalType = "king";
+          }
         }
 
         if (cardSuits[i] === "clubs" || cardSuits[i] === "spades") {
@@ -476,6 +620,7 @@ let generalCardProperties = {
   cardColour: "",
 };
 let royalCardProperties = {
+  royalType: "",
   armour: 0,
   health: 0,
 };
@@ -483,9 +628,11 @@ let royalCardProperties = {
 function moveCard() {
   return {};
 }
+
 function placeCard() {
   return {};
 }
+
 function selectCard() {
   return {};
 }
@@ -498,6 +645,7 @@ function numberCard() {
     ...selectCard(),
   };
 }
+
 function royalCard() {
   return {
     ...generalCardProperties,
@@ -507,6 +655,7 @@ function royalCard() {
     ...selectCard(),
   };
 }
+
 function aceCard() {
   return {
     ...generalCardProperties,
@@ -515,6 +664,7 @@ function aceCard() {
     ...selectCard(),
   };
 }
+
 function jokerCard() {
   return {
     ...generalCardProperties,
