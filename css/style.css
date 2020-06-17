@@ -52,15 +52,18 @@
     background-color: transparent;
 }
 
-.slot-label{
+.slot-label, .armor-label{
     position: absolute;
-    top: 0;
+    top: -1rem;
     left: 0;
     font-size: 0.75rem;
     text-transform: uppercase;
     font-weight: 500;
 }
 
+.armor-label{
+    top: 1rem;
+}
 
 
 
