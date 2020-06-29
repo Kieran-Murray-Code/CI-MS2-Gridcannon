@@ -18,18 +18,26 @@ class gridSlot {
           "text"
         )[0].textContent = `${this.cards[0].cardValue} of ${this.cards[0].suit}`;
 
-        if(this.cards[0].cardValue > 10){
-          console.log(this.topCardElement);
-          let armorLabel  = this.topCardElement.getElementsByClassName("armor-label");
-          if(armorLabel[0]){
-            armorLabel[0].getElementsByTagName(
-              "text"
-            )[0].textContent = `Armour =  ${this.cards[0].armour}`
-          }
+      if (this.cards[0].cardValue > 10) {
+        let armorLabel = this.topCardElement.getElementsByClassName(
+          "armor-label"
+        );
+        if (armorLabel[0]) {
+          armorLabel[0].getElementsByTagName(
+            "text"
+          )[0].textContent = `Armour =  ${this.cards[0].armour}`;
         }
+      }
     } else {
       this.topCardElement.classList.add("hide-element");
     }
+  }
+  shuffleCardsIntoDeck() {
+    while (this.cards.length > 0) {
+      deck.cards.push(this.cards.shift());
+    }
+    deck.shuffle();
+    this.updateCardVisuals();
   }
 }
 
@@ -93,11 +101,25 @@ class numberedCardGridSlot extends gridSlot {
       verticalAttackCards.unshift(
         gameManager.numberCardGrid[this.verticalAttackSlots[1]].cards[0]
       );
-      verticalDamage =
-        gameManager.numberCardGrid[this.verticalAttackSlots[0]].cards[0]
-          .cardValue +
-        gameManager.numberCardGrid[this.verticalAttackSlots[1]].cards[0]
-          .cardValue;
+      let verticalDamage_01 = 0;
+      let verticalDamage_02 = 0;
+
+      if (
+        gameManager.numberCardGrid[this.verticalAttackSlots[0]].cards.length > 0
+      ) {
+        verticalDamage_01 =
+          gameManager.numberCardGrid[this.verticalAttackSlots[0]].cards[0]
+            .cardValue;
+      }
+      if (
+        gameManager.numberCardGrid[this.verticalAttackSlots[1]].cards.length > 0
+      ) {
+        verticalDamage_02 =
+          gameManager.numberCardGrid[this.verticalAttackSlots[1]].cards[0]
+            .cardValue;
+      }
+
+      verticalDamage = verticalDamage_01 + verticalDamage_02;
     }
 
     if (this.horizontalAttackSlots.length != 0) {
@@ -107,11 +129,20 @@ class numberedCardGridSlot extends gridSlot {
       horizontalAttackCards.unshift(
         gameManager.numberCardGrid[this.horizontalAttackSlots[1]].cards[0]
       );
-      horizontalDamage =
-        gameManager.numberCardGrid[this.horizontalAttackSlots[0]].cards[0]
-          .cardValue +
-        gameManager.numberCardGrid[this.horizontalAttackSlots[1]].cards[0]
-          .cardValue;
+      let horizontalDamage_01 = 0;
+      let horizontalDamage_02 = 0;
+
+      if (gameManager.numberCardGrid[this.horizontalAttackSlots[0]].cards > 0) {
+        horizontalDamage_01 =
+          gameManager.numberCardGrid[this.horizontalAttackSlots[0]].cards[0]
+            .cardValue;
+      }
+      if (gameManager.numberCardGrid[this.horizontalAttackSlots[1]].cards > 0) {
+        horizontalDamage_02 =
+          gameManager.numberCardGrid[this.horizontalAttackSlots[1]].cards[0]
+            .cardValue;
+      }
+      horizontalDamage = horizontalDamage_01 + horizontalDamage_02;
     }
 
     //Check if Royal is a Jack, King Queen or empty
@@ -119,7 +150,7 @@ class numberedCardGridSlot extends gridSlot {
     //If it's a Queen then the two attack cards must equal the Queens colour
     //If it's a Kind then the two attack cards must equal the Kings suit.
     if (verticalRoyalCard) {
-      if (verticalAttackCards.length == 2) {
+      if (verticalAttackCards[0] && verticalAttackCards[1]) {
         if (verticalRoyalCard.royalType === "jack") {
           verticalRoyalGridSlot.applyDamage(verticalDamage);
         } else if (verticalRoyalCard.royalType === "queen") {
@@ -146,18 +177,19 @@ class numberedCardGridSlot extends gridSlot {
     }
 
     if (horizontalRoyalCard) {
-      if (horizontalAttackCards.length == 2) {
+      if (horizontalAttackCards[0] && horizontalAttackCards[1]) {
         if (horizontalRoyalCard.royalType === "jack") {
           horizontalRoyalGridSlot.applyDamage(horizontalDamage);
         } else if (horizontalRoyalCard.royalType === "queen") {
-          if (
-            horizontalRoyalCard.cardColour ===
-              horizontalAttackCards[0].cardColour &&
-            horizontalRoyalCard.cardColour ===
-              horizontalAttackCards[1].cardColour
-          ) {
-            horizontalRoyalGridSlot.applyDamage(horizontalDamage);
-          } else {
+          if (horizontalAttackCards[0] && horizontalAttackCards[1]) {
+            if (
+              horizontalRoyalCard.cardColour ===
+                horizontalAttackCards[0].cardColour &&
+              horizontalRoyalCard.cardColour ===
+                horizontalAttackCards[1].cardColour
+            ) {
+              horizontalRoyalGridSlot.applyDamage(horizontalDamage);
+            }
           }
         } else {
           if (
@@ -318,20 +350,29 @@ const gameManager = {
           if (royalSlotAvailable === false) {
             continue;
           }
-
-          if (this.numberCardGrid[i].cards[0].suit === cardInHand.suit) {
-            if (highestValueMatchingSlot.cards.length > 0) {
-              if (
-                this.numberCardGrid[i].cards[0].cardValue >
-                highestValueMatchingSlot.cards[0].cardValue
-              ) {
+          //Don't check for matching suit if slot is empty
+          if (this.numberCardGrid[i].cards.length > 0) {
+            if (this.numberCardGrid[i].cards[0].suit === cardInHand.suit) {
+              if (highestValueMatchingSlot.cards.length > 0) {
+                if (
+                  this.numberCardGrid[i].cards[0].cardValue >
+                  highestValueMatchingSlot.cards[0].cardValue
+                ) {
+                  highestValueMatchingSlot = this.numberCardGrid[i];
+                }
+              } else {
                 highestValueMatchingSlot = this.numberCardGrid[i];
+                //check if adjacent royal slots are filled if the are continue
               }
             } else {
-              highestValueMatchingSlot = this.numberCardGrid[i];
-              //check if adjacent royal slots are filled if the are continue
+              continue;
             }
           } else {
+            let emptySlot = this.numberCardGrid[i];
+            for(let j = 0; j < emptySlot.adjacentRoyalGridSlots.length; j++)
+            {
+              royalCardGrid[emptySlot.adjacentRoyalGridSlots[j]].element.classList.add("dropzone");
+            }
             continue;
           }
         }
@@ -360,19 +401,23 @@ const gameManager = {
               continue;
             }
 
-            if (
-              this.numberCardGrid[i].cards[0].cardColour ===
-              cardInHand.cardColour
-            ) {
-              if (highestValueMatchingSlot.cards.length > 0) {
-                if (
-                  this.numberCardGrid[i].cards[0].cardValue >
-                  highestValueMatchingSlot.cards[0].cardValue
-                ) {
+            if (this.numberCardGrid[i].cards.length > 0) {
+              if (
+                this.numberCardGrid[i].cards[0].cardColour ===
+                cardInHand.cardColour
+              ) {
+                if (highestValueMatchingSlot.cards.length > 0) {
+                  if (
+                    this.numberCardGrid[i].cards[0].cardValue >
+                    highestValueMatchingSlot.cards[0].cardValue
+                  ) {
+                    highestValueMatchingSlot = this.numberCardGrid[i];
+                  }
+                } else {
                   highestValueMatchingSlot = this.numberCardGrid[i];
                 }
               } else {
-                highestValueMatchingSlot = this.numberCardGrid[i];
+                continue;
               }
             } else {
               continue;
@@ -403,15 +448,19 @@ const gameManager = {
             if (royalSlotAvailable === false) {
               continue;
             }
-            if (highestValueMatchingSlot.cards.length > 0) {
-              if (
-                this.numberCardGrid[i].cards[0].cardValue >
-                highestValueMatchingSlot.cards[0].cardValue
-              ) {
+            if (this.numberCardGrid[i].cards.length > 0) {
+              if (highestValueMatchingSlot.cards.length > 0) {
+                if (
+                  this.numberCardGrid[i].cards[0].cardValue >
+                  highestValueMatchingSlot.cards[0].cardValue
+                ) {
+                  highestValueMatchingSlot = this.numberCardGrid[i];
+                }
+              } else {
                 highestValueMatchingSlot = this.numberCardGrid[i];
               }
             } else {
-              highestValueMatchingSlot = this.numberCardGrid[i];
+              continue;
             }
           }
         }
@@ -436,6 +485,8 @@ const gameManager = {
               gameManager.numberCardGrid[i].element.classList.add("dropzone");
               matchFound = true;
             }
+          } else {
+            gameManager.numberCardGrid[i].element.classList.add("dropzone");
           }
         }
 
@@ -508,6 +559,13 @@ const gameManager = {
       } else if (cardInHand.cardType === "ace") {
         if (cardInHandSlotType === "hand") {
           acesDeck.element.classList.add("dropzone");
+          for (let i = 0; i < this.numberCardGrid.length; i++) {
+            this.numberCardGrid[i].element.classList.add("dropzone");
+          }
+        } else if (cardInHandSlotType === "aceDeck") {
+          for (let i = 0; i < this.numberCardGrid.length; i++) {
+            this.numberCardGrid[i].element.classList.add("dropzone");
+          }
         }
       } else if (cardInHand.cardType === "joker") {
         if (cardInHandSlotType === "hand") {
@@ -663,6 +721,7 @@ function onReady() {
   gameManager.generateRoyalCardGrid();
 
   // addAllRoyalsToHand();
+  //addAllAcesToHand();
 
   interact(".draggable").draggable({
     listeners: {
@@ -684,6 +743,11 @@ function onReady() {
         if (event.target.parentNode.getAttribute("data-slot-type") === "hand") {
           cardInHand = hand.cards[0];
           cardInHandSlotType = "hand";
+        } else if (
+          event.target.parentNode.getAttribute("data-slot-type") === "aceDeck"
+        ) {
+          cardInHand = acesDeck.cards[0];
+          cardInHandSlotType = "aceDeck";
         }
         gameManager.findValidMoves();
         /*Find Valid Moves
@@ -695,7 +759,7 @@ function onReady() {
         } 
         if cardTye ==== "number"
         {
-          find all equal to or below card value
+          find all equal to or below card value & empty slots
           if no matches are found, find smallest Royal and add to armour.
         } 
         if cardTye ==== "ace"
@@ -759,6 +823,7 @@ function onReady() {
         "data-slot-type"
       );
 
+
       if (dropSlotType === "royal") {
         if (dropItemParentSlotType === "hand") {
           if (royalCardGrid[dropSlotGridIndex].cards.length === 0) {
@@ -776,11 +841,24 @@ function onReady() {
       } else if (dropSlotType === "numbered") {
         if (dropItemParentSlotType === "hand") {
           //Add card to slot
-          gameManager.numberCardGrid[dropSlotGridIndex].addCardToSlot(
-            hand.cards.shift()
-          );
+          if (hand.cards[0].cardType === "ace") {
+            discardDeck.addCardToSlot(hand.cards.shift());
+            hand.updateCardVisuals();
+            gameManager.numberCardGrid[
+              dropSlotGridIndex
+            ].shuffleCardsIntoDeck();
+          } else if (hand.cards[0].cardType === "joker") {
+          } else {
+            gameManager.numberCardGrid[dropSlotGridIndex].addCardToSlot(
+              hand.cards.shift()
+            );
+          }
+        } else if (dropItemParentSlotType === "aceDeck") {
+          discardDeck.addCardToSlot(acesDeck.cards.shift());
+          acesDeck.updateCardVisuals();
+          gameManager.numberCardGrid[dropSlotGridIndex].shuffleCardsIntoDeck();
         }
-      } else if (dropSlotType === "aces") {
+      } else if (dropSlotType === "aceDeck") {
         if (dropItemParentSlotType === "hand") {
           acesDeck.cards.unshift(hand.cards.shift());
           acesDeck.updateCardVisuals();
@@ -816,6 +894,14 @@ function addAllRoyalsToHand() {
   for (let i = 0; i < deck.cards.length; i++) {
     if (deck.cards[i].cardType === "royal") {
       hand.cards.unshift(deck.cards[i]);
+    }
+  }
+}
+
+function addAllAcesToHand() {
+  for (let i = 0; i < deck.cards.length; i++) {
+    if (deck.cards[i].cardType === "ace") {
+      hand.addCardToSlot(deck.cards[i]);
     }
   }
 }
