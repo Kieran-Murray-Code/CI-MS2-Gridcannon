@@ -43,10 +43,6 @@ class gridSlot {
 
 class royalCardGridSlot extends gridSlot {
   applyDamage(damage) {
-    console.log(
-      "Health =  " + (this.cards[0].cardValue + this.cards[0].armour)
-    );
-    console.log("Damage = " + damage);
     if (damage >= this.cards[0].cardValue + this.cards[0].armour) {
       this.element.classList.add("deactivate");
       this.cards[0].isDefeated = true;
@@ -78,14 +74,12 @@ class numberedCardGridSlot extends gridSlot {
     let horizontalRoyalIndex;
     let horizontalDamage = 0;
 
-    console.log(this.oppositeRoyalCardGridSlots);
     if (this.oppositeRoyalCardGridSlots[0]) {
       horizontalRoyalIndex = this.oppositeRoyalCardGridSlots[0];
       if (royalCardGrid[horizontalRoyalIndex]) {
         horizontalRoyalGridSlot = royalCardGrid[horizontalRoyalIndex];
         if (royalCardGrid[horizontalRoyalIndex].cards.length > 0) {
           horizontalRoyalCard = royalCardGrid[horizontalRoyalIndex].cards[0];
-          console.log(horizontalRoyalCard);
         }
       }
     }
@@ -184,8 +178,6 @@ class numberedCardGridSlot extends gridSlot {
     } else {}
 
     if (horizontalRoyalCard) {
-      console.log(horizontalAttackCards[0].suit);
-      console.log(horizontalAttackCards[1].suit);
       if (horizontalAttackCards[0] && horizontalAttackCards[1]) {
         if (horizontalRoyalCard.royalType === "jack") {
           horizontalRoyalGridSlot.applyDamage(horizontalDamage);
@@ -331,6 +323,7 @@ const gameManager = {
 
   findValidMoves: function () {
     if (cardInHand) {
+      console.log(cardInHand.cardType);
       if (cardInHand.cardType === "royal") {
         let highestValueMatchingSlot = new numberedCardGridSlot();
         for (let i = 0; i < this.numberCardGrid.length; i++) {
@@ -581,6 +574,9 @@ const gameManager = {
         if (cardInHandSlotType === "hand") {
           jokerDeck.element.classList.add("dropzone");
         }
+        for (let i = 0; i < this.numberCardGrid.length; i++) {
+          this.numberCardGrid[i].element.classList.add("dropzone");
+        }
       }
     }
   },
@@ -758,6 +754,16 @@ function onReady() {
           cardInHand = acesDeck.cards[0];
           cardInHandSlotType = "aceDeck";
         }
+        else if(event.target.parentNode.getAttribute("data-slot-type") === "jokerDeck"
+        ) {
+          cardInHand = jokerDeck.cards[0];
+          cardInHandSlotType = "jokerDeck";
+        }
+        else if(event.target.parentNode.getAttribute("data-slot-type") === "numbered"
+        ) {
+          cardInHand = gameManager.numberCardGrid[event.target.parentNode.getAttribute("data-grid-index")].cards[0];
+          cardInHandSlotType = "numbered";
+        }
         gameManager.findValidMoves();
         /*Find Valid Moves
         if cardTye ==== "royal"
@@ -864,6 +870,18 @@ function onReady() {
           discardDeck.addCardToSlot(acesDeck.cards.shift());
           acesDeck.updateCardVisuals();
           gameManager.numberCardGrid[dropSlotGridIndex].shuffleCardsIntoDeck();
+        }
+        else if (dropItemParentSlotType === "jokerDeck") {
+          discardDeck.addCardToSlot(jokerDeck.cards.shift());
+          jokerDeck.updateCardVisuals();
+          //Make top card element of grid slot draggable
+          gameManager.numberCardGrid[dropSlotGridIndex].topCardElement.classList.add("draggable");
+        }else if (dropItemParentSlotType === "numbered") {
+          gameManager.numberCardGrid[dropSlotGridIndex].addCardToSlot(
+            gameManager.numberCardGrid[dropItemParentSlotIndex].cards.shift()
+          );
+          gameManager.numberCardGrid[dropItemParentSlotIndex].updateCardVisuals();
+          gameManager.numberCardGrid[dropItemParentSlotIndex].topCardElement.classList.remove("draggable");
         }
       } else if (dropSlotType === "aceDeck") {
         if (dropItemParentSlotType === "hand") {
