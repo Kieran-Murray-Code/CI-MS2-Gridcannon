@@ -43,20 +43,23 @@ class gridSlot {
 
 class royalCardGridSlot extends gridSlot {
   applyDamage(damage) {
+    console.log(
+      "Health =  " + (this.cards[0].cardValue + this.cards[0].armour)
+    );
+    console.log("Damage = " + damage);
     if (damage >= this.cards[0].cardValue + this.cards[0].armour) {
-      this.element.classList.add("hide-element");
-      this.isDefeated = true;
-    } else {
-    }
+      this.element.classList.add("deactivate");
+      this.cards[0].isDefeated = true;
+    } else {}
   }
 }
 class numberedCardGridSlot extends gridSlot {
   constructor() {
     super();
     (this.oppositeRoyalCardGridSlots = []),
-      (this.adjacentRoyalGridSlots = []),
-      (this.verticalAttackSlots = []),
-      (this.horizontalAttackSlots = []);
+    (this.adjacentRoyalGridSlots = []),
+    (this.verticalAttackSlots = []),
+    (this.horizontalAttackSlots = []);
   }
   addCardToSlot(cardToAdd) {
     this.cards.unshift(cardToAdd);
@@ -75,12 +78,14 @@ class numberedCardGridSlot extends gridSlot {
     let horizontalRoyalIndex;
     let horizontalDamage = 0;
 
+    console.log(this.oppositeRoyalCardGridSlots);
     if (this.oppositeRoyalCardGridSlots[0]) {
       horizontalRoyalIndex = this.oppositeRoyalCardGridSlots[0];
       if (royalCardGrid[horizontalRoyalIndex]) {
         horizontalRoyalGridSlot = royalCardGrid[horizontalRoyalIndex];
         if (royalCardGrid[horizontalRoyalIndex].cards.length > 0) {
           horizontalRoyalCard = royalCardGrid[horizontalRoyalIndex].cards[0];
+          console.log(horizontalRoyalCard);
         }
       }
     }
@@ -109,14 +114,14 @@ class numberedCardGridSlot extends gridSlot {
       ) {
         verticalDamage_01 =
           gameManager.numberCardGrid[this.verticalAttackSlots[0]].cards[0]
-            .cardValue;
+          .cardValue;
       }
       if (
         gameManager.numberCardGrid[this.verticalAttackSlots[1]].cards.length > 0
       ) {
         verticalDamage_02 =
           gameManager.numberCardGrid[this.verticalAttackSlots[1]].cards[0]
-            .cardValue;
+          .cardValue;
       }
 
       verticalDamage = verticalDamage_01 + verticalDamage_02;
@@ -132,15 +137,21 @@ class numberedCardGridSlot extends gridSlot {
       let horizontalDamage_01 = 0;
       let horizontalDamage_02 = 0;
 
-      if (gameManager.numberCardGrid[this.horizontalAttackSlots[0]].cards > 0) {
+      if (
+        gameManager.numberCardGrid[this.horizontalAttackSlots[0]].cards.length >
+        0
+      ) {
         horizontalDamage_01 =
           gameManager.numberCardGrid[this.horizontalAttackSlots[0]].cards[0]
-            .cardValue;
+          .cardValue;
       }
-      if (gameManager.numberCardGrid[this.horizontalAttackSlots[1]].cards > 0) {
+      if (
+        gameManager.numberCardGrid[this.horizontalAttackSlots[1]].cards.length >
+        0
+      ) {
         horizontalDamage_02 =
           gameManager.numberCardGrid[this.horizontalAttackSlots[1]].cards[0]
-            .cardValue;
+          .cardValue;
       }
       horizontalDamage = horizontalDamage_01 + horizontalDamage_02;
     }
@@ -156,27 +167,25 @@ class numberedCardGridSlot extends gridSlot {
         } else if (verticalRoyalCard.royalType === "queen") {
           if (
             verticalRoyalCard.cardColour ===
-              verticalAttackCards[0].cardColour &&
+            verticalAttackCards[0].cardColour &&
             verticalRoyalCard.cardColour === verticalAttackCards[1].cardColour
           ) {
             verticalRoyalGridSlot.applyDamage(verticalDamage);
-          } else {
-          }
+          } else {}
         } else {
           if (
             verticalRoyalCard.suit === verticalAttackCards[0].suit &&
             verticalRoyalCard.suit === verticalAttackCards[1].suit
           ) {
             verticalRoyalGridSlot.applyDamage(verticalDamage);
-          } else {
-          }
+          } else {}
         }
-      } else {
-      }
-    } else {
-    }
+      } else {}
+    } else {}
 
     if (horizontalRoyalCard) {
+      console.log(horizontalAttackCards[0].suit);
+      console.log(horizontalAttackCards[1].suit);
       if (horizontalAttackCards[0] && horizontalAttackCards[1]) {
         if (horizontalRoyalCard.royalType === "jack") {
           horizontalRoyalGridSlot.applyDamage(horizontalDamage);
@@ -184,9 +193,9 @@ class numberedCardGridSlot extends gridSlot {
           if (horizontalAttackCards[0] && horizontalAttackCards[1]) {
             if (
               horizontalRoyalCard.cardColour ===
-                horizontalAttackCards[0].cardColour &&
+              horizontalAttackCards[0].cardColour &&
               horizontalRoyalCard.cardColour ===
-                horizontalAttackCards[1].cardColour
+              horizontalAttackCards[1].cardColour
             ) {
               horizontalRoyalGridSlot.applyDamage(horizontalDamage);
             }
@@ -197,13 +206,10 @@ class numberedCardGridSlot extends gridSlot {
             horizontalRoyalCard.suit === horizontalAttackCards[1].suit
           ) {
             horizontalRoyalGridSlot.applyDamage(horizontalDamage);
-          } else {
           }
         }
-      } else {
-      }
-    } else {
-    }
+      } else {}
+    } else {}
   }
 }
 
@@ -263,7 +269,7 @@ const gameManager = {
     this.numberCardGrid[1].adjacentRoyalGridSlots = [10];
     this.numberCardGrid[1].verticalAttackSlots = [4, 7];
 
-    this.numberCardGrid[2].oppositeRoyalCardGridSlots = [0, 8];
+    this.numberCardGrid[2].oppositeRoyalCardGridSlots = [8, 0];
     this.numberCardGrid[2].adjacentRoyalGridSlots = [7, 9];
     this.numberCardGrid[2].verticalAttackSlots = [5, 8];
     this.numberCardGrid[2].horizontalAttackSlots = [0, 1];
@@ -335,13 +341,11 @@ const gameManager = {
           let royalSlotAvailable = false;
 
           for (
-            let j = 0;
-            j < this.numberCardGrid[i].adjacentRoyalGridSlots.length;
-            j++
+            let j = 0; j < this.numberCardGrid[i].adjacentRoyalGridSlots.length; j++
           ) {
             if (
               royalCardGrid[this.numberCardGrid[i].adjacentRoyalGridSlots[j]]
-                .cards.length === 0
+              .cards.length === 0
             ) {
               royalSlotAvailable = true;
             }
@@ -369,9 +373,15 @@ const gameManager = {
             }
           } else {
             let emptySlot = this.numberCardGrid[i];
-            for(let j = 0; j < emptySlot.adjacentRoyalGridSlots.length; j++)
-            {
-              royalCardGrid[emptySlot.adjacentRoyalGridSlots[j]].element.classList.add("dropzone");
+            for (let j = 0; j < emptySlot.adjacentRoyalGridSlots.length; j++) {
+              if (
+                royalCardGrid[emptySlot.adjacentRoyalGridSlots[j]].cards
+                .length === 0
+              ) {
+                royalCardGrid[
+                  emptySlot.adjacentRoyalGridSlots[j]
+                ].element.classList.add("dropzone");
+              }
             }
             continue;
           }
@@ -385,13 +395,11 @@ const gameManager = {
             let royalSlotAvailable = false;
 
             for (
-              let j = 0;
-              j < this.numberCardGrid[i].adjacentRoyalGridSlots.length;
-              j++
+              let j = 0; j < this.numberCardGrid[i].adjacentRoyalGridSlots.length; j++
             ) {
               if (
                 royalCardGrid[this.numberCardGrid[i].adjacentRoyalGridSlots[j]]
-                  .cards.length === 0
+                .cards.length === 0
               ) {
                 royalSlotAvailable = true;
               }
@@ -433,13 +441,11 @@ const gameManager = {
             let royalSlotAvailable = false;
 
             for (
-              let j = 0;
-              j < this.numberCardGrid[i].adjacentRoyalGridSlots.length;
-              j++
+              let j = 0; j < this.numberCardGrid[i].adjacentRoyalGridSlots.length; j++
             ) {
               if (
                 royalCardGrid[this.numberCardGrid[i].adjacentRoyalGridSlots[j]]
-                  .cards.length === 0
+                .cards.length === 0
               ) {
                 royalSlotAvailable = true;
               }
@@ -466,13 +472,17 @@ const gameManager = {
         }
 
         for (
-          let i = 0;
-          i < highestValueMatchingSlot.adjacentRoyalGridSlots.length;
-          i++
+          let i = 0; i < highestValueMatchingSlot.adjacentRoyalGridSlots.length; i++
         ) {
-          royalCardGrid[
-            highestValueMatchingSlot.adjacentRoyalGridSlots[i]
-          ].element.classList.add("dropzone");
+          if (
+            royalCardGrid[
+              highestValueMatchingSlot.adjacentRoyalGridSlots[i]
+            ].cards.length === 0
+          ) {
+            royalCardGrid[
+              highestValueMatchingSlot.adjacentRoyalGridSlots[i]
+            ].element.classList.add("dropzone");
+          }
         }
       } else if (cardInHand.cardType === "numbered") {
         let matchFound = false;
@@ -518,7 +528,7 @@ const gameManager = {
               if (royalCardGrid[i].cards != 0) {
                 if (
                   royalCardGrid[i].cards[0].cardColour ===
-                    cardInHand.cardColour &&
+                  cardInHand.cardColour &&
                   royalCardGrid[i].cards[0].isDefeated === false
                 ) {
                   if (lowestMatchingRoyalSlot) {
@@ -539,7 +549,7 @@ const gameManager = {
           if (!lowestMatchingRoyalSlot) {
             for (let i = 0; i < royalCardGrid.length; i++) {
               if (royalCardGrid[i].cards != 0) {
-                if (royalCardGrid[i].cards.isDefeated === false) {
+                if (royalCardGrid[i].cards[0].isDefeated === false) {
                   if (lowestMatchingRoyalSlot) {
                     if (
                       royalCardGrid[i].cards[0].cardValue <
@@ -596,8 +606,7 @@ let deck = {
   drawCard: function () {
     if (this.cards.length > 0) {
       return this.cards.pop();
-    } else {
-    }
+    } else {}
   },
   initialise: function () {
     let card;
@@ -823,7 +832,6 @@ function onReady() {
         "data-slot-type"
       );
 
-
       if (dropSlotType === "royal") {
         if (dropItemParentSlotType === "hand") {
           if (royalCardGrid[dropSlotGridIndex].cards.length === 0) {
@@ -847,8 +855,7 @@ function onReady() {
             gameManager.numberCardGrid[
               dropSlotGridIndex
             ].shuffleCardsIntoDeck();
-          } else if (hand.cards[0].cardType === "joker") {
-          } else {
+          } else if (hand.cards[0].cardType === "joker") {} else {
             gameManager.numberCardGrid[dropSlotGridIndex].addCardToSlot(
               hand.cards.shift()
             );
