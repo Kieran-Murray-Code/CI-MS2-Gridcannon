@@ -252,7 +252,7 @@ const gameManager = {
       ].element.getElementsByClassName("card")[0];
     }
 
-    this.numberCardGrid[0].oppositeRoyalCardGridSlots = [2, 7];
+    this.numberCardGrid[0].oppositeRoyalCardGridSlots = [7, 2];
     this.numberCardGrid[0].adjacentRoyalGridSlots = [11, 8];
     this.numberCardGrid[0].verticalAttackSlots = [3, 6];
     this.numberCardGrid[0].horizontalAttackSlots = [1, 2];
@@ -323,7 +323,6 @@ const gameManager = {
 
   findValidMoves: function () {
     if (cardInHand) {
-      console.log(cardInHand.cardType);
       if (cardInHand.cardType === "royal") {
         let highestValueMatchingSlot = new numberedCardGridSlot();
         for (let i = 0; i < this.numberCardGrid.length; i++) {
@@ -468,9 +467,8 @@ const gameManager = {
           let i = 0; i < highestValueMatchingSlot.adjacentRoyalGridSlots.length; i++
         ) {
           if (
-            royalCardGrid[
-              highestValueMatchingSlot.adjacentRoyalGridSlots[i]
-            ].cards.length === 0
+            royalCardGrid[highestValueMatchingSlot.adjacentRoyalGridSlots[i]]
+            .cards.length === 0
           ) {
             royalCardGrid[
               highestValueMatchingSlot.adjacentRoyalGridSlots[i]
@@ -727,6 +725,7 @@ function onReady() {
 
   // addAllRoyalsToHand();
   //addAllAcesToHand();
+  addAllJokersToHand();
 
   interact(".draggable").draggable({
     listeners: {
@@ -753,15 +752,18 @@ function onReady() {
         ) {
           cardInHand = acesDeck.cards[0];
           cardInHandSlotType = "aceDeck";
-        }
-        else if(event.target.parentNode.getAttribute("data-slot-type") === "jokerDeck"
+        } else if (
+          event.target.parentNode.getAttribute("data-slot-type") === "jokerDeck"
         ) {
           cardInHand = jokerDeck.cards[0];
           cardInHandSlotType = "jokerDeck";
-        }
-        else if(event.target.parentNode.getAttribute("data-slot-type") === "numbered"
+        } else if (
+          event.target.parentNode.getAttribute("data-slot-type") === "numbered"
         ) {
-          cardInHand = gameManager.numberCardGrid[event.target.parentNode.getAttribute("data-grid-index")].cards[0];
+          cardInHand =
+            gameManager.numberCardGrid[
+              event.target.parentNode.getAttribute("data-grid-index")
+            ].cards[0];
           cardInHandSlotType = "numbered";
         }
         gameManager.findValidMoves();
@@ -861,7 +863,13 @@ function onReady() {
             gameManager.numberCardGrid[
               dropSlotGridIndex
             ].shuffleCardsIntoDeck();
-          } else if (hand.cards[0].cardType === "joker") {} else {
+          } else if (hand.cards[0].cardType === "joker") {
+            discardDeck.addCardToSlot(hand.cards.shift());
+            hand.updateCardVisuals();
+            gameManager.numberCardGrid[
+              dropSlotGridIndex
+            ].topCardElement.classList.add("draggable");
+          } else {
             gameManager.numberCardGrid[dropSlotGridIndex].addCardToSlot(
               hand.cards.shift()
             );
@@ -870,18 +878,22 @@ function onReady() {
           discardDeck.addCardToSlot(acesDeck.cards.shift());
           acesDeck.updateCardVisuals();
           gameManager.numberCardGrid[dropSlotGridIndex].shuffleCardsIntoDeck();
-        }
-        else if (dropItemParentSlotType === "jokerDeck") {
+        } else if (dropItemParentSlotType === "jokerDeck") {
           discardDeck.addCardToSlot(jokerDeck.cards.shift());
           jokerDeck.updateCardVisuals();
-          //Make top card element of grid slot draggable
-          gameManager.numberCardGrid[dropSlotGridIndex].topCardElement.classList.add("draggable");
-        }else if (dropItemParentSlotType === "numbered") {
+          gameManager.numberCardGrid[
+            dropSlotGridIndex
+          ].topCardElement.classList.add("draggable");
+        } else if (dropItemParentSlotType === "numbered") {
           gameManager.numberCardGrid[dropSlotGridIndex].addCardToSlot(
             gameManager.numberCardGrid[dropItemParentSlotIndex].cards.shift()
           );
-          gameManager.numberCardGrid[dropItemParentSlotIndex].updateCardVisuals();
-          gameManager.numberCardGrid[dropItemParentSlotIndex].topCardElement.classList.remove("draggable");
+          gameManager.numberCardGrid[
+            dropItemParentSlotIndex
+          ].updateCardVisuals();
+          gameManager.numberCardGrid[
+            dropItemParentSlotIndex
+          ].topCardElement.classList.remove("draggable");
         }
       } else if (dropSlotType === "aceDeck") {
         if (dropItemParentSlotType === "hand") {
@@ -889,7 +901,8 @@ function onReady() {
           acesDeck.updateCardVisuals();
           hand.updateCardVisuals();
         }
-      } else if (dropSlotType === "jokers") {
+      } else if (dropSlotType === "jokerDeck") {
+        console.log("Dropping into Jokers Deck");
         if (dropItemParentSlotType === "hand") {
           jokerDeck.cards.unshift(hand.cards.shift());
           jokerDeck.updateCardVisuals();
@@ -926,6 +939,14 @@ function addAllRoyalsToHand() {
 function addAllAcesToHand() {
   for (let i = 0; i < deck.cards.length; i++) {
     if (deck.cards[i].cardType === "ace") {
+      hand.addCardToSlot(deck.cards[i]);
+    }
+  }
+}
+
+function addAllJokersToHand() {
+  for (let i = 0; i < deck.cards.length; i++) {
+    if (deck.cards[i].cardType === "joker") {
       hand.addCardToSlot(deck.cards[i]);
     }
   }
