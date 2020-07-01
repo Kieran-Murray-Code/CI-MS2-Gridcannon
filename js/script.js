@@ -74,7 +74,7 @@ class numberedCardGridSlot extends gridSlot {
     let horizontalRoyalIndex;
     let horizontalDamage = 0;
 
-    if (this.oppositeRoyalCardGridSlots[0]) {
+    if (this.oppositeRoyalCardGridSlots[0] != null) {
       horizontalRoyalIndex = this.oppositeRoyalCardGridSlots[0];
       if (royalCardGrid[horizontalRoyalIndex]) {
         horizontalRoyalGridSlot = royalCardGrid[horizontalRoyalIndex];
@@ -83,7 +83,7 @@ class numberedCardGridSlot extends gridSlot {
         }
       }
     }
-    if (this.oppositeRoyalCardGridSlots[1]) {
+    if (this.oppositeRoyalCardGridSlots[1] != null) {
       verticalRoyalIndex = this.oppositeRoyalCardGridSlots[1];
       if (royalCardGrid[verticalRoyalIndex]) {
         verticalRoyalGridSlot = royalCardGrid[verticalRoyalIndex];
@@ -723,9 +723,9 @@ function onReady() {
   gameManager.populateNumberedCardGrid();
   gameManager.generateRoyalCardGrid();
 
-  // addAllRoyalsToHand();
+   addAllRoyalsToHand();
   //addAllAcesToHand();
-  addAllJokersToHand();
+  //addAllJokersToHand();
 
   interact(".draggable").draggable({
     listeners: {
@@ -766,6 +766,7 @@ function onReady() {
             ].cards[0];
           cardInHandSlotType = "numbered";
         }
+
         gameManager.findValidMoves();
         /*Find Valid Moves
         if cardTye ==== "royal"
@@ -902,7 +903,6 @@ function onReady() {
           hand.updateCardVisuals();
         }
       } else if (dropSlotType === "jokerDeck") {
-        console.log("Dropping into Jokers Deck");
         if (dropItemParentSlotType === "hand") {
           jokerDeck.cards.unshift(hand.cards.shift());
           jokerDeck.updateCardVisuals();
@@ -928,12 +928,18 @@ function onReady() {
   });
 }
 
+function returnAllRoyalCards(card){
+  return card.cardType === "royal";
+}
+
+function returnAllNonRoyalCards(card){
+  return card.cardType != "royal";
+}
 function addAllRoyalsToHand() {
-  for (let i = 0; i < deck.cards.length; i++) {
-    if (deck.cards[i].cardType === "royal") {
-      hand.cards.unshift(deck.cards[i]);
-    }
-  }
+
+    let royalCards = deck.cards.filter(returnAllRoyalCards);
+    deck.cards = deck.cards.filter(returnAllNonRoyalCards);
+    hand.cards = hand.cards.concat(royalCards);
 }
 
 function addAllAcesToHand() {
