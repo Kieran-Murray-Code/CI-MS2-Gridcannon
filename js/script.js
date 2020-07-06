@@ -12,12 +12,93 @@ class gridSlot {
   updateCardVisuals() {
     if (this.cards.length > 0) {
       this.topCardElement.classList.remove("hide-element");
-      this.topCardElement
-        .getElementsByTagName("svg")[0]
-        .getElementsByTagName(
-          "text"
-        )[0].textContent = `${this.cards[0].cardValue} of ${this.cards[0].suit}`;
+      let cardValueText = this.topCardElement
+      .getElementsByClassName("card-value")[0];
 
+
+      if(this.cards[0].cardValue === 0)
+      {
+        cardValueText.textContent = "JO"
+      }
+      if(this.cards[0].cardValue === 1)
+      {
+        cardValueText.textContent = "A"
+      }
+      else if(this.cards[0].cardValue === 11)
+      {
+        cardValueText.textContent = "J"
+      }
+      else if(this.cards[0].cardValue === 12)
+      {
+        cardValueText.textContent = "Q"
+      }
+      else if(this.cards[0].cardValue === 13)
+      {
+        cardValueText.textContent = "K"
+      }
+      else
+      {
+        cardValueText.textContent = this.cards[0].cardValue;
+      }
+
+
+      let suitIcon = this.topCardElement.getElementsByClassName("suit-icon")[0];
+      let slotLabel = this.topCardElement
+      .getElementsByClassName(
+        "slot-label"
+      )[0];
+      //suitIcon.setAttribute("class", "")
+      //suitIcon.classList.add("suit-icon");
+
+      suitIcon.classList.remove("club");
+      suitIcon.classList.remove("spade");
+      suitIcon.classList.remove("heart");
+      suitIcon.classList.remove("diamond");
+      suitIcon.classList.remove("red");
+      suitIcon.classList.remove("black");
+
+      slotLabel.classList.remove("red");
+      slotLabel.classList.remove("black");
+
+      this.topCardElement.classList.remove("black");
+      this.topCardElement.classList.remove("red");
+
+      if(this.cards[0].suit === "clubs")
+      {
+        suitIcon.classList.add("club");
+        this.topCardElement.classList.add("red");
+        slotLabel.classList.add("red");
+      }
+      else if (this.cards[0].suit === "spades")
+      {
+        suitIcon.classList.add("spade");
+        this.topCardElement.classList.add("red");
+        this.topCardElement
+        slotLabel.classList.add("red");
+      }
+      else if (this.cards[0].suit === "hearts")
+      {
+        suitIcon.classList.add("heart");
+        this.topCardElement.classList.add("black");
+        this.topCardElement
+        slotLabel.classList.add("black");
+      }
+      else if (this.cards[0].suit === "diamonds")
+      {
+        suitIcon.classList.add("diamond");
+        this.topCardElement.classList.add("black");
+        this.topCardElement
+        slotLabel.classList.add("black");
+      }
+      else if (this.cards[0].suit === "joker")
+      {
+        suitIcon.classList.add("diamond");
+        this.topCardElement.classList.add("black");
+        this.topCardElement
+        slotLabel.classList.add("black");
+      }
+      
+      
       if (this.cards[0].cardValue > 10) {
         let armorLabel = this.topCardElement.getElementsByClassName(
           "armor-label"
@@ -25,7 +106,7 @@ class gridSlot {
         if (armorLabel[0]) {
           armorLabel[0].getElementsByTagName(
             "text"
-          )[0].textContent = `Armour =  ${this.cards[0].armour}`;
+          )[0].textContent = `${this.cards[0].armour}`;
         }
       }
     } else {
@@ -323,6 +404,7 @@ const gameManager = {
 
   findValidMoves: function () {
     if (cardInHand) {
+      console.log(cardInHand);
       if (cardInHand.cardType === "royal") {
         let highestValueMatchingSlot = new numberedCardGridSlot();
         for (let i = 0; i < this.numberCardGrid.length; i++) {
@@ -723,14 +805,14 @@ function onReady() {
   gameManager.populateNumberedCardGrid();
   gameManager.generateRoyalCardGrid();
 
-   addAllRoyalsToHand();
+   //addAllRoyalsToHand();
   //addAllAcesToHand();
   //addAllJokersToHand();
 
   interact(".draggable").draggable({
     listeners: {
       start(event) {
-        event.target.style.transform = "translate(" + -50 + "%, " + -50 + "%)";
+        // event.target.style.transform = "translate(" + -50 + "%, " + -50 + "%)";
       },
       move(event) {
         event.target.style.transform.position.x += event.dx;
@@ -918,7 +1000,7 @@ function onReady() {
     },
     ondropdeactivate: function (event) {
       event.relatedTarget.style.transform =
-        "translate(" + -50 + "%, " + -50 + "%)";
+         "translate(0,0)";
 
       event.relatedTarget.setAttribute("data-x", 0);
       event.relatedTarget.setAttribute("data-y", 0);
