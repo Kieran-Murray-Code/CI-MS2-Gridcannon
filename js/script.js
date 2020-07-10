@@ -805,7 +805,7 @@ function onReady() {
   gameManager.populateNumberedCardGrid();
   gameManager.generateRoyalCardGrid();
 
-   //addAllRoyalsToHand();
+   addAllRoyalsToHand();
   //addAllAcesToHand();
   //addAllJokersToHand();
 
@@ -825,7 +825,7 @@ function onReady() {
   interact(".draggable").draggable({
     listeners: {
       start(event) {
-        event.target.style.zIndex = 1;
+        event.target.style.zIndex = 10;
         if (event.target.parentNode.getAttribute("data-slot-type") === "hand") {
           cardInHand = hand.cards[0];
           cardInHandSlotType = "hand";

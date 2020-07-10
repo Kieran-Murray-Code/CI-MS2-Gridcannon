@@ -1,15 +1,25 @@
+:root {
+    --color-gameboard-primary: rgb(208, 231, 225);
+    --color-gameboard-secondary : rgb(187, 217, 217);
+    --color-card-blue-primary : rgb(114, 202, 242);
+    --color-card-blue-secondary : rgb(117, 165, 198);
+    --color-card-red-primary : rgb(240, 104, 127);
+    --color-card-red-secondary : rgb(211, 78, 128);
+}
+
 body {
     overflow: hidden; /* Hide scrollbars */
-    background-color: lightgray;
+    background-color: white;
   }
 .card-slot-numbered , .card-slot-royal, .deck-slot{
     padding-top: 100%;
 	width: 100%;
-    background-color: white;
-    border-radius: 5px;
-    border: solid 2px black;
+    background-color: var(--color-gameboard-secondary);
+    border-radius: 20%;
+    /* border: solid 2px black; */
     touch-action: none;
     user-select: none;
+    /* z-index: 1; */
 }
 
 /* .card-slot-royal{
@@ -20,10 +30,27 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    padding-top: 95%;
+    padding-top: 88%;
     width: 100%;
-    border-radius: 10px;
+    border-radius: 20%;
     /* transform: translate(-50%, -50%); */
+}
+
+.card-and-slot-highlight{
+    background-color: rgba(81, 255, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-top: 100%;
+    width: 100%;
+    border-radius: 20%;
+    z-index: -1;
+    opacity: 0;
+}
+
+.drop-active .card-and-slot-highlight{
+    z-index: 2;
+    opacity: 1;
 }
 
 .card-and-slot-highlight hide-element{
@@ -33,25 +60,28 @@ body {
     padding-top: 100%;
     width: 100%;
     background-color: rgba(255, 255, 255, 0.3);
-    border: solid 2px rgba(255, 255, 255, 0.3);
-    border-radius: 5px;
+    /* border: solid 2px rgba(255, 255, 255, 0.3); */
+    /* border-radius: 5px; */
 }
 
 .card.red, .card-royal.red{
-    background-color: red;
-    border: solid 5px black;
+    background-color: var(--color-card-blue-primary);
+    border: .05vh solid var(--color-card-blue-secondary);
+    border-bottom-width: 1vh;
+    
 }
 
 .card.black, .card-royal.black{
-    background-color: black;
-    border: solid 5px red;
+    background-color: var(--color-card-red-primary);
+    border: .05vh solid var(--color-card-red-secondary);
+    border-bottom-width: 1vh;;
 }
 
-.deck-slot{
+/* .deck-slot{
     position: relative;
     background-color: white;
     text-align: center;
-}
+} */
 
 .blank-tile{
     padding-top: 100%;
@@ -63,21 +93,20 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     text-transform: uppercase;
     font-weight: 1000;
 }
 
-.armor-label{
-    font-size: .75rem;
-
-}
 
 .slot-label.red text{
-    fill: red;
+    fill: var(--color-card-blue-secondary);
+    fill: white;
 }
 .slot-label.black text{
-    fill: black;
+    fill: var(--color-card-red-secondary);
+    fill: white;
+    
 }
 
 .suit-icon{
@@ -87,27 +116,52 @@ body {
 }
 
 .suit-icon.club path{
-    d: path("M12-.001l11 6v12l-11 6-11-6v-12l11-6z");
-    fill: black;
+    d: path("M24.588 12.274c-1.845 0-3.503 0.769-4.683 2.022-0.5 0.531-1.368 1.16-2.306 1.713 0.441-1.683 1.834-3.803 2.801-4.733 1.239-1.193 2-2.87 2-4.734 0-3.59-2.859-6.503-6.4-6.541-3.541 0.038-6.4 2.951-6.4 6.541 0 1.865 0.761 3.542 2 4.734 0.967 0.93 2.36 3.050 2.801 4.733-0.939-0.553-1.806-1.182-2.306-1.713-1.18-1.253-2.838-2.022-4.683-2.022-3.575 0-6.471 2.927-6.471 6.541s2.897 6.542 6.471 6.542c1.845 0 3.503-0.792 4.683-2.045 0.525-0.558 1.451-1.254 2.447-1.832-0.094 4.615-2.298 8.005-4.541 9.341v1.179h12v-1.179c-2.244-1.335-4.448-4.726-4.541-9.341 0.995 0.578 1.922 1.274 2.447 1.832 1.18 1.253 2.838 2.045 4.683 2.045 3.575 0 6.471-2.928 6.471-6.542s-2.897-6.541-6.471-6.541z");
+    fill: white;
 }
 
 .suit-icon.spade path{
-    d: path("M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z");
-    fill:black;
+    d: path("M25.549 10.88c-6.049-4.496-8.133-8.094-9.549-10.88v0c-0 0-0-0-0-0v0c-1.415 2.785-3.5 6.384-9.549 10.88-10.314 7.665-0.606 18.365 7.93 12.476-0.556 3.654-2.454 6.318-4.381 7.465v1.179h12.001v-1.179c-1.928-1.147-3.825-3.811-4.382-7.465 8.535 5.889 18.244-4.811 7.93-12.476z");
+    fill: white;
 }
 
 .suit-icon.heart path{
-    d: path("M12 4.248c-3.148-5.402-12-3.825-12 2.944 0 4.661 5.571 9.427 12 15.808 6.43-6.381 12-11.147 12-15.808 0-6.792-8.875-8.306-12-2.944z");
-    fill: red;
+    d: path("M23.6 2c-3.363 0-6.258 2.736-7.599 5.594-1.342-2.858-4.237-5.594-7.601-5.594-4.637 0-8.4 3.764-8.4 8.401 0 9.433 9.516 11.906 16.001 21.232 6.13-9.268 15.999-12.1 15.999-21.232 0-4.637-3.763-8.401-8.4-8.401z");
+    fill: white;
 }
 
+/* M30 0l-14 4-14-4c0 0-0.141 1.616 0 4l14 4.378 14-4.378c0.141-2.384 0-4 0-4zM2.256 6.097c0.75 7.834 3.547 21.007 13.744 25.903 10.197-4.896 12.995-18.069 13.744-25.903l-13.744 5.167-13.744-5.167z */
 .suit-icon.diamond path{
-    d: path("M12 .001l12 12-12 12-12-12 12-12z");
-    fill: red;
+    d: path("M16 0l-10 16 10 16 10-16z");
+    fill: white;
 }
+
+.armour-icon{
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(60%, 0%) scale(.9);
+
+}
+.armour-icon path{
+    d: path("M30 0l-14 4-14-4c0 0-0.141 1.616 0 4l14 4.378 14-4.378c0.141-2.384 0-4 0-4zM2.256 6.097c0.75 7.834 3.547 21.007 13.744 25.903 10.197-4.896 12.995-18.069 13.744-25.903l-13.744 5.167-13.744-5.167z");
+    fill: white;
+}
+
 
 .armor-label{
-    top: 1rem;
+    font-size: .8rem;
+    z-index: 1;
+}
+
+.black .armor-label text{
+    fill: var(--color-card-red-primary);
+    transform: translate(80%,23%);
+}
+
+.red .armor-label text{
+    fill: var(--color-card-blue-primary);
+    transform: translate(80%,23%);
 }
 
 
@@ -122,9 +176,42 @@ body {
 }
 
 .drop-active {
-    border-color: #aaa;
+    /* border-color: rgba(102, 255, 0, 0.801); */
   }
 
 .clone{
     opacity: 0.5;
+}
+
+
+/* THESE MUST BE CHANGED TO CUSTOM CLASSES */
+.col-2{
+    margin-right: 1%;
+    margin-bottom: 1%;
+}
+
+.offset-1 {
+    margin-left:6.333333%;
+}
+
+.offset-3 {
+    margin-left: 24%;
+}
+
+.gameboard{
+    background-color: var(--color-gameboard-primary);
+    border-radius: 5%;
+    padding-bottom: .5%;
+    padding-top: .5%;
+     margin-top : 10vh;
+    border: 1px solid var(--color-gameboard-secondary);
+    border-top-width: 20px;
+}
+
+.deck-area{
+    background-color: rgb(206, 231, 225);
+    position: absolute;
+    padding-top: 100%;
+	width: 100%;
+    z-index: 0;
 }
