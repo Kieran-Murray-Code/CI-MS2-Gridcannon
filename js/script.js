@@ -404,7 +404,6 @@ const gameManager = {
 
   findValidMoves: function () {
     if (cardInHand) {
-      console.log(cardInHand);
       if (cardInHand.cardType === "royal") {
         let highestValueMatchingSlot = new numberedCardGridSlot();
         for (let i = 0; i < this.numberCardGrid.length; i++) {
@@ -805,7 +804,7 @@ function onReady() {
   gameManager.populateNumberedCardGrid();
   gameManager.generateRoyalCardGrid();
 
-   addAllRoyalsToHand();
+  //  addAllRoyalsToHand();
   //addAllAcesToHand();
   //addAllJokersToHand();
 
@@ -850,28 +849,6 @@ function onReady() {
         }
 
         gameManager.findValidMoves();
-        /*Find Valid Moves
-        if cardTye ==== "royal"
-        {
-          find highest matching suit
-          else find hightest matching colour
-          else find highest matching value
-        } 
-        if cardTye ==== "number"
-        {
-          find all equal to or below card value & empty slots
-          if no matches are found, find smallest Royal and add to armour.
-        } 
-        if cardTye ==== "ace"
-        {
-          find all number slots
-        } 
-        if cardTye ==== "joker"
-        {
-          find the gameBoard
-        } 
-        
-        */
       },
 
       move: dragMoveListener,
@@ -908,8 +885,29 @@ function onReady() {
     ondragenter: function (event) {
       var draggableElement = event.relatedTarget;
       var dropzoneElement = event.target;
+      let dropSlotGridIndex = dropzoneElement.getAttribute(
+        "data-grid-index"
+      );
+      let dropSlotType = dropzoneElement.getAttribute("data-slot-type");
+
+      if(dropSlotType === "numbered"){
+        let slotRoyalIndexes = gameManager.numberCardGrid[dropSlotGridIndex].oppositeRoyalCardGridSlots;
+        for(let i = 0; i < slotRoyalIndexes.length ; i ++)
+        {
+          console.log(royalCardGrid[slotRoyalIndexes[i]]);
+          if(royalCardGrid[slotRoyalIndexes[i]] != null){
+            // royalCardGrid[slotRoyalIndexes[i]].element.classList.add("dropzone");
+          }
+          
+        }
+      }
+
     },
-    ondragleave: function (event) {},
+    ondragleave: function (event) {
+      var draggableElement = event.relatedTarget;
+      var dropzoneElement = event.target;
+      // dropzoneElement.style.opacity = 1;
+    },
     ondrop: function (event) {
       let dropSlotGridIndex = event.currentTarget.getAttribute(
         "data-grid-index"
