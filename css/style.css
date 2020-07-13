@@ -9,7 +9,11 @@
 
 body {
     overflow: hidden; /* Hide scrollbars */
-    background-color: white;
+    background-color: var(--color-card-blue-secondary);
+  }
+
+  .navbar{
+      background-color: var(--color-gameboard-primary);
   }
 .card-slot-numbered , .card-slot-royal, .deck-slot{
     padding-top: 100%;
@@ -225,3 +229,7 @@ body {
 	width: 100%;
     z-index: 0;
 }
+
+/* .draggable{
+    z-index: 2;
+} */
