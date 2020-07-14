@@ -1,6 +1,7 @@
 :root {
     --color-gameboard-primary: rgb(219, 219, 219);
     --color-gameboard-secondary : 	rgb(202, 202, 202);
+    --color-gameboard-tertiary : 	rgb(175, 174, 174);
     --color-card-blue-primary : rgb(172, 172, 172);
     --color-card-blue-secondary : 	rgb(144, 144, 144);
     --color-card-red-primary : rgb(240, 104, 127);
@@ -26,9 +27,9 @@ body {
     /* z-index: 1; */
 }
 
-/* .card-slot-royal{
-    background-color: red;
-} */
+.card-slot-royal{
+    background-color: var(--color-gameboard-tertiary) ;
+}
 
 .card-royal, .card{
     position: absolute;
@@ -37,13 +38,13 @@ body {
     padding-top: 88%;
     width: 100%;
     border-radius: 20%;
-    opacity: 0.5;
+    /* opacity: 0.5; */
     /* transform: translate(-50%, -50%); */
 }
 
-.card.draggable, .card-royal.draggable{
+/* .card.draggable, .card-royal.draggable{
     opacity: 1;
-}
+} */
 
 /* rgb(159, 242, 114, 0.5) */
 .slot-highlight, .card-highlight{
@@ -198,7 +199,7 @@ body {
 
 
 .hide-element{
-    opacity: 0;
+    visibility: hidden;
 }
 
 .deactivate{
@@ -220,11 +221,11 @@ body {
     margin-bottom: 1%;
 }
 
-.offset-1 {
+.mid-row-offset {
     margin-left:6.333333%;
 }
 
-.offset-3 {
+.outer-row-offset {
     margin-left: 24%;
 }
 
@@ -249,3 +250,17 @@ body {
 /* .draggable{
     z-index: 2;
 } */
+
+.play-button, .mull-button{
+    margin-top: 1vh;
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    display: block;
+    width: 100%;
+}
+
+.mull-button{
+    width: 50%;
+    float: left;
+}

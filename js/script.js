@@ -278,6 +278,12 @@ class deckGridSlot extends gridSlot{
   }
 
   drawCard () {
+    if(gameManager.state === "placing-royals")
+    {
+      gameManager.state === "setup-complete";
+      acesDeck.topCardElement.classList.add("draggable");
+      jokerDeck.topCardElement.classList.add("draggable");
+    }
     if (this.cards.length > 0) {
       return this.cards.pop();
     } else {
@@ -342,7 +348,7 @@ class royalCard extends card{
   constructor(){
     super();
     this.royalType = "",
-    this.armour = "",
+    this.armour = 0,
     this.isDefeated = false;
   }
 }
@@ -366,7 +372,7 @@ let hand = {};
 
 
 const gameManager = {
-  state: "setup",
+  state: "start",
 
   numberCardGrid: [],
   deckSetup: function (){
@@ -770,12 +776,38 @@ function onReady() {
   gameManager.jokerDeckSetup();
   gameManager.discardDeckSetup();
   gameManager.generateNumberedCardGrid();
-  gameManager.populateNumberedCardGrid();
+  // gameManager.populateNumberedCardGrid();
   gameManager.generateRoyalCardGrid();
 
   //  addAllRoyalsToHand();
   // addAllAcesToHand();
   //addAllJokersToHand();
+
+  $( "#play-button" ).click(function() {
+    gameManager.populateNumberedCardGrid();
+    this.classList.add("hide-element");
+    this.style.position = "absolute";
+    $("#mull-button").removeClass("hide-element");
+    $("#continue-button").removeClass("hide-element");
+  });
+
+  $( "#mull-button" ).click(function() {
+    gameManager.populateNumberedCardGrid();
+    this.classList.add("hide-element");
+    $("#continue-button").addClass("hide-element");
+    this.style.position = "absolute";
+    for(let i = 0 ; i < gameManager.numberCardGrid.length; i ++)
+    {
+      gameManager.numberCardGrid[i].topCardElement.classList.add("draggable");
+    }
+  });
+
+  $( "#continue-button" ).click(function() {
+    this.classList.add("hide-element");
+    $( "#mull-button" ).addClass("hide-element");
+    hand.topCardElement.classList.add("draggable");
+    firstMoveTaken();
+  });
 
   interact(".draggable").draggable({
     listeners: {
@@ -988,6 +1020,7 @@ function onReady() {
         }
         gameManager.numberCardGrid[dropItemParentSlotIndex].cards.unshift(replacementCard);
         gameManager.numberCardGrid[dropItemParentSlotIndex].updateCardVisuals();
+        hand.topCardElement.classList.add("draggable");
       }
 
       if (hand.cards.length === 0) {
@@ -1030,6 +1063,12 @@ function firstMoveTaken(){
   for(let i = 0 ; i < gameManager.numberCardGrid.length ; i++){
     gameManager.numberCardGrid[i].topCardElement.classList.remove("draggable");
   }
+
+  for(let i = 0; i < royalCardGrid.length ; i ++){
+    royalCardGrid[i].element.classList.remove("hide-element");
+  }
+
+  gameManager.state = "placing-royals"
 }
 
 function addAllAcesToHand() {
