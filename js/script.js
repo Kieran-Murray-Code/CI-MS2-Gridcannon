@@ -39,9 +39,9 @@ class gridSlot {
       suitIcon.classList.remove("spade");
       suitIcon.classList.remove("heart");
       suitIcon.classList.remove("diamond");
+      suitIcon.classList.remove("joker");
       suitIcon.classList.remove("red");
       suitIcon.classList.remove("black");
-
       slotLabel.classList.remove("red");
       slotLabel.classList.remove("black");
 
