@@ -1,7 +1,3 @@
-const cardSuits = ["clubs", "spades", "hearts", "diamonds"];
-const numberOfJokers = 2;
-let canTakeMulligan = true;
-
 class gridSlot {
   constructor() {
     (this.cards = []), this.element, this.topCardElement, this.overlayElement;
@@ -100,7 +96,6 @@ class gridSlot {
     this.updateCardVisuals();
   }
 }
-
 class royalCardGridSlot extends gridSlot {
   applyDamage(damage) {
     if (damage >= this.cards[0].cardValue + this.cards[0].armour) {
@@ -271,7 +266,6 @@ class numberedCardGridSlot extends gridSlot {
     }
   }
 }
-
 class deckGridSlot extends gridSlot{
   shuffle() {
     for (let i = this.cards.length - 1; i > 0; i--) {
@@ -291,56 +285,85 @@ class deckGridSlot extends gridSlot{
   }
 
   initialise () {
-    let card;
+    let cardInstance;
     for (let i = 0; i < cardSuits.length; i++) {
       for (let j = 1; j < 14; j++) {
         if (j === 1) {
-          card = new aceCard();
-          card.cardValue = j;
-          card.suit = cardSuits[i];
-          card.cardType = "ace";
+          cardInstance = new card();
+          cardInstance.cardValue = j;
+          cardInstance.suit = cardSuits[i];
+          cardInstance.cardType = "ace";
         } else if (j > 1 && j < 11) {
-          card = new numberCard();
-          card.cardValue = j;
-          card.suit = cardSuits[i];
-          card.cardType = "numbered";
+          cardInstance = new card();
+          cardInstance.cardValue = j;
+          cardInstance.suit = cardSuits[i];
+          cardInstance.cardType = "numbered";
         } else {
-          card = new royalCard();
-          card.cardValue = j;
-          card.suit = cardSuits[i];
-          card.cardType = "royal";
+          cardInstance = new royalCard();
+          cardInstance.cardValue = j;
+          cardInstance.suit = cardSuits[i];
+          cardInstance.cardType = "royal";
           if (j === 11) {
-            card.royalType = "jack";
+            cardInstance.royalType = "jack";
           } else if (j === 12) {
-            card.royalType = "queen";
+            cardInstance.royalType = "queen";
           } else {
-            card.royalType = "king";
+            cardInstance.royalType = "king";
           }
         }
 
         if (cardSuits[i] === "clubs" || cardSuits[i] === "spades") {
-          card.cardColour = "black";
+          cardInstance.cardColour = "black";
         } else {
-          card.cardColour = "red";
+          cardInstance.cardColour = "red";
         }
-        this.cards.unshift(card);
+        this.cards.unshift(cardInstance);
       }
     }
 
     for (let i = 0; i < numberOfJokers; i++) {
-      card = new jokerCard();
-      card.suit = "joker";
-      card.cardType = "joker";
-      card.cardValue = 0;
-      this.cards.unshift(card);
+      cardInstance = new card();
+      cardInstance.suit = "joker";
+      cardInstance.cardType = "joker";
+      cardInstance.cardValue = 0;
+      this.cards.unshift(cardInstance);
     }
   }
 }
+class card {
+  constructor(){
+    this.suit = "",
+    this.cardValue = 0,
+    this.cardType = "",
+    this.cardColour = "";
+  }
+}
+class royalCard extends card{
+  constructor(){
+    super();
+    this.royalType = "",
+    this.armour = "",
+    this.isDefeated = false;
+  }
+}
 
+
+const cardSuits = ["clubs", "spades", "hearts", "diamonds"];
+const numberOfJokers = 2;
+let canTakeMulligan = true;
 let royalCardGrid = [];
-
 let cardInHand;
 let cardInHandSlotType;
+let jokerDeck = new gridSlot();
+let acesDeck = new gridSlot();
+let discardDeck = new gridSlot();
+let deck = new deckGridSlot();
+let hand = {};
+
+
+
+
+
 
 const gameManager = {
   state: "setup",
@@ -737,75 +760,6 @@ const gameManager = {
     }
   },
 };
-
-let hand = {};
-
-let jokerDeck = new gridSlot();
-let acesDeck = new gridSlot();
-let discardDeck = new gridSlot();
-let deck = new deckGridSlot();
-
-let generalCardProperties = {
-  suit: "",
-  cardValue: 0,
-  canBeMoved: "false",
-  cardType: "",
-  cardColour: "",
-};
-let royalCardProperties = {
-  royalType: "",
-  armour: 0,
-  isDefeated: false,
-};
-
-function moveCard() {
-  return {};
-}
-
-function placeCard() {
-  return {};
-}
-
-function selectCard() {
-  return {};
-}
-
-function numberCard() {
-  return {
-    ...generalCardProperties,
-    ...moveCard(),
-    ...placeCard(),
-    ...selectCard(),
-  };
-}
-
-function royalCard() {
-  return {
-    ...generalCardProperties,
-    ...royalCardProperties,
-    ...moveCard(),
-    ...placeCard(),
-    ...selectCard(),
-  };
-}
-
-function aceCard() {
-  return {
-    ...generalCardProperties,
-    ...moveCard(),
-    ...placeCard(),
-    ...selectCard(),
-  };
-}
-
-function jokerCard() {
-  return {
-    ...generalCardProperties,
-    ...moveCard(),
-    ...placeCard(),
-    ...selectCard(),
-  };
-}
 
 $(document).ready(onReady);
 
