@@ -1,6 +1,6 @@
 const cardSuits = ["clubs", "spades", "hearts", "diamonds"];
 const numberOfJokers = 2;
-let canTakeMulligan = false;
+let canTakeMulligan = true;
 
 class gridSlot {
   constructor() {
@@ -20,7 +20,7 @@ class gridSlot {
       if (this.cards[0].cardValue === 0) {
         cardValueText.textContent = "JO";
       }
-      if (this.cards[0].cardValue === 1) {
+      else if (this.cards[0].cardValue === 1) {
         cardValueText.textContent = "A";
       } else if (this.cards[0].cardValue === 11) {
         cardValueText.textContent = "J";
@@ -72,7 +72,7 @@ class gridSlot {
         this.topCardElement;
         slotLabel.classList.add("black");
       } else if (this.cards[0].suit === "joker") {
-        suitIcon.classList.add("diamond");
+        suitIcon.classList.add("joker");
         this.topCardElement.classList.add("black");
         this.topCardElement;
         slotLabel.classList.add("black");
@@ -331,6 +331,7 @@ class deckGridSlot extends gridSlot{
       card = new jokerCard();
       card.suit = "joker";
       card.cardType = "joker";
+      card.cardValue = 0;
       this.cards.unshift(card);
     }
   }
@@ -624,7 +625,7 @@ const gameManager = {
           }
         }
       } else if (cardInHand.cardType === "numbered") {
-        if (canTakeMulligan) {
+        if (canTakeMulligan === false) {
           let matchFound = false;
           for (let i = 0; i < gameManager.numberCardGrid.length; i++) {
             if (gameManager.numberCardGrid[i].cards.length > 0) {
@@ -1031,7 +1032,10 @@ function onReady() {
         hand.cards.unshift(newCard);
         hand.updateCardVisuals();
       }
-      firstMoveTaken();
+      if(canTakeMulligan){
+        firstMoveTaken();
+      }
+      
     },
     ondropdeactivate: function (event) {
       event.relatedTarget.style.transform = "translate(0,0)";
@@ -1059,7 +1063,7 @@ function addAllRoyalsToHand() {
 }
 
 function firstMoveTaken(){
-  canTakeMulligan = true;
+  canTakeMulligan = false;
   for(let i = 0 ; i < gameManager.numberCardGrid.length ; i++){
     gameManager.numberCardGrid[i].topCardElement.classList.remove("draggable");
   }
