@@ -942,9 +942,14 @@ function onReady() {
             royalCardGrid[dropSlotGridIndex].addCardToSlot(hand.cards.shift());
           } else {
             //Add Armour
+            
+            let armourValue = hand.cards[0].cardValue;
             royalCardGrid[
               dropSlotGridIndex
-            ].cards[0].armour += hand.cards.shift().cardValue;
+            ].cards[0].armour += armourValue;
+            discardDeck.addCardToSlot(hand.cards.shift());
+            discardDeck.updateCardVisuals();
+            console.log(discardDeck.cards);
           }
 
           royalCardGrid[dropSlotGridIndex].updateCardVisuals();

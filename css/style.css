@@ -37,11 +37,16 @@ body {
     padding-top: 88%;
     width: 100%;
     border-radius: 20%;
+    opacity: 0.5;
     /* transform: translate(-50%, -50%); */
 }
 
+.card.draggable, .card-royal.draggable{
+    opacity: 1;
+}
+
 /* rgb(159, 242, 114, 0.5) */
-.card-and-slot-highlight{
+.slot-highlight, .card-highlight{
     background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
     top: 0;
@@ -53,12 +58,18 @@ body {
     opacity: 0;
 }
 
-.drop-active .card-and-slot-highlight{
+.drop-active .slot-highlight{
     z-index: 2;
     opacity: 1;
 }
 
-.card-and-slot-highlight hide-element{
+/* .draggable .card-highlight{
+    background-color: rgb(0, 255, 64,0.5);
+    z-index: 2;
+    opacity: 1;
+} */
+
+.slot-highlight hide-element{
     position: absolute;
     top: 0;
     left: 0;
