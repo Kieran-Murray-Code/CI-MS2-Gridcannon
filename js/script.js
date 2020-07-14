@@ -715,11 +715,15 @@ const gameManager = {
         if (cardInHandSlotType === "hand") {
           acesDeck.element.classList.add("dropzone");
           for (let i = 0; i < this.numberCardGrid.length; i++) {
+            if(this.numberCardGrid[i].cards.length > 0){
             this.numberCardGrid[i].element.classList.add("dropzone");
+            }
           }
         } else if (cardInHandSlotType === "aceDeck") {
           for (let i = 0; i < this.numberCardGrid.length; i++) {
+            if(this.numberCardGrid[i].cards.length > 0){
             this.numberCardGrid[i].element.classList.add("dropzone");
+            }
           }
         }
       } else if (cardInHand.cardType === "joker") {
@@ -816,7 +820,7 @@ function onReady() {
   gameManager.generateRoyalCardGrid();
 
   //  addAllRoyalsToHand();
-  //addAllAcesToHand();
+  // addAllAcesToHand();
   //addAllJokersToHand();
 
   interact(".draggable").draggable({
