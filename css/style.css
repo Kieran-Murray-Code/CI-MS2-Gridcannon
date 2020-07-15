@@ -8,12 +8,15 @@
     --color-card-red-secondary : rgb(211, 78, 128);
 }
 
-body {
-    overflow: hidden; /* Hide scrollbars */
+body { /* Hide scrollbars */
     background-color: var(--color-card-blue-secondary);
   }
 
-  .navbar{
+.game-body{
+    overflow: hidden;
+}
+
+.navbar{
       background-color: var(--color-gameboard-primary);
   }
 .card-slot-numbered , .card-slot-royal, .deck-slot{

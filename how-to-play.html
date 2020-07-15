@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Gridcannon A Game By Tom Francis</title>
+    <meta meta name="viewport" content="width=device-width, user-scalable=no" />
+</head>
+
+<body>
+
+    <header class="container-fluid p-0">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">Gridcannon</a>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="how-to-play.html">How To Play</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="play.html">Play</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div id="gameboard" class="container-fluid p-0 grid">
+        <div class="row no-gutters">
+            <div class="col col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-4 offset-lg-4 gameboard">
+                <h2>Setup</h2>
+                <ol>
+                    <li>Start with a shuffled deck, including jokers.</li>
+                    <li>With the deck face-down, draw cards from the top and lay them out face-up in a 3×3 grid. If you
+                        draw any royals, aces or jokers during this, put them on a separate pile and keep drawing til
+                        you’ve made the grid of just number cards.</li>
+                    <li>If you did draw some royals, you now place them the same way we will when playing: put it
+                        outside the grid, adjacent to the grid card it’s most similar to. ‘Most similar’ means:<ol>
+                            <li>Highest value card of the same suit</li>
+                            <li>If none, highest value card of the same colour</li>
+                            <li>If none, highest value card</li>
+                            <li>If there’s a tie, or most similar card is on a corner, you can choose between the
+                                equally valid positions</li>
+                        </ol>
+                    </li>
+                    <li>Any aces and jokers you drew during set up, keep them face-up to one side. These are Ploys you can play whenever you like, rules below.</li>
+                    <li>Once you have a 3×3 grid of number cards, you may choose one to replace if you like: put it on the bottom of the draw pile and draw a new card to replace it.</li>
+                </ol>
+                <h2>The Goal</h2>
+                <p>Find and kill all the royals</p>
+                <h2>Play</h2>
+                <p>Draw the top card of the deck.</p>
+                <ul>
+                    <li>If it’s a royal: use placement rule above.</li>
+                    <li>If it has value 2-10: you must place it on the grid. It can go on any card with the same or lower value, regardless of suit.</li>
+                    <li>If it’s an ace or joker: keep it to one side, see Ploys.</li>
+                </ul>
+                <h3>Killing royals:</h3>
+                <p>if you’re able to place a card on the grid opposite a royal – so there are two cards between – those two cards Attack the royal. The sum of their values is the must be at least as much as health of the royal to kill them: if it’s not, you can still place the card, but the royal is unaffected. The value of the card you just placed is not part of the Attack, only the two between.</p>
+                <ul>
+                    <li>Jacks: 11 health. The cards Attacking can be any suit.</li>
+                    <li>Queens: 12 health. The cards Attacking must match the colour of the queen to count.</li>
+                    <li>Kings: 13 health. The cards Attacking must match the suit of the king to count.</li>
+                </ul>
+                <h3>Ploys</h3>
+                <ul>
+                    <li>Aces are Extractions: at any time you can use up one of the aces you’ve drawn to pick up one stack of cards from the grid and put them face-down at the bottom of your draw pile. You can do this even after drawing a card and before placing it. Turn the ace face-down to remember you’ve used it.</li>
+                    <li>Jokers are Reassignments: at any time you can use up one you’ve drawn to move the top card of one stack on the grid to another position. The place you move it to must be a valid spot to play the card, and placing it can trigger an Attack the same way a normal play can. Turn the joker face-down to remember you’ve used it.</li>
+                </ul>
+                <h3>Armour</h3>
+                <p>If you cannot place a card: and you have no Ploys to use, you must add the card as Armour to the royal it’s most similar to (lowest value royal of same suit, failing that lowest of same colour, etc). It increases their health by the value of the card. So a King with a 3 as armour now has 13 + 3 = 16 health. You can add armour to a royal that already has armour – it stacks. If a royal ends up with 20+ health (or 19+ for a King) you lose.</p>
+                <h3>Winning</h3>
+                <p>If there are no living royals on the table: if every spot around the grid has a dead royal on it – all 12 – you’ve won! If not, just keep drawing cards until you find a royal, placing the cards in a face-up pile as you go. Once you find a royal, place it, then add the cards you cycled through to the bottom of your deck.</p>
+                <h3>Losing</h3>
+                <p>If the draw pile runs out: and you haven’t killed all the royals, and have no Ploys to use, you’ve lost.</p>
+                <h3>Scoring</h3>
+                <p>If you’ve killed all the royals without running out of cards, your score is how many Ploys you have left unspent. So the maximum score is 6.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid p-0">
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+    <!-- Interact.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.9.19/interact.min.js"
+        integrity="sha256-WHpZk1xU7OgvrZbu3BveBvwUUdQY1D3v5a5tG81r8eg=" crossorigin="anonymous"></script>
+    <!-- Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <!-- Bootstrap -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
+    <!-- Game JS -->
+    <script src="js/script.js"></script>
+</body>
