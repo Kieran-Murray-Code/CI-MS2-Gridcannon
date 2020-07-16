@@ -23,7 +23,7 @@
                 aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="#">Gridcannon</a>
+            <a class="navbar-title" href="index.html">Gridcannon</a>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item">
@@ -43,7 +43,7 @@
     <!-- Gameboard Grid -->
     <div id="gameboard" class="container-fluid p-0 grid">
         <div class="row no-gutters">
-            <div class="col col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-4 offset-lg-4 gameboard">
+            <div class="col col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-4 offset-lg-4 gameboard-container">
                 <!-- Blank Row -->
                 <!-- <div class="row no-gutters deck-area">
                     <div class="col-2 offset-5">
@@ -51,10 +51,12 @@
                         </div>
                     </div>
                 </div> -->
+
+                <div class="col gameboard"></div>
                 <!-- Grid Row 1 -->
                 <div class="row no-gutters">
                     <div class="col-2 outer-row-offset">
-                        <div data-grid-index="11" data-slot-type="royal" class="card-slot-royal hide-element ">
+                        <div data-grid-index="11" data-slot-type="royal" class="card-slot-royal hide-element  ">
                             <div class="slot-highlight"></div>
                             <div class="card-royal">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
@@ -79,7 +81,7 @@
 
                     </div>
                     <div class="col-2">
-                        <div data-grid-index="10" data-slot-type="royal" class="card-slot-royal hide-element ">
+                        <div data-grid-index="10" data-slot-type="royal" class="card-slot-royal hide-element  ">
                             <div class="slot-highlight"></div>
                             <div class="card-royal">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
@@ -104,7 +106,7 @@
 
                     </div>
                     <div class="col-2">
-                        <div data-grid-index="9" data-slot-type="royal" class="card-slot-royal hide-element ">
+                        <div data-grid-index="9" data-slot-type="royal" class="card-slot-royal hide-element  ">
                             <div class="slot-highlight"></div>
                             <div class="card-royal">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
@@ -128,7 +130,7 @@
                 <!-- Grid Row 2 -->
                 <div class="row no-gutters">
                     <div class="col-2 mid-row-offset">
-                        <div data-grid-index="8" data-slot-type="royal" class="card-slot-royal hide-element">
+                        <div data-grid-index="8" data-slot-type="royal" class="card-slot-royal hide-element ">
                             <div class="slot-highlight"></div>
                             <div class="card-royal">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
@@ -163,7 +165,7 @@
                     <div class="col-2">
                         <div data-grid-index="1" data-slot-type="numbered" class="card-slot-numbered">
                             <div class="slot-highlight"></div>
-                            <div class="card  hide-element">
+                            <div class="card hide-element">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
                                         <path d="" /></svg></div>
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
@@ -176,7 +178,7 @@
                     <div class="col-2">
                         <div data-grid-index="2" data-slot-type="numbered" class="card-slot-numbered">
                             <div class="slot-highlight"></div>
-                            <div class="card  hide-element">
+                            <div class="card hide-element">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
                                         <path d="" /></svg></div>
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
@@ -187,7 +189,7 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <div data-grid-index="7" data-slot-type="royal" class="card-slot-royal hide-element ">
+                        <div data-grid-index="7" data-slot-type="royal" class="card-slot-royal hide-element  ">
                             <div class="slot-highlight"></div>
                             <div class="card-royal">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
@@ -210,7 +212,7 @@
                 <!-- Grid Row 3 -->
                 <div class="row no-gutters">
                     <div class="col-2 mid-row-offset">
-                        <div data-grid-index="6" data-slot-type="royal" class="card-slot-royal hide-element ">
+                        <div data-grid-index="6" data-slot-type="royal" class="card-slot-royal hide-element  ">
                             <div class="slot-highlight"></div>
                             <div class="card-royal">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
@@ -232,7 +234,7 @@
                     <div class="col-2">
                         <div data-grid-index="3" data-slot-type="numbered" class="card-slot-numbered">
                             <div class="slot-highlight"></div>
-                            <div class="card  hide-element">
+                            <div class="card hide-element">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
                                         <path d="" /></svg></div>
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
@@ -245,7 +247,7 @@
                     <div class="col-2">
                         <div data-grid-index="4" data-slot-type="numbered" class="card-slot-numbered">
                             <div class="slot-highlight"></div>
-                            <div class="card  hide-element">
+                            <div class="card hide-element">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
                                         <path d="" /></svg></div>
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
@@ -258,7 +260,7 @@
                     <div class="col-2">
                         <div data-grid-index="5" data-slot-type="numbered" class="card-slot-numbered">
                             <div class="slot-highlight"></div>
-                            <div class="card  hide-element">
+                            <div class="card hide-element">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
                                         <path d="" /></svg></div>
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
@@ -269,7 +271,7 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <div data-grid-index="5" data-slot-type="royal" class="card-slot-royal hide-element ">
+                        <div data-grid-index="5" data-slot-type="royal" class="card-slot-royal hide-element  ">
                             <div class="slot-highlight"></div>
                             <div class="card-royal">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
@@ -292,7 +294,7 @@
                 <!-- Grid Row 4 -->
                 <div class="row no-gutters">
                     <div class="col-2 mid-row-offset">
-                        <div data-grid-index="4" data-slot-type="royal" class="card-slot-royal hide-element ">
+                        <div data-grid-index="4" data-slot-type="royal" class="card-slot-royal hide-element  ">
                             <div class="slot-highlight"></div>
                             <div class="card-royal">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
@@ -314,7 +316,7 @@
                     <div class="col-2">
                         <div data-grid-index="6" data-slot-type="numbered" class="card-slot-numbered">
                             <div class="slot-highlight"></div>
-                            <div class="card  hide-element">
+                            <div class="card hide-element">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
                                         <path d="" /></svg></div>
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
@@ -327,7 +329,7 @@
                     <div class="col-2">
                         <div data-grid-index="7" data-slot-type="numbered" class="card-slot-numbered">
                             <div class="slot-highlight"></div>
-                            <div class="card  hide-element">
+                            <div class="card hide-element">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
                                         <path d="" /></svg></div>
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
@@ -340,7 +342,7 @@
                     <div class="col-2">
                         <div data-grid-index="8" data-slot-type="numbered" class="card-slot-numbered">
                             <div class="slot-highlight"></div>
-                            <div class="card  hide-element">
+                            <div class="card hide-element">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
                                         <path d="" /></svg></div>
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
@@ -351,7 +353,7 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <div data-grid-index="3" data-slot-type="royal" class="card-slot-royal hide-element ">
+                        <div data-grid-index="3" data-slot-type="royal" class="card-slot-royal hide-element  ">
                             <div class="slot-highlight"></div>
                             <div class="card-royal">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
@@ -374,7 +376,7 @@
                 <!-- Grid Row 5 -->
                 <div class="row no-gutters">
                     <div class="col-2 outer-row-offset">
-                        <div data-grid-index="2" data-slot-type="royal" class="card-slot-royal hide-element ">
+                        <div data-grid-index="2" data-slot-type="royal" class="card-slot-royal hide-element  ">
                             <div class="slot-highlight"></div>
                             <div class="card-royal">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
@@ -394,7 +396,7 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <div data-grid-index="1" data-slot-type="royal" class="card-slot-royal hide-element ">
+                        <div data-grid-index="1" data-slot-type="royal" class="card-slot-royal hide-element  ">
                             <div class="slot-highlight"></div>
                             <div class="card-royal">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
@@ -414,7 +416,7 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <div data-grid-index="0" data-slot-type="royal" class="card-slot-royal hide-element">
+                        <div data-grid-index="0" data-slot-type="royal" class="card-slot-royal hide-element ">
                             <div class="slot-highlight"></div>
                             <div class="card-royal">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
@@ -435,12 +437,19 @@
                     </div>
                 </div>
                 <!-- Blank Row -->
-                <div class="row no-gutter">
-                    <div class="col-2 offset-5">
+                <div class="row no-gutters"><div class="col-10 offset-1"><p id="info-text">Welcome to Gridcannon. Press play to deal a new number grid.</p></div></div>
+                <div class="row no-gutters">
+                    <div class="col-1">
                         <div class="blank-tile">
                         </div>
                     </div>
+                    <div class="col-6 offset-2">
+                        <input class="btn play-button" id="play-button" type="button" value="Play">
+                    </div>
+                    <div class="col-4 remove-element"><input class="btn mull-button" id="mull-button" type="button" value="Mulligan"></div>
+                    <div class="col-4 offset-2 remove-element"><input class="btn mull-button" id="continue-button" type="button" value="Continue"></div>
                 </div>
+                
                 <!-- Decks Area -->
                 <div class="row no-gutters ">
                     <!-- Discard Deck -->
@@ -461,7 +470,7 @@
                     <div class="col-2">
                         <div class="deck-slot" data-slot-type="deck" id="deck">
                             <div class="slot-highlight"></div>
-                            <div class="card">
+                            <div class="card-back">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
                                     <path d="" /></svg></div>
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
@@ -474,7 +483,7 @@
                     <div class="col-2">
                         <div data-grid-index="0" data-slot-type="hand" id="hand" class="deck-slot">
                             <div class="slot-highlight"></div>
-                            <div class="card hide-element ">
+                            <div class="card hide-element">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
                                         <path d="" /></svg></div>
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
@@ -489,7 +498,7 @@
                     <div class="col-2">
                         <div class="deck-slot" id="aces" data-slot-type="aceDeck">
                             <div class="slot-highlight"></div>
-                            <div class="card hide-element">
+                            <div class="card ">
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
                                         <path d="" /></svg></div>
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
@@ -503,7 +512,7 @@
                     <div class="col-2">
                         <div class="deck-slot" id="jokers" data-slot-type="jokerDeck">
                             <div class="slot-highlight"></div>
-                            <div class="card hide-element">
+                            <div class="card ">
                                 <div class="card-highlight"></div>
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
                                         <path d="" /></svg></div>
@@ -516,17 +525,21 @@
                         </div>
                     </div>
                 </div>
+                <!-- <div class="row no-gutters">
+                    <div class="col-6 offset-3 col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
+                        <input class="btn play-button" id="play-button" type="button" value="Play">
+                        
+                    </div>
+                    <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
+                        <input class="btn mull-button " id="mull-button" type="button" value="Mulligan">
+                        <input class="btn mull-button " id="continue-button" type="button" value="Continue">
+                    </div>
+                    <div class="col"><p id="info-text">Press play to deal a new number grid.</p></div>
+                    
+                </div> -->
             </div>
         </div>
-        <div class="row no-gutters">
-            <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
-                <input class="btn play-button" id="play-button" type="button" value="Play">
-            </div>
-            <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
-                <input class="btn mull-button hide-element" id="mull-button" type="button" value="Mulligan">
-                <input class="btn mull-button hide-element" id="continue-button" type="button" value="Continue">
-            </div>
-        </div>
+
     </div>
 
 

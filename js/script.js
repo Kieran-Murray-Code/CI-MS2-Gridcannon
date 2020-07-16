@@ -769,23 +769,24 @@ function onReady() {
   //  addAllRoyalsToHand();
   // addAllAcesToHand();
   //addAllJokersToHand();
+  
 
   $("#play-button").click(function () {
     gameManager.populateNumberedCardGrid();
-    this.classList.add("hide-element");
-    this.style.position = "absolute";
-    $("#mull-button").removeClass("hide-element");
-    $("#continue-button").removeClass("hide-element");
+    this.parentNode.classList.add("remove-element");
+    $("#mull-button").parent().removeClass("remove-element");
+    $("#continue-button").parent().removeClass("remove-element");
+    $("#info-text").text("A mulligan allows you to swap one card on the grid for a new card from your deck.");
   });
 
   $("#mull-button").click(function () {
     gameManager.populateNumberedCardGrid();
     this.classList.add("hide-element");
     $("#continue-button").addClass("hide-element");
-    this.style.position = "absolute";
     for (let i = 0; i < gameManager.numberCardGrid.length; i++) {
       gameManager.numberCardGrid[i].topCardElement.classList.add("draggable");
     }
+    $("#info-text").text("Drag a card from the grid onto the deck to get a new card");
   });
 
   $("#continue-button").click(function () {
@@ -1075,8 +1076,10 @@ function onSuccessfulMoveTaken() {
       let newCard = deck.drawCard();
       hand.addCardToSlot(newCard);
       gameManager.state = "game-active";
+      $("#info-text").text("Kill the royals!");
     }
   } else if (gameManager.state === "game-active") {
+    $("#info-text").addClass("hide-element");
     if (hand.cards.length === 0) {
       if (deck.cards.length > 0) {
         let newCard = deck.drawCard();
@@ -1113,6 +1116,7 @@ function firstMoveTaken() {
     royalCardGrid[i].element.classList.remove("hide-element");
   }
   gameManager.state = "placing-royals";
+  $("#info-text").text("Now place all royals from your hand onto the board");
 }
 
 function addAllAcesToHand() {

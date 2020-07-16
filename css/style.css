@@ -12,6 +12,10 @@ body { /* Hide scrollbars */
     background-color: var(--color-card-blue-secondary);
   }
 
+  .grid{
+      position: relative;
+      height: 100vh;
+  }
 .game-body{
     overflow: hidden;
 }
@@ -34,7 +38,7 @@ body { /* Hide scrollbars */
     background-color: var(--color-gameboard-tertiary) ;
 }
 
-.card-royal, .card{
+.card-royal, .card, .card-back{
     position: absolute;
     top: 0;
     left: 0;
@@ -43,6 +47,12 @@ body { /* Hide scrollbars */
     border-radius: 20%;
     /* opacity: 0.5; */
     /* transform: translate(-50%, -50%); */
+}
+
+.card-back{
+    background-color: var(--color-card-blue-primary);
+    border: .05vh solid var(--color-card-blue-secondary);
+    border-bottom-width: 1vh;
 }
 
 /* .card.draggable, .card-royal.draggable{
@@ -113,9 +123,12 @@ body { /* Hide scrollbars */
 } */
 
 .blank-tile{
-    padding-top: 100%;
+    padding-top: 33%;
 	width: 100%;
-    background-color: transparent;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    visibility:hidden;
+    background-color: red;
 }
 
 .slot-label, .armor-label{
@@ -214,6 +227,10 @@ body { /* Hide scrollbars */
     visibility: hidden;
 }
 
+.remove-element{
+    display: none;
+}
+
 .deactivate{
     opacity: 0.2;
 }
@@ -241,14 +258,24 @@ body { /* Hide scrollbars */
     margin-left: 24%;
 }
 
+.gameboard-container{
+    position: absolute;
+    top: 50%;
+    transform: translate(0%,-50%);
+}
 .gameboard{
     background-color: var(--color-gameboard-primary);
     border-radius: 5%;
-    padding-bottom: .5%;
+    /* padding-bottom: .5%;
     padding-top: .5%;
-     margin-top : 1vh;
+     margin-top : 1vh; */
     border: 1px solid var(--color-gameboard-secondary);
     border-top-width: 20px;
+    height: 109%;
+    width: 94%;
+    left: 3%;
+    top: -7%;
+    position: absolute;
 }
 
 .deck-area{
@@ -264,15 +291,43 @@ body { /* Hide scrollbars */
 } */
 
 .play-button, .mull-button{
-    margin-top: 1vh;
-    color: var(--color-gameboard-tertiary);
-    background-color: var(--color-gameboard-primary);
-    border-color: var(--color-gameboard-secondary);
+    text-align: center;
+    position: relative;
+    /* margin-top: 2%; */
+    margin-bottom: 15%;
+    color: rgb(225, 221, 12);
+    background-color: rgb(255, 251, 42);
+    border: .05vh solid rgb(225, 221, 12);
+    border-bottom-width: 1.5vh;
     display: block;
     width: 100%;
+    /* border-radius: 7%; */
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 1rem;
 }
 
 .mull-button{
-    width: 50%;
+    /* width: 48%;
     float: left;
+    margin-left: 2%;
+    font-size: 1rem;
+    border-bottom-width: 1.5vh; */
+    /* position: absolute; */
 }
+
+.navbar-title{
+    font-weight: 900;
+    color: var(--color-gameboard-secondary);
+    text-transform: uppercase;
+    font-size: 1.5rem;
+}
+
+#info-text{
+    text-align: center;
+    color: var(--color-gameboard-tertiary);
+    font-size: 0.8rem;
+    font-weight: 900;
+}
+
+
