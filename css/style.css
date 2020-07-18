@@ -23,7 +23,7 @@ body { /* Hide scrollbars */
 .navbar{
       background-color: var(--color-gameboard-primary);
   }
-.card-slot-numbered , .card-slot-royal, .deck-slot{
+.card-slot{
     padding-top: 100%;
 	width: 100%;
     background-color: var(--color-gameboard-secondary);
@@ -34,7 +34,7 @@ body { /* Hide scrollbars */
     /* z-index: 1; */
 }
 
-.card-slot-royal{
+.card-slot .royal{
     background-color: var(--color-gameboard-tertiary) ;
 }
 
@@ -70,6 +70,11 @@ body { /* Hide scrollbars */
     border-radius: 20%;
     z-index: -1;
     opacity: 0;
+}
+
+.clicked .slot-highlight{
+    z-index: 2;
+    opacity: 1;
 }
 
 .slot-highlight.target{
@@ -138,6 +143,11 @@ body { /* Hide scrollbars */
     font-size: 1.4rem;
     text-transform: uppercase;
     font-weight: 1000;
+}
+
+.number-of-cards{
+    fill: var(--color-card-blue-secondary);
+    transform: translate(80%,80%);
 }
 
 
@@ -259,9 +269,9 @@ body { /* Hide scrollbars */
 }
 
 .gameboard-container{
-    position: absolute;
-    top: 50%;
-    transform: translate(0%,-50%);
+  position: absolute;
+      top: 50%;
+     transform: translate(0%,-50%);
 }
 .gameboard{
     background-color: var(--color-gameboard-primary);
