@@ -295,9 +295,9 @@ body { /* Hide scrollbars */
     position: relative;
     /* margin-top: 2%; */
     margin-bottom: 15%;
-    color: rgb(225, 221, 12);
-    background-color: rgb(255, 251, 42);
-    border: .05vh solid rgb(225, 221, 12);
+    color:var(--color-card-blue-primary);
+    background-color: var(--color-card-blue-secondary);
+    border: .05vh solid var(--color-card-blue-primary);
     border-bottom-width: 1.5vh;
     display: block;
     width: 100%;

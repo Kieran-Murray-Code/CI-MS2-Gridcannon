@@ -757,6 +757,7 @@ const gameManager = {
 $(document).ready(onReady);
 
 function onReady() {
+  document.body.requestFullscreen();
   gameManager.deckSetup();
   gameManager.handSetup();
   gameManager.acesDeckSetup();
