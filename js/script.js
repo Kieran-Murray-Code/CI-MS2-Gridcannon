@@ -8,20 +8,24 @@ class gridSlot {
     this.updateCardVisuals();
   }
   updateCardVisuals() {
+    if (this.id === "deck") {
+    }
+
+    let numberOfCardsText = this.overlayElement.getElementsByClassName(
+      "number-of-cards"
+    )[0];
+
+    if (numberOfCardsText) {
+      numberOfCardsText.textContent = this.cards.length;
+    }
+
     if (this.topCardElement != null) {
       if (this.cards.length > 0) {
         this.topCardElement.classList.remove("hide-element");
         let cardValueText = this.topCardElement.getElementsByClassName(
           "card-value"
         )[0];
-        let numberOfCardsText = this.overlayElement.getElementsByClassName(
-          "number-of-cards"
-        )[0];
 
-          if(numberOfCardsText){
-            numberOfCardsText.textContent = this.cards.length;
-          }
-          
         if (this.cards[0].cardValue === 0) {
           cardValueText.textContent = "JOKER";
         } else if (this.cards[0].cardValue === 1) {
@@ -292,6 +296,7 @@ class deckGridSlot extends gridSlot {
 
   drawCard() {
     return this.cards.shift();
+    deck.updateCardVisuals();
   }
 
   initialise() {
@@ -505,6 +510,8 @@ const gameManager = {
     if (hand.cards.length === 0) {
       cycleForRoyal();
     }
+
+    deck.updateCardVisuals();
   },
 
   findValidMoves: function () {
@@ -786,303 +793,315 @@ const gameManager = {
 $(document).ready(onReady);
 
 function onReady() {
+  newGame();
+}
+
+function newGame() {
   gameManager.deckSetup();
   gameManager.handSetup();
   gameManager.acesDeckSetup();
   gameManager.jokerDeckSetup();
   gameManager.discardDeckSetup();
   gameManager.generateNumberedCardGrid();
-  // gameManager.populateNumberedCardGrid();
   gameManager.generateRoyalCardGrid();
-  window.scrollTo(0, 1);
+}
 
-  //  addAllRoyalsToHand();
-  // addAllAcesToHand();
-  //addAllJokersToHand();
+$("#play-button").click(function () {
+  gameManager.populateNumberedCardGrid();
+  this.parentNode.classList.add("remove-element");
+  $("#mull-button").parent().removeClass("remove-element");
+  $("#continue-button").parent().removeClass("remove-element");
+  $("#info-text").text(
+    "A mulligan allows you to swap one card on the grid for a new card from your deck."
+  );
+});
 
-  $("#play-button").click(function () {
-    gameManager.populateNumberedCardGrid();
-    this.parentNode.classList.add("remove-element");
-    $("#mull-button").parent().removeClass("remove-element");
-    $("#continue-button").parent().removeClass("remove-element");
-    $("#info-text").text(
-      "A mulligan allows you to swap one card on the grid for a new card from your deck."
-    );
-  });
-
-  $("#mull-button").click(function () {
-    gameManager.populateNumberedCardGrid();
-    this.classList.add("hide-element");
-    $("#continue-button").addClass("hide-element");
-    for (let i = 0; i < gameManager.numberCardGrid.length; i++) {
-      gameManager.numberCardGrid[i].topCardElement.classList.add("draggable");
-    }
-    $("#info-text").text(
-      "Drag a card from the grid onto the deck to get a new card"
-    );
-  });
-
-  $("#continue-button").click(function () {
-    this.classList.add("hide-element");
-    $("#mull-button").addClass("hide-element");
-    hand.topCardElement.classList.add("draggable");
-    firstMoveTaken();
-    gameManager.state = "placing-royals";
-  });
-
-  interact(".draggable").draggable({
-    listeners: {
-      start(event) {
-        // event.target.style.transform = "translate(" + -50 + "%, " + -50 + "%)";
-      },
-      move(event) {
-        event.target.style.transform.position.x += event.dx;
-        event.target.style.transform.position.y += event.dy;
-      },
-    },
-  });
-
-  let clone = null;
-  interact(".draggable").draggable({
-    listeners: {
-      start(event) {
-        clone = event.target.cloneNode(true);
-        clone.classList.add("clone");
-        clone.classList.remove("draggable");
-        event.target.parentNode.appendChild(clone);
-        clone = event.target.parentNode.getElementsByClassName("clone")[0];
-
-        event.target.style.zIndex = 10;
-        if (event.target.parentNode.getAttribute("data-slot-type") === "hand") {
-          cardInHand = hand.cards[0];
-          cardInHandSlotType = "hand";
-        } else if (
-          event.target.parentNode.getAttribute("data-slot-type") === "aceDeck"
-        ) {
-          cardInHand = acesDeck.cards[0];
-          cardInHandSlotType = "aceDeck";
-        } else if (
-          event.target.parentNode.getAttribute("data-slot-type") === "jokerDeck"
-        ) {
-          cardInHand = jokerDeck.cards[0];
-          cardInHandSlotType = "jokerDeck";
-        } else if (
-          event.target.parentNode.getAttribute("data-slot-type") === "numbered"
-        ) {
-          cardInHand =
-            gameManager.numberCardGrid[
-              event.target.parentNode.getAttribute("data-grid-index")
-            ].cards[0];
-          cardInHandSlotType = "numbered";
-        }
-
-        gameManager.findValidMoves();
-      },
-
-      move: dragMoveListener,
-
-      end(event) {
-        event.target.style.zIndex = 0;
-      },
-    },
-  });
-
-  function dragMoveListener(event) {
-    var target = event.target;
-
-    let boundingRect = target.getBoundingClientRect();
-
-    var x = (parseFloat(target.getAttribute("data-x")) || 0) + event.dx;
-    var y = (parseFloat(target.getAttribute("data-y")) || 0) + event.dy;
-
-    target.style.webkitTransform = target.style.transform =
-      "translate(" + x + "px, " + y + "px)";
-
-    target.setAttribute("data-x", x);
-    target.setAttribute("data-y", y);
+$("#mull-button").click(function () {
+  gameManager.populateNumberedCardGrid();
+  this.parentNode.classList.add("remove-element");
+  $("#continue-button").parent().addClass("remove-element");
+  for (let i = 0; i < gameManager.numberCardGrid.length; i++) {
+    gameManager.numberCardGrid[i].topCardElement.classList.add("draggable");
   }
+  $("#info-text").text(
+    "Drag a card from the grid onto the deck to get a new card"
+  );
+});
 
-  interact(".dropzone").dropzone({
-    accept: ".card",
+$("#continue-button").click(function () {
+  this.parentNode.classList.add("remove-element");
+  $("#mull-button").parent().addClass("remove-element");
+  hand.topCardElement.classList.add("draggable");
+  firstMoveTaken();
+  gameManager.state = "placing-royals";
+});
 
-    overlap: 0.75,
-
-    ondropactivate: function (event) {
-      event.target.classList.add("drop-active");
+interact(".draggable").draggable({
+  listeners: {
+    start(event) {
+      // event.target.style.transform = "translate(" + -50 + "%, " + -50 + "%)";
     },
-    ondragenter: function (event) {
-      var draggableElement = event.relatedTarget;
-      let draggableElementType = draggableElement.getAttribute(
-        "data-card-type"
-      );
-      var dropzoneElement = event.target;
-      let dropSlotGridIndex = dropzoneElement.getAttribute("data-grid-index");
-      let dropSlotType = dropzoneElement.getAttribute("data-slot-type");
+    move(event) {
+      event.target.style.transform.position.x += event.dx;
+      event.target.style.transform.position.y += event.dy;
+    },
+  },
+});
 
-      if (dropSlotType === "numbered" && draggableElementType === "numbered") {
-        for (let i = 0; i < gameManager.numberCardGrid.length; i++) {
-          gameManager.numberCardGrid[i].overlayElement.classList.add("mute");
-        }
-        let slotRoyalIndexes =
-          gameManager.numberCardGrid[dropSlotGridIndex]
-            .oppositeRoyalCardGridSlots;
-        for (let i = 0; i < slotRoyalIndexes.length; i++) {
-          if (royalCardGrid[slotRoyalIndexes[i]] != null) {
-            royalCardGrid[slotRoyalIndexes[i]].overlayElement.classList.add(
-              "target"
-            );
-          }
+let clone = null;
+interact(".draggable").draggable({
+  listeners: {
+    start(event) {
+      if (lastSlotClicked) {
+        lastSlotClicked.removeClass("clicked");
+        lastSlotClicked = null;
+      }
+      clone = event.target.cloneNode(true);
+      clone.classList.add("clone");
+      clone.classList.remove("draggable");
+      event.target.parentNode.appendChild(clone);
+      clone = event.target.parentNode.getElementsByClassName("clone")[0];
+
+      event.target.style.zIndex = 10;
+      if (event.target.parentNode.getAttribute("data-slot-type") === "hand") {
+        cardInHand = hand.cards[0];
+        cardInHandSlotType = "hand";
+      } else if (
+        event.target.parentNode.getAttribute("data-slot-type") === "aceDeck"
+      ) {
+        cardInHand = acesDeck.cards[0];
+        cardInHandSlotType = "aceDeck";
+      } else if (
+        event.target.parentNode.getAttribute("data-slot-type") === "jokerDeck"
+      ) {
+        cardInHand = jokerDeck.cards[0];
+        cardInHandSlotType = "jokerDeck";
+      } else if (
+        event.target.parentNode.getAttribute("data-slot-type") === "numbered"
+      ) {
+        cardInHand =
+          gameManager.numberCardGrid[
+            event.target.parentNode.getAttribute("data-grid-index")
+          ].cards[0];
+        cardInHandSlotType = "numbered";
+      }
+
+      gameManager.findValidMoves();
+    },
+
+    move: dragMoveListener,
+
+    end(event) {
+      event.target.style.zIndex = 0;
+    },
+  },
+});
+
+function dragMoveListener(event) {
+  var target = event.target;
+
+  let boundingRect = target.getBoundingClientRect();
+
+  var x = (parseFloat(target.getAttribute("data-x")) || 0) + event.dx;
+  var y = (parseFloat(target.getAttribute("data-y")) || 0) + event.dy;
+
+  target.style.webkitTransform = target.style.transform =
+    "translate(" + x + "px, " + y + "px)";
+
+  target.setAttribute("data-x", x);
+  target.setAttribute("data-y", y);
+}
+
+interact(".dropzone").dropzone({
+  accept: ".card",
+
+  overlap: 0.75,
+
+  ondropactivate: function (event) {
+    event.target.classList.add("drop-active");
+  },
+  ondragenter: function (event) {
+    var draggableElement = event.relatedTarget;
+    let draggableElementType = draggableElement.getAttribute("data-card-type");
+    var dropzoneElement = event.target;
+    let dropSlotGridIndex = dropzoneElement.getAttribute("data-grid-index");
+    let dropSlotType = dropzoneElement.getAttribute("data-slot-type");
+
+    /*If the player drags a numbered card into a numbered card slot, turn off the valid moves highlights and
+     highlight the royals that will be targeted withe the attack. */
+
+    if (dropSlotType === "numbered" && draggableElementType === "numbered") {
+      for (let i = 0; i < gameManager.numberCardGrid.length; i++) {
+        gameManager.numberCardGrid[i].overlayElement.classList.add("mute");
+      }
+      let royalSlotIndices =
+        gameManager.numberCardGrid[dropSlotGridIndex]
+          .oppositeRoyalCardGridSlots;
+      for (let i = 0; i < royalSlotIndices.length; i++) {
+        if (royalCardGrid[royalSlotIndices[i]] != null) {
+          royalCardGrid[royalSlotIndices[i]].overlayElement.classList.add(
+            "target"
+          );
         }
       }
-    },
-    ondragleave: function (event) {
-      var draggableElement = event.relatedTarget;
-      var dropzoneElement = event.target;
-      let dropSlotGridIndex = dropzoneElement.getAttribute("data-grid-index");
-      let dropSlotType = dropzoneElement.getAttribute("data-slot-type");
-      if (dropSlotType === "numbered") {
-        let slotRoyalIndexes =
-          gameManager.numberCardGrid[dropSlotGridIndex]
-            .oppositeRoyalCardGridSlots;
-        for (let i = 0; i < gameManager.numberCardGrid.length; i++) {
-          gameManager.numberCardGrid[i].overlayElement.classList.remove("mute");
-        }
-        for (let i = 0; i < slotRoyalIndexes.length; i++) {
-          if (royalCardGrid[slotRoyalIndexes[i]] != null) {
-            royalCardGrid[slotRoyalIndexes[i]].overlayElement.classList.remove(
-              "target"
-            );
-          }
+
+      let attackSlotIndices = [
+        ...gameManager.numberCardGrid[dropSlotGridIndex].verticalAttackSlots,
+        ...gameManager.numberCardGrid[dropSlotGridIndex].horizontalAttackSlots,
+      ];
+      for (let i = 0; i < attackSlotIndices.length; i++) {
+        gameManager.numberCardGrid[
+          attackSlotIndices[i]
+        ].overlayElement.classList.remove("mute");
+        gameManager.numberCardGrid[
+          attackSlotIndices[i]
+        ].overlayElement.classList.add("target");
+      }
+    }
+  },
+  ondragleave: function (event) {
+    var draggableElement = event.relatedTarget;
+    var dropzoneElement = event.target;
+    let dropSlotGridIndex = dropzoneElement.getAttribute("data-grid-index");
+    let dropSlotType = dropzoneElement.getAttribute("data-slot-type");
+    if (dropSlotType === "numbered") {
+      let slotRoyalIndexes =
+        gameManager.numberCardGrid[dropSlotGridIndex]
+          .oppositeRoyalCardGridSlots;
+      for (let i = 0; i < gameManager.numberCardGrid.length; i++) {
+        gameManager.numberCardGrid[i].overlayElement.classList.remove("mute");
+        gameManager.numberCardGrid[i].overlayElement.classList.remove("target");
+      }
+      for (let i = 0; i < slotRoyalIndexes.length; i++) {
+        if (royalCardGrid[slotRoyalIndexes[i]] != null) {
+          royalCardGrid[slotRoyalIndexes[i]].overlayElement.classList.remove(
+            "target"
+          );
         }
       }
-    },
-    ondrop: function (event) {
-      let dropSlotGridIndex = event.currentTarget.getAttribute(
-        "data-grid-index"
-      );
-      let dropSlotType = event.currentTarget.getAttribute("data-slot-type");
-      let dropItemParentSlotIndex = event.relatedTarget.parentNode.getAttribute(
-        "data-grid-index"
-      );
-      let dropItemParentSlotType = event.relatedTarget.parentNode.getAttribute(
-        "data-slot-type"
-      );
+    }
+  },
+  ondrop: function (event) {
+    let dropSlotGridIndex = event.currentTarget.getAttribute("data-grid-index");
+    let dropSlotType = event.currentTarget.getAttribute("data-slot-type");
+    let dropItemParentSlotIndex = event.relatedTarget.parentNode.getAttribute(
+      "data-grid-index"
+    );
+    let dropItemParentSlotType = event.relatedTarget.parentNode.getAttribute(
+      "data-slot-type"
+    );
 
-      clone.remove();
-      if (dropSlotType === "royal") {
-        if (dropItemParentSlotType === "hand") {
-          if (royalCardGrid[dropSlotGridIndex].cards.length === 0) {
-            royalCardGrid[dropSlotGridIndex].addCardToSlot(hand.cards.shift());
-          } else {
-            //Add Armour
+    clone.remove();
+    if (dropSlotType === "royal") {
+      if (dropItemParentSlotType === "hand") {
+        if (royalCardGrid[dropSlotGridIndex].cards.length === 0) {
+          royalCardGrid[dropSlotGridIndex].addCardToSlot(hand.cards.shift());
+        } else {
+          //Add Armour
 
-            let armourValue = hand.cards[0].cardValue;
-            royalCardGrid[dropSlotGridIndex].cards[0].armour += armourValue;
-            discardDeck.addCardToSlot(hand.cards.shift());
-            discardDeck.updateCardVisuals();
-          }
+          let armourValue = hand.cards[0].cardValue;
+          royalCardGrid[dropSlotGridIndex].cards[0].armour += armourValue;
+          discardDeck.addCardToSlot(hand.cards.shift());
+          discardDeck.updateCardVisuals();
+        }
 
-          royalCardGrid[dropSlotGridIndex].updateCardVisuals();
+        royalCardGrid[dropSlotGridIndex].updateCardVisuals();
+        hand.updateCardVisuals();
+      }
+    } else if (dropSlotType === "numbered") {
+      if (dropItemParentSlotType === "hand") {
+        //Add card to slot
+        if (hand.cards[0].cardType === "ace") {
+          discardDeck.addCardToSlot(hand.cards.shift());
           hand.updateCardVisuals();
-        }
-      } else if (dropSlotType === "numbered") {
-        if (dropItemParentSlotType === "hand") {
-          //Add card to slot
-          if (hand.cards[0].cardType === "ace") {
-            discardDeck.addCardToSlot(hand.cards.shift());
-            hand.updateCardVisuals();
-            gameManager.numberCardGrid[
-              dropSlotGridIndex
-            ].shuffleCardsIntoDeck();
-          } else if (hand.cards[0].cardType === "joker") {
-            discardDeck.addCardToSlot(hand.cards.shift());
-            hand.updateCardVisuals();
-            gameManager.numberCardGrid[
-              dropSlotGridIndex
-            ].topCardElement.classList.add("draggable");
-          } else {
-            gameManager.numberCardGrid[dropSlotGridIndex].addCardToSlot(
-              hand.cards.shift()
-            );
-          }
-        } else if (dropItemParentSlotType === "aceDeck") {
-          discardDeck.addCardToSlot(acesDeck.cards.shift());
-          acesDeck.updateCardVisuals();
           gameManager.numberCardGrid[dropSlotGridIndex].shuffleCardsIntoDeck();
-        } else if (dropItemParentSlotType === "jokerDeck") {
-          discardDeck.addCardToSlot(jokerDeck.cards.shift());
-          jokerDeck.updateCardVisuals();
+        } else if (hand.cards[0].cardType === "joker") {
+          discardDeck.addCardToSlot(hand.cards.shift());
+          hand.updateCardVisuals();
           gameManager.numberCardGrid[
             dropSlotGridIndex
           ].topCardElement.classList.add("draggable");
-        } else if (dropItemParentSlotType === "numbered") {
+        } else {
           gameManager.numberCardGrid[dropSlotGridIndex].addCardToSlot(
-            gameManager.numberCardGrid[dropItemParentSlotIndex].cards.shift()
+            hand.cards.shift()
           );
-          gameManager.numberCardGrid[
-            dropItemParentSlotIndex
-          ].updateCardVisuals();
-          gameManager.numberCardGrid[
-            dropItemParentSlotIndex
-          ].topCardElement.classList.remove("draggable");
         }
-      } else if (dropSlotType === "aceDeck") {
-        if (dropItemParentSlotType === "hand") {
-          acesDeck.cards.unshift(hand.cards.shift());
-          acesDeck.updateCardVisuals();
-          hand.updateCardVisuals();
-        }
-      } else if (dropSlotType === "jokerDeck") {
-        if (dropItemParentSlotType === "hand") {
-          jokerDeck.cards.unshift(hand.cards.shift());
-          jokerDeck.updateCardVisuals();
-          hand.updateCardVisuals();
-        }
-      } else if (dropSlotType === "deck") {
-        deck.cards.push(
+      } else if (dropItemParentSlotType === "aceDeck") {
+        discardDeck.addCardToSlot(acesDeck.cards.shift());
+        acesDeck.updateCardVisuals();
+        gameManager.numberCardGrid[dropSlotGridIndex].shuffleCardsIntoDeck();
+      } else if (dropItemParentSlotType === "jokerDeck") {
+        discardDeck.addCardToSlot(jokerDeck.cards.shift());
+        jokerDeck.updateCardVisuals();
+        gameManager.numberCardGrid[
+          dropSlotGridIndex
+        ].topCardElement.classList.add("draggable");
+      } else if (dropItemParentSlotType === "numbered") {
+        gameManager.numberCardGrid[dropSlotGridIndex].addCardToSlot(
           gameManager.numberCardGrid[dropItemParentSlotIndex].cards.shift()
         );
-        let replacementCard = deck.cards.shift();
-        while (replacementCard.cardType != "numbered") {
-          if (replacementCard.cardType === "royal") {
-            hand.addCardToSlot(replacementCard);
-          } else if (replacementCard.cardType === "ace") {
-            acesDeck.addCardToSlot(replacementCard);
-          } else if (replacementCard.cardType === "joker") {
-            jokerDeck.addCardToSlot(replacementCard);
-          }
-          replacementCard = deck.cards.shift();
-        }
-        gameManager.numberCardGrid[dropItemParentSlotIndex].cards.unshift(
-          replacementCard
-        );
         gameManager.numberCardGrid[dropItemParentSlotIndex].updateCardVisuals();
-        hand.topCardElement.classList.add("draggable");
+        gameManager.numberCardGrid[
+          dropItemParentSlotIndex
+        ].topCardElement.classList.remove("draggable");
       }
+    } else if (dropSlotType === "aceDeck") {
+      if (dropItemParentSlotType === "hand") {
+        acesDeck.cards.unshift(hand.cards.shift());
+        acesDeck.updateCardVisuals();
+        hand.updateCardVisuals();
+      }
+    } else if (dropSlotType === "jokerDeck") {
+      if (dropItemParentSlotType === "hand") {
+        jokerDeck.cards.unshift(hand.cards.shift());
+        jokerDeck.updateCardVisuals();
+        hand.updateCardVisuals();
+      }
+    } else if (dropSlotType === "deck") {
+      deck.cards.push(
+        gameManager.numberCardGrid[dropItemParentSlotIndex].cards.shift()
+      );
+      let replacementCard = deck.cards.shift();
+      while (replacementCard.cardType != "numbered") {
+        if (replacementCard.cardType === "royal") {
+          hand.addCardToSlot(replacementCard);
+        } else if (replacementCard.cardType === "ace") {
+          acesDeck.addCardToSlot(replacementCard);
+        } else if (replacementCard.cardType === "joker") {
+          jokerDeck.addCardToSlot(replacementCard);
+        }
+        replacementCard = deck.cards.shift();
+      }
+      gameManager.numberCardGrid[dropItemParentSlotIndex].cards.unshift(
+        replacementCard
+      );
+      gameManager.numberCardGrid[dropItemParentSlotIndex].updateCardVisuals();
+      hand.topCardElement.classList.add("draggable");
+    }
 
-      for (let i = 0; i < gameManager.numberCardGrid.length; i++) {
-        gameManager.numberCardGrid[i].overlayElement.classList.remove("mute");
-      }
-      for (let i = 0; i < royalCardGrid.length; i++) {
-        royalCardGrid[i].overlayElement.classList.remove("target");
-      }
+    for (let i = 0; i < gameManager.numberCardGrid.length; i++) {
+      gameManager.numberCardGrid[i].overlayElement.classList.remove("mute");
+      gameManager.numberCardGrid[i].overlayElement.classList.remove("target");
+    }
+    for (let i = 0; i < royalCardGrid.length; i++) {
+      royalCardGrid[i].overlayElement.classList.remove("target");
+    }
 
-      onSuccessfulMoveTaken();
-      if (canTakeMulligan) {
-        firstMoveTaken();
-      }
-    },
-    ondropdeactivate: function (event) {
-      event.relatedTarget.style.transform = "translate(0,0)";
+    onSuccessfulMoveTaken();
+    if (canTakeMulligan) {
+      firstMoveTaken();
+    }
+  },
+  ondropdeactivate: function (event) {
+    event.relatedTarget.style.transform = "translate(0,0)";
 
-      clone.remove();
-      event.relatedTarget.setAttribute("data-x", 0);
-      event.relatedTarget.setAttribute("data-y", 0);
-      event.target.classList.remove("dropzone");
-      event.target.classList.remove("drop-active");
-    },
-  });
-}
+    clone.remove();
+    event.relatedTarget.setAttribute("data-x", 0);
+    event.relatedTarget.setAttribute("data-y", 0);
+    event.target.classList.remove("dropzone");
+    event.target.classList.remove("drop-active");
+  },
+});
 
 function onSuccessfulMoveTaken() {
   /* Check if there are no royals on board, if not cycle through the deck until a royal is drawn, placing all non royal cards on the bottom of the deck.
@@ -1106,11 +1125,10 @@ function onSuccessfulMoveTaken() {
         royalCardGrid[i].cards[0].cardValue + royalCardGrid[i].cards[0].armour >
         20
       ) {
-          hand.topCardElement.classList.remove("draggable");
-          acesDeck.topCardElement.classList.remove("draggable");
-          jokerDeck.topCardElement.classList.remove("draggable");
-          $("#info-text").text("A royal has become too powerful, you lose!");
-
+        hand.topCardElement.classList.remove("draggable");
+        acesDeck.topCardElement.classList.remove("draggable");
+        jokerDeck.topCardElement.classList.remove("draggable");
+        $("#info-text").text("A royal has become too powerful, you lose!");
       }
       if (royalCardGrid[i].cards[0].isDefeated === false) {
         allRoyalsAreDefeated = false;
@@ -1145,16 +1163,17 @@ function onSuccessfulMoveTaken() {
         hand.addCardToSlot(newCard);
       } else {
         // Check if you have any Aces or Jokers left in stash.
-        if(acesDeck.cards.length > 0 || jokerDeck.cards.length > 0){
-          $("#info-text").text("Your deck is empty but you still have some ploys left that might allow you to win");
+        if (acesDeck.cards.length > 0 || jokerDeck.cards.length > 0) {
+          $("#info-text").text(
+            "Your deck is empty but you still have some ploys left that might allow you to win"
+          );
+          hand.topCardElement.classList.add("hide-element");
+        } else {
+          $("#info-text").text(
+            "You are out of cards and the royals are not defeated, you lose!"
+          );
           hand.topCardElement.classList.add("hide-element");
         }
-        else
-        {
-          $("#info-text").text("You are out of cards and the royals are not defeated, you lose!");
-          hand.topCardElement.classList.add("hide-element");
-        }
-
       }
     }
   }
@@ -1213,27 +1232,67 @@ function addAllJokersToHand() {
   }
 }
 
-let lastSlotClicked
-$(".card-slot").click(function() {
-  
-  
-  if(lastSlotClicked){
-    if(lastSlotClicked.is($( this ))){
-      $( this ).toggleClass("clicked");
+let lastSlotClicked;
+$(".card-slot").click(function () {
+  if (lastSlotClicked) {
+    if (lastSlotClicked.is($(this))) {
+      $(this).toggleClass("clicked");
       lastSlotClicked = null;
-    }
-    else
-    {
+    } else {
       lastSlotClicked.toggleClass("clicked");
-      $( this ).toggleClass("clicked");
-      lastSlotClicked = $( this );
+      $(this).toggleClass("clicked");
+      lastSlotClicked = $(this);
     }
+  } else {
+    $(this).toggleClass("clicked");
+    lastSlotClicked = $(this);
   }
-  else
-  {
-    $( this ).toggleClass("clicked");
-    lastSlotClicked = $( this );
+});
+
+$(".reset-button").click(function () {
+  //Cycle through the number grid and push all cards back into the deck.target
+  for (let i = 0; i < gameManager.numberCardGrid.length; i++) {
+    Array.prototype.push.apply(deck.cards, gameManager.numberCardGrid[i].cards);
+    gameManager.numberCardGrid[i].cards = [];
+    gameManager.numberCardGrid[i].updateCardVisuals();
   }
 
-  
+  //Cycle through the royal grid and push all cards back into the deck.target
+  for (let i = 0; i < royalCardGrid.length; i++) {
+    Array.prototype.push.apply(deck.cards, royalCardGrid[i].cards);
+    royalCardGrid[i].cards = [];
+    royalCardGrid[i].updateCardVisuals();
+  }
+
+  //Push the discard pile into the deck.
+  Array.prototype.push.apply(deck.cards, discardDeck.cards);
+  discardDeck.cards = [];
+  discardDeck.updateCardVisuals();
+
+  //Push the aces pile into the deck.
+  Array.prototype.push.apply(deck.cards, acesDeck.cards);
+  acesDeck.cards = [];
+  acesDeck.updateCardVisuals();
+
+  //Push the joker pile into the deck.
+  Array.prototype.push.apply(deck.cards, jokerDeck.cards);
+  jokerDeck.cards = [];
+  jokerDeck.updateCardVisuals();
+
+  //Push the hand pile into the deck.
+  Array.prototype.push.apply(deck.cards, hand.cards);
+  hand.cards = [];
+  hand.updateCardVisuals();
+
+  deck.shuffle();
+  deck.updateCardVisuals();
+
+  for (let i = 0; i < royalCardGrid.length; i++) {
+    royalCardGrid[i].element.classList.add("hide-element");
+  }
+
+  $("#play-button").parent().removeClass("remove-element");
+  $("#info-text").text("Welcome to Gridcannon. Press play to deal a new number grid.");
+
+  gameManager.state = "new-game"
 });
