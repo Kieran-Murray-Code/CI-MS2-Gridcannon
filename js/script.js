@@ -372,6 +372,7 @@ let discardDeck = new gridSlot();
 let deck = new deckGridSlot();
 let hand = {};
 let numberOfRoyalsDefeated = 0;
+let dragging = false;
 
 const gameManager = {
   state: "start",
@@ -840,6 +841,7 @@ interact(".draggable").draggable({
   listeners: {
     start(event) {
       // event.target.style.transform = "translate(" + -50 + "%, " + -50 + "%)";
+
     },
     move(event) {
       event.target.style.transform.position.x += event.dx;
@@ -856,6 +858,10 @@ interact(".draggable").draggable({
         lastSlotClicked.removeClass("clicked");
         lastSlotClicked = null;
       }
+
+      //Prevent Slot Click Event from happening while dragging a card.
+      dragging = true;
+
       clone = event.target.cloneNode(true);
       clone.classList.add("clone");
       clone.classList.remove("draggable");
@@ -1094,12 +1100,12 @@ interact(".dropzone").dropzone({
   },
   ondropdeactivate: function (event) {
     event.relatedTarget.style.transform = "translate(0,0)";
-
     clone.remove();
     event.relatedTarget.setAttribute("data-x", 0);
     event.relatedTarget.setAttribute("data-y", 0);
     event.target.classList.remove("dropzone");
     event.target.classList.remove("drop-active");
+    setTimeout(() => {  dragging = false; }, 100);
   },
 });
 
@@ -1234,18 +1240,21 @@ function addAllJokersToHand() {
 
 let lastSlotClicked;
 $(".card-slot").click(function () {
-  if (lastSlotClicked) {
-    if (lastSlotClicked.is($(this))) {
-      $(this).toggleClass("clicked");
-      lastSlotClicked = null;
+  if (dragging === false) {
+    $("#info-text").text("Slot Clicked On");
+    if (lastSlotClicked) {
+      if (lastSlotClicked.is($(this))) {
+        $(this).toggleClass("clicked");
+        lastSlotClicked = null;
+      } else {
+        lastSlotClicked.toggleClass("clicked");
+        $(this).toggleClass("clicked");
+        lastSlotClicked = $(this);
+      }
     } else {
-      lastSlotClicked.toggleClass("clicked");
       $(this).toggleClass("clicked");
       lastSlotClicked = $(this);
     }
-  } else {
-    $(this).toggleClass("clicked");
-    lastSlotClicked = $(this);
   }
 });
 
@@ -1292,7 +1301,9 @@ $(".reset-button").click(function () {
   }
 
   $("#play-button").parent().removeClass("remove-element");
-  $("#info-text").text("Welcome to Gridcannon. Press play to deal a new number grid.");
+  $("#info-text").text(
+    "Welcome to Gridcannon. Press play to deal a new number grid."
+  );
 
-  gameManager.state = "new-game"
+  gameManager.state = "new-game";
 });
