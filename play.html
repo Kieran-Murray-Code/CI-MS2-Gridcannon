@@ -43,17 +43,10 @@
     <div id="gameboard" class="container-fluid p-0 grid">
         <div class="row no-gutters">
             <div class="col col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-4 offset-lg-4 gameboard-container">
-                <!-- Blank Row -->
-                <!-- <div class="row no-gutters deck-area">
-                    <div class="col-2 offset-5">
-                        <div class="blank-tile">
-                        </div>
-                    </div>
-                </div> -->
-
                 <div class="col gameboard"></div>
                 <!-- Grid Row 1 -->
                 <div class="row no-gutters">
+                    <!-- Reset Button -->
                     <div class="col-2 mid-row-offset reset-button">
                         <div>
                             <svg viewBox="0 0 100 100" width="100%" height="100%"
@@ -62,6 +55,7 @@
                             </svg>
                         </div>
                     </div>
+
                     <div class="col-2 ">
                         <div data-grid-index="11" data-slot-type="royal" class="card-slot royal hide-element  ">
                             <div class="slot-highlight">
@@ -86,6 +80,12 @@
                                 </div>
                                 <div>
                                     <svg class="armour-icon" viewBox="0 0 100 100">
+                                        <path d="" /></svg>
+                                </div>
+                            </div>  
+                            <div class="card-back">
+                                <div>
+                                    <svg class="flag-icon" viewBox="0 0 100 100">
                                         <path d="" /></svg>
                                 </div>
                             </div>
@@ -120,6 +120,12 @@
                                 </div>
 
                             </div>
+                            <div class="card-back">
+                                <div>
+                                    <svg class="flag-icon" viewBox="0 0 100 100">
+                                        <path d="" /></svg>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -147,6 +153,12 @@
                                 </div>
 
                             </div>
+                            <div class="card-back">
+                                <div>
+                                    <svg class="flag-icon" viewBox="0 0 100 100">
+                                        <path d="" /></svg>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -173,6 +185,12 @@
                                     </svg></div>
                                 <div>
                                     <svg class="armour-icon" viewBox="0 0 100 100">
+                                        <path d="" /></svg>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <div>
+                                    <svg class="flag-icon" viewBox="0 0 100 100">
                                         <path d="" /></svg>
                                 </div>
                             </div>
@@ -271,6 +289,12 @@
                                 </div>
 
                             </div>
+                            <div class="card-back">
+                                <div>
+                                    <svg class="flag-icon" viewBox="0 0 100 100">
+                                        <path d="" /></svg>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -299,6 +323,12 @@
                                         <path d="" /></svg>
                                 </div>
 
+                            </div>
+                            <div class="card-back">
+                                <div>
+                                    <svg class="flag-icon" viewBox="0 0 100 100">
+                                        <path d="" /></svg>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -395,6 +425,12 @@
                                 </div>
 
                             </div>
+                            <div class="card-back">
+                                <div>
+                                    <svg class="flag-icon" viewBox="0 0 100 100">
+                                        <path d="" /></svg>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -423,6 +459,12 @@
                                         <path d="" /></svg>
                                 </div>
 
+                            </div>
+                            <div class="card-back">
+                                <div>
+                                    <svg class="flag-icon" viewBox="0 0 100 100">
+                                        <path d="" /></svg>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -519,6 +561,12 @@
                                 </div>
 
                             </div>
+                            <div class="card-back">
+                                <div>
+                                    <svg class="flag-icon" viewBox="0 0 100 100">
+                                        <path d="" /></svg>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -548,6 +596,12 @@
                                 </div>
 
                             </div>
+                            <div class="card-back">
+                                <div>
+                                    <svg class="flag-icon" viewBox="0 0 100 100">
+                                        <path d="" /></svg>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-2">
@@ -574,6 +628,12 @@
                                 </div>
 
                             </div>
+                            <div class="card-back">
+                                <div>
+                                    <svg class="flag-icon" viewBox="0 0 100 100">
+                                        <path d="" /></svg>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-2">
@@ -599,6 +659,12 @@
                                         <path d="" /></svg>
                                 </div>
 
+                            </div>
+                            <div class="card-back">
+                                <div>
+                                    <svg class="flag-icon" viewBox="0 0 100 100">
+                                        <path d="" /></svg>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -651,7 +717,7 @@
                     </div>
                     <!-- Main Deck -->
                     <div class="col-2">
-                        <div class="card-slot deck" data-slot-type="deck" id="deck">
+                        <div class="card-slot deck flipped" data-slot-type="deck" id="deck">
                             <div class="slot-highlight">
                                 <div>
                                     <svg class="layers-icon" viewBox="0 0 100 100">
@@ -739,7 +805,7 @@
                                 <div><svg class="suit-icon" xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16  64 64">
                                         <path d="" /></svg></div>
                                 <div><svg class="slot-label" viewBox="0 0 100 100">
-                                        <text class="card-value" x="20%" y="20%" dominant-baseline="middle"
+                                        <text class="card-value" x="50%" y="20%" dominant-baseline="middle"
                                             text-anchor="middle"></text>
                                     </svg></div>
 

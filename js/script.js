@@ -114,7 +114,7 @@ class gridSlot {
 class royalCardGridSlot extends gridSlot {
   applyDamage(damage) {
     if (damage >= this.cards[0].cardValue + this.cards[0].armour) {
-      this.element.classList.add("deactivate");
+      this.element.classList.add("flipped");
       this.cards[0].isDefeated = true;
       numberOfRoyalsDefeated++;
     } else {
@@ -1082,7 +1082,7 @@ interact(".dropzone").dropzone({
         replacementCard
       );
       gameManager.numberCardGrid[dropItemParentSlotIndex].updateCardVisuals();
-      hand.topCardElement.classList.add("draggable");
+      
     }
 
     for (let i = 0; i < gameManager.numberCardGrid.length; i++) {
@@ -1184,6 +1184,7 @@ function onSuccessfulMoveTaken() {
     }
   }
 
+  hand.topCardElement.classList.add("draggable");
   deck.updateCardVisuals();
 }
 
@@ -1241,7 +1242,6 @@ function addAllJokersToHand() {
 let lastSlotClicked;
 $(".card-slot").click(function () {
   if (dragging === false) {
-    $("#info-text").text("Slot Clicked On");
     if (lastSlotClicked) {
       if (lastSlotClicked.is($(this))) {
         $(this).toggleClass("clicked");
@@ -1271,6 +1271,8 @@ $(".reset-button").click(function () {
     Array.prototype.push.apply(deck.cards, royalCardGrid[i].cards);
     royalCardGrid[i].cards = [];
     royalCardGrid[i].updateCardVisuals();
+    royalCardGrid[i].element.classList.remove("flipped");
+    royalCardGrid[i].element.classList.add("hide-element");
   }
 
   //Push the discard pile into the deck.
@@ -1296,14 +1298,15 @@ $(".reset-button").click(function () {
   deck.shuffle();
   deck.updateCardVisuals();
 
-  for (let i = 0; i < royalCardGrid.length; i++) {
-    royalCardGrid[i].element.classList.add("hide-element");
-  }
-
   $("#play-button").parent().removeClass("remove-element");
+  $("#mull-button").parent().addClass("remove-element");
+  $("#continue-button").parent().addClass("remove-element");
   $("#info-text").text(
     "Welcome to Gridcannon. Press play to deal a new number grid."
   );
 
-  gameManager.state = "new-game";
+  acesDeck.topCardElement.classList.remove("draggable");
+  jokerDeck.topCardElement.classList.remove("draggable");
+  hand.topCardElement.classList.remove("draggable");
+  gameManager.state = "start";
 });
