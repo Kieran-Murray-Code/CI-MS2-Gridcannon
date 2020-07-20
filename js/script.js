@@ -827,6 +827,8 @@ $("#mull-button").click(function () {
   for (let i = 0; i < gameManager.numberCardGrid.length; i++) {
     gameManager.numberCardGrid[i].topCardElement.classList.add("draggable");
   }
+  $(".deck-name").removeClass("hide-element")
+  $(".deck").removeClass("hide-element");
   $("#info-text").text(
     "Drag the card you wish to swap onto the deck and a new card will be put in it's place."
   );
@@ -836,6 +838,8 @@ $("#continue-button").click(function () {
   this.classList.add("remove-element");
   $("#mull-button").addClass("remove-element");
   hand.topCardElement.classList.add("draggable");
+  $(".deck-name").removeClass("hide-element")
+  $(".deck").removeClass("hide-element");;
   firstMoveTaken();
   gameManager.state = "placing-royals";
 });
@@ -1297,7 +1301,7 @@ $("#reset-icon").click(function () {
     royalCardGrid[i].cards = [];
     royalCardGrid[i].updateCardVisuals();
     royalCardGrid[i].element.classList.remove("flipped");
-    royalCardGrid[i].element.classList.add("hide-element");
+    // royalCardGrid[i].element.classList.add("hide-element");
   }
 
   //Push the discard pile into the deck.
@@ -1323,6 +1327,8 @@ $("#reset-icon").click(function () {
   deck.shuffle();
   deck.updateCardVisuals();
 
+  $(".deck-name").addClass("hide-element")
+  $(".deck").addClass("hide-element");
   $("#play-button").removeClass("remove-element");
   $("#mull-button").addClass("remove-element");
   $("#continue-button").addClass("remove-element");
