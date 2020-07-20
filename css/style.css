@@ -6,6 +6,9 @@
   --color-card-blue-secondary: rgb(144, 144, 144);
   --color-card-red-primary: rgb(240, 104, 127);
   --color-card-red-secondary: rgb(211, 78, 128);
+
+  --card-border-radius: 1rem;
+  --card-border-width: .1rem;
 }
 
 body {
@@ -24,19 +27,19 @@ body {
 .navbar {
   background-color: var(--color-gameboard-primary);
 }
-.card-slot {
+.card-slot{
   padding-top: 100%;
   width: 100%;
   background-color: var(--color-gameboard-secondary);
-  border-radius: 20%;
-  /* border: solid 2px black; */
+  border: solid var(--card-border-width) var(--color-gameboard-secondary);
+  border-radius: var(--card-border-radius);
   touch-action: none;
   user-select: none;
-  /* z-index: 1; */
 }
 
-.card-slot .royal {
+.card-slot.royal {
   background-color: var(--color-gameboard-tertiary);
+  border-color: var(--color-gameboard-tertiary);
 }
 
 .card-royal,
@@ -45,16 +48,17 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  padding-top: 88%;
+  padding-top: 100%;
   width: 100%;
-  border-radius: 20%;
   backface-visibility: hidden;
+  border-radius: var(--card-border-radius);
+  border-width: var(--card-border-width);
+  /* border-width: .1rem; */
 }
 
 .card-back {
   background-color: var(--color-card-blue-primary);
-  border: 0.05vh solid var(--color-card-blue-secondary);
-  border-bottom-width: 1vh;
+  /* border-bottom-width: .5rem; */
   backface-visibility: hidden;
   transform: rotateY(180deg);
 }
@@ -69,9 +73,7 @@ body {
   transition: transform 1s ease-in;
 }
 
-/* .card.draggable, .card-royal.draggable{
-    opacity: 1;
-} */
+
 
 /* rgb(159, 242, 114, 0.5) */
 .slot-highlight,
@@ -82,7 +84,8 @@ body {
   left: 0;
   padding-top: 100%;
   width: 100%;
-  border-radius: 20%;
+  border : solid var(--card-border-width) rgba(0, 0, 0, 0.5);
+  border-radius: var(--card-border-radius); 
   z-index: -1;
   opacity: 0;
 }
@@ -106,11 +109,7 @@ body {
   opacity: 0;
 }
 
-/* .draggable .card-highlight{
-    background-color: rgb(0, 255, 64,0.5);
-    z-index: 2;
-    opacity: 1;
-} */
+
 
 .slot-highlight hide-element {
   position: absolute;
@@ -126,15 +125,15 @@ body {
 .card.red,
 .card-royal.red {
   background-color: var(--color-card-blue-primary);
-  border: 0.05vh solid var(--color-card-blue-secondary);
-  border-bottom-width: 1vh;
+  box-shadow: inset 0 -.5rem var(--color-card-blue-secondary);
+  /* border-bottom-width: .4rem; */
 }
 
 .card.black,
 .card-royal.black {
   background-color: var(--color-card-red-primary);
-  border: 0.05vh solid var(--color-card-red-secondary);
-  border-bottom-width: 1vh;
+  box-shadow: inset 0 -.5rem var(--color-card-red-secondary);
+  /* border-bottom-width: .4rem; */
 }
 
 /* .deck-slot{
@@ -159,6 +158,7 @@ body {
   font-size: 1.4rem;
   text-transform: uppercase;
   font-weight: 1000;
+  height: 100%;
 }
 
 .number-of-cards {
@@ -215,7 +215,7 @@ target-icon path {
     "M17 6.5c0-0.276-0.224-0.5-0.5-0.5s-0.5 0.224-0.5 0.5v8.5h-9.5c-0.276 0-0.5 0.224-0.5 0.5s0.224 0.5 0.5 0.5h9.5v9.469c0 0.276 0.224 0.5 0.5 0.5s0.5-0.224 0.5-0.5v-9.469h9.469c0.276 0 0.5-0.224 0.5-0.5s-0.224-0.5-0.5-0.5h-9.469v-8.5zM31.562 15h-2.613c-0.488-6.37-5.579-11.461-11.949-11.949v-2.551c0-0.276-0.224-0.5-0.5-0.5s-0.5 0.224-0.5 0.5v2.5c-6.83 0-12.435 5.299-12.949 12h-2.489c-0.276 0-0.5 0.224-0.5 0.5s0.224 0.5 0.5 0.5h2.438c0 7.168 5.832 13 13 13v2.5c0 0.276 0.224 0.5 0.5 0.5s0.5-0.224 0.5-0.5v-2.551c6.701-0.514 12-6.119 12-12.949h2.562c0.276 0 0.5-0.224 0.5-0.5s-0.223-0.5-0.5-0.5zM16 28c-6.617 0-12-5.383-12-12s5.383-12 12-12 12 5.383 12 12-5.383 12-12 12z  "
   );
   fill: white;
-  transform: translate(18%, 20%) scale(2);
+  transform: translate(17.5%, 18%) scale(2);
   visibility: visible;
 }
 
@@ -272,6 +272,21 @@ target-icon path {
   );
 }
 
+.armour-icon text{
+    fill: white;
+    transform: translate(12%,12%);
+    font-size: .65rem;
+    font-weight: 700;
+}
+
+.black .armour-icon text{
+    fill: var(--color-card-red-secondary);
+}
+
+.red .armour-icon text{
+    fill: var(--color-card-blue-secondary);
+}
+
 .red .armour-icon path {
   fill: var(--color-card-blue-secondary);
 }
@@ -280,7 +295,7 @@ target-icon path {
   fill: var(--color-card-red-secondary);
 }
 
-.armor-label {
+/* .armor-label {
   font-size: 1.3rem;
   z-index: 1;
 }
@@ -293,7 +308,7 @@ target-icon path {
 .red .armor-label text {
   fill: var(--color-card-blue-secondary);
   transform: translate(82.5%, 70%);
-}
+} */
 
 .hide-element {
   visibility: hidden;
@@ -303,9 +318,7 @@ target-icon path {
   display: none;
 }
 
-.drop-active {
-  /* border-color: rgba(102, 255, 0, 0.801); */
-}
+
 
 .clone {
   opacity: 0.5;
@@ -337,7 +350,7 @@ target-icon path {
   /* padding-bottom: .5%;
     padding-top: .5%;
      margin-top : 1vh; */
-  border: 1px solid var(--color-gameboard-secondary);
+  border: .3rem solid var(--color-gameboard-secondary);
   box-shadow: 0 -.8rem var(--color-gameboard-secondary);
   /* border-top-width: 20px; */
   height: 109%;
@@ -355,20 +368,17 @@ target-icon path {
   z-index: 0;
 }
 
-/* .draggable{
-    z-index: 2;
-} */
+.card.draggable{
+    border-color: white;
+}
 
 .play-button,
 .mull-button {
     overflow: hidden;
   text-align: center;
   position: absolute;
-  /* margin-bottom: 15%; */
-  color: var(--color-card-blue-primary);
-  /* background-color: var(--color-card-blue-secondary); */
+  background-color: var(--color-card-blue-secondary);
   border: 0.05vh solid var(--color-card-blue-primary);
-  /* border-bottom-width: 1.5vh; */
   /* float: left; */
   width: 100%;
   height: 50%;

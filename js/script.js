@@ -27,7 +27,7 @@ class gridSlot {
         )[0];
 
         if (this.cards[0].cardValue === 0) {
-          cardValueText.textContent = "JOKER";
+          cardValueText.textContent = "J";
         } else if (this.cards[0].cardValue === 1) {
           cardValueText.textContent = "A";
         } else if (this.cards[0].cardValue === 11) {
@@ -90,7 +90,7 @@ class gridSlot {
 
         if (this.cards[0].cardValue > 10) {
           let armorLabel = this.topCardElement.getElementsByClassName(
-            "armor-label"
+            "armour-label"
           );
           if (armorLabel[0]) {
             armorLabel[0].getElementsByTagName(
@@ -367,6 +367,7 @@ let canTakeMulligan = true;
 let royalCardGrid = [];
 let cardInHand;
 let cardInHandSlotType;
+let lastCardPlayed;
 let jokerDeck = new gridSlot();
 let acesDeck = new gridSlot();
 let discardDeck = new gridSlot();
@@ -1095,6 +1096,7 @@ interact(".dropzone").dropzone({
       royalCardGrid[i].overlayElement.classList.remove("target");
     }
 
+
     onSuccessfulMoveTaken();
     if (canTakeMulligan) {
       firstMoveTaken();
@@ -1126,6 +1128,7 @@ function onSuccessfulMoveTaken() {
   if there are no cards left check if the player has any ploys left to play. If there are no ploys left to play, the player loses the game.
   */
 
+ lastCardPlayed = cardInHand;
   let allRoyalsAreDefeated = true;
   for (let i = 0; i < royalCardGrid.length; i++) {
     if (royalCardGrid[i].cards.length > 0) {
@@ -1133,9 +1136,7 @@ function onSuccessfulMoveTaken() {
         royalCardGrid[i].cards[0].cardValue + royalCardGrid[i].cards[0].armour >
         20
       ) {
-        hand.topCardElement.classList.remove("draggable");
-        acesDeck.topCardElement.classList.remove("draggable");
-        jokerDeck.topCardElement.classList.remove("draggable");
+        gameOver();
         $("#info-text").text("A royal has become too powerful, you lose!");
       }
       if (royalCardGrid[i].cards[0].isDefeated === false) {
@@ -1148,7 +1149,7 @@ function onSuccessfulMoveTaken() {
   if (allRoyalsAreDefeated) {
     if (numberOfRoyalsDefeated === 12) {
       gameManager.state === "game-over-win";
-      console.log("All royals are defeated, you win the game");
+      $("#info-text").text("All royals are defeated, you win the game");
     } else {
       cycleForRoyal();
     }
@@ -1161,6 +1162,7 @@ function onSuccessfulMoveTaken() {
       let newCard = deck.drawCard();
       hand.addCardToSlot(newCard);
       gameManager.state = "game-active";
+      emptyDeck();
       $("#info-text").text("Kill the royals!");
     }
   } else if (gameManager.state === "game-active") {
@@ -1171,7 +1173,7 @@ function onSuccessfulMoveTaken() {
         hand.addCardToSlot(newCard);
       } else {
         // Check if you have any Aces or Jokers left in stash.
-        if (acesDeck.cards.length > 0 || jokerDeck.cards.length > 0) {
+        if (acesDeck.cards.length > 0 || jokerDeck.cards.length > 0 || lastCardPlayed.suit === "joker") {
           $("#info-text").text(
             "Your deck is empty but you still have some ploys left that might allow you to win"
           );
@@ -1180,6 +1182,7 @@ function onSuccessfulMoveTaken() {
           $("#info-text").text(
             "You are out of cards and the royals are not defeated, you lose!"
           );
+          gameOver();
           hand.topCardElement.classList.add("hide-element");
         }
       }
@@ -1241,6 +1244,24 @@ function addAllJokersToHand() {
   }
 }
 
+function emptyDeck(){
+  for (let i = 0; i < deck.cards.length; i++) {
+    if(deck.cards[i].value === 0){
+      jokerDeck.addCardToSlot(deck.cards[i]);
+    }
+    else if (deck.cards[i].value === 1) {
+      acesDeck.addCardToSlot(deck.cards[i]);
+    }
+  }
+
+  deck.cards = [];
+}
+
+function gameOver(){
+  hand.topCardElement.classList.remove("draggable");
+  acesDeck.topCardElement.classList.remove("draggable");
+  jokerDeck.topCardElement.classList.remove("draggable");
+}
 let lastSlotClicked;
 $(".card-slot").click(function () {
   if (dragging === false) {
@@ -1267,6 +1288,7 @@ $("#reset-icon").click(function () {
     Array.prototype.push.apply(deck.cards, gameManager.numberCardGrid[i].cards);
     gameManager.numberCardGrid[i].cards = [];
     gameManager.numberCardGrid[i].updateCardVisuals();
+    gameManager.numberCardGrid[i].topCardElement.classList.remove("draggable");
   }
 
   //Cycle through the royal grid and push all cards back into the deck.target
