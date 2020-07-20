@@ -1162,7 +1162,7 @@ function onSuccessfulMoveTaken() {
       let newCard = deck.drawCard();
       hand.addCardToSlot(newCard);
       gameManager.state = "game-active";
-      emptyDeck();
+      // emptyDeck();
       $("#info-text").text("Kill the royals!");
     }
   } else if (gameManager.state === "game-active") {
