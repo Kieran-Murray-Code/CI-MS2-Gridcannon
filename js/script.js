@@ -809,9 +809,9 @@ function newGame() {
 
 $("#play-button").click(function () {
   gameManager.populateNumberedCardGrid();
-  this.parentNode.classList.add("remove-element");
-  $("#mull-button").parent().removeClass("remove-element");
-  $("#continue-button").parent().removeClass("remove-element");
+  this.classList.add("remove-element");
+  $("#mull-button").removeClass("remove-element");
+  $("#continue-button").removeClass("remove-element");
   $("#info-text").text(
     "A mulligan allows you to swap one card on the grid for a new card from your deck."
   );
@@ -819,8 +819,8 @@ $("#play-button").click(function () {
 
 $("#mull-button").click(function () {
   gameManager.populateNumberedCardGrid();
-  this.parentNode.classList.add("remove-element");
-  $("#continue-button").parent().addClass("remove-element");
+  this.classList.add("remove-element");
+  $("#continue-button").addClass("remove-element");
   for (let i = 0; i < gameManager.numberCardGrid.length; i++) {
     gameManager.numberCardGrid[i].topCardElement.classList.add("draggable");
   }
@@ -830,8 +830,8 @@ $("#mull-button").click(function () {
 });
 
 $("#continue-button").click(function () {
-  this.parentNode.classList.add("remove-element");
-  $("#mull-button").parent().addClass("remove-element");
+  this.classList.add("remove-element");
+  $("#mull-button").addClass("remove-element");
   hand.topCardElement.classList.add("draggable");
   firstMoveTaken();
   gameManager.state = "placing-royals";
@@ -1298,9 +1298,9 @@ $(".reset-button").click(function () {
   deck.shuffle();
   deck.updateCardVisuals();
 
-  $("#play-button").parent().removeClass("remove-element");
-  $("#mull-button").parent().addClass("remove-element");
-  $("#continue-button").parent().addClass("remove-element");
+  $("#play-button").removeClass("remove-element");
+  $("#mull-button").addClass("remove-element");
+  $("#continue-button").addClass("remove-element");
   $("#info-text").text(
     "Welcome to Gridcannon. Press play to deal a new number grid."
   );

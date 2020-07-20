@@ -571,7 +571,13 @@
                 </div>
                 <!-- Grid Row 5 -->
                 <div class="row no-gutters">
-                    <div class="col-2 outer-row-offset">
+                    
+                    <div class="col-2 mid-row-offset">
+                        <!-- <input class="btn play-button" id="play-button" type="button" value="Play">   -->
+                    </div>
+                    <div class="col-2">
+                        <input class="mull-button remove-element" id="mull-button"
+                                    type="button" value="Mulligan">
                         <div data-grid-index="2" data-slot-type="royal" class="card-slot royal hide-element  ">
                             <div class="slot-highlight">
                                 <div>
@@ -604,6 +610,7 @@
                         </div>
                     </div>
                     <div class="col-2">
+                        <input class="play-button" id="play-button" type="button" value="Play">
                         <div data-grid-index="1" data-slot-type="royal" class="card-slot royal hide-element  ">
                             <div class="slot-highlight">
                                 <div>
@@ -636,6 +643,8 @@
                         </div>
                     </div>
                     <div class="col-2">
+                        <input class="mull-button remove-element" id="continue-button"
+                                    type="button" value="Continue">
                         <div data-grid-index="0" data-slot-type="royal" class="card-slot royal hide-element ">
                             <div class="slot-highlight">
                                 <div>
@@ -670,17 +679,8 @@
                 </div>
                 <!-- Blank Row -->
                 <div class="row no-gutters">
-                    <div class="col blank-tile">
+                    <div class="col-10 offset-1 col-md-10 offset-md-1 ui-area">
                         <p id="info-text">Welcome to Gridcannon. Press play to deal a new number grid.</p>
-                        <div class="col-6 offset-3">
-                            <input class="btn play-button" id="play-button" type="button" value="Play">
-                        </div>
-                        <div class="row">
-                            <div class="col-4 offset-2 remove-element"><input class="btn mull-button" id="mull-button"
-                                    type="button" value="Mulligan"></div>
-                            <div class="col-4 remove-element"><input class="btn mull-button" id="continue-button"
-                                    type="button" value="Continue"></div>
-                        </div>
                     </div>
 
                 </div>
