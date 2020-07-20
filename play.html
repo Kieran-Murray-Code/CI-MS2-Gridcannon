@@ -573,11 +573,13 @@
                 <div class="row no-gutters">
                     
                     <div class="col-2 mid-row-offset">
-                        <!-- <input class="btn play-button" id="play-button" type="button" value="Play">   -->
+                        
                     </div>
                     <div class="col-2">
-                        <input class="mull-button remove-element" id="mull-button"
-                                    type="button" value="Mulligan">
+                        <div class="mull-button remove-element" id="mull-button">
+                            <svg class="yes-icon" viewBox="0 0 100 100">
+                                <path d="" /></svg>
+                        </div>
                         <div data-grid-index="2" data-slot-type="royal" class="card-slot royal hide-element  ">
                             <div class="slot-highlight">
                                 <div>
@@ -610,7 +612,10 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <input class="play-button" id="play-button" type="button" value="Play">
+                        <div class="play-button" id="play-button">
+                            <svg class="play-icon" viewBox="0 0 100 100">
+                                <path d="" /></svg>
+                        </div>
                         <div data-grid-index="1" data-slot-type="royal" class="card-slot royal hide-element  ">
                             <div class="slot-highlight">
                                 <div>
@@ -643,8 +648,10 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <input class="mull-button remove-element" id="continue-button"
-                                    type="button" value="Continue">
+                        <div class="mull-button remove-element" id="continue-button">
+                            <svg class="no-icon" viewBox="0 0 100 100">
+                                <path d="" /></svg>
+                        </div>
                         <div data-grid-index="0" data-slot-type="royal" class="card-slot royal hide-element ">
                             <div class="slot-highlight">
                                 <div>
@@ -723,6 +730,7 @@
 
                             </div>
                         </div>
+                    <div class="deck-name">Discard</div>
                     </div>
                     <!-- Main Deck -->
                     <div class="col-2">
@@ -747,6 +755,7 @@
 
                             </div>
                         </div>
+                        <div class="deck-name">Deck</div>
                     </div>
                     <!-- Hand Deck -->
                     <div class="col-2">
@@ -771,6 +780,7 @@
                             </div>
 
                         </div>
+                        <div class="deck-name">Hand</div>
                     </div>
                     <!-- Aces Deck -->
                     <div class="col-2">
@@ -796,6 +806,7 @@
                             </div>
 
                         </div>
+                        <div class="deck-name">Aces</div>
                     </div>
                     <div class="col-2">
                         <div class="card-slot deck" id="jokers" data-slot-type="jokerDeck">
@@ -821,6 +832,7 @@
                             </div>
 
                         </div>
+                        <div class="deck-name">Jokers</div>
                     </div>
                 </div>
                 <!-- <div class="row no-gutters">

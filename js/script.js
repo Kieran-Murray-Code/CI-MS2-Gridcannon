@@ -815,7 +815,7 @@ $("#play-button").click(function () {
   $("#continue-button").removeClass("remove-element");
   $("#reset-icon").removeClass("remove-element");
   $("#info-text").text(
-    "A mulligan allows you to swap one card on the grid for a new card from your deck."
+    "Would you like to swap one card on the grid for a new card?"
   );
 });
 
@@ -827,7 +827,7 @@ $("#mull-button").click(function () {
     gameManager.numberCardGrid[i].topCardElement.classList.add("draggable");
   }
   $("#info-text").text(
-    "Drag a card from the grid onto the deck to get a new card"
+    "Drag the card you wish to swap onto the deck and a new card will be put in it's place."
   );
 });
 
