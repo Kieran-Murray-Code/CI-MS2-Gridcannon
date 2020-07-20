@@ -145,6 +145,8 @@ body {
 
 .ui-area {
   /* visibility:hidden; */
+  margin-top: .5rem;
+  margin-bottom: .5rem;
   background-color: transparent;
   height: 5rem;
 }
@@ -373,7 +375,7 @@ target-icon path {
   font-weight: 900;
   text-transform: uppercase;
   font-size: 0.5rem;
-  box-shadow: 0 0.5rem var(--color-card-blue-primary);
+  box-shadow: 0 0.2rem var(--color-card-blue-primary);
   transform: translateY(-50%);
 }
 
@@ -408,8 +410,6 @@ height: 100%;
   margin: 0.1rem;
 }
 
-.reset-button {
-}
 
 #reset-icon {
 }

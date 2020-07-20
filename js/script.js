@@ -360,6 +360,7 @@ class royalCard extends card {
   }
 }
 
+// Variables
 const cardSuits = ["clubs", "spades", "hearts", "diamonds"];
 const numberOfJokers = 2;
 let canTakeMulligan = true;
@@ -812,6 +813,7 @@ $("#play-button").click(function () {
   this.classList.add("remove-element");
   $("#mull-button").removeClass("remove-element");
   $("#continue-button").removeClass("remove-element");
+  $("#reset-icon").removeClass("remove-element");
   $("#info-text").text(
     "A mulligan allows you to swap one card on the grid for a new card from your deck."
   );
@@ -1258,7 +1260,8 @@ $(".card-slot").click(function () {
   }
 });
 
-$(".reset-button").click(function () {
+$("#reset-icon").click(function () {
+  $(this).addClass("remove-element");
   //Cycle through the number grid and push all cards back into the deck.target
   for (let i = 0; i < gameManager.numberCardGrid.length; i++) {
     Array.prototype.push.apply(deck.cards, gameManager.numberCardGrid[i].cards);
@@ -1308,5 +1311,6 @@ $(".reset-button").click(function () {
   acesDeck.topCardElement.classList.remove("draggable");
   jokerDeck.topCardElement.classList.remove("draggable");
   hand.topCardElement.classList.remove("draggable");
+  canTakeMulligan = true;
   gameManager.state = "start";
 });
