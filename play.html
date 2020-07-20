@@ -49,8 +49,7 @@
                     <!-- Reset Button -->
                     <div class="col-2 mid-row-offset reset-button">
                         <div>
-                            <svg viewBox="0 0 100 100" width="100%" height="100%"
-                                id="reset-icon">
+                            <svg viewBox="0 0 100 100" width="100%" height="100%" id="reset-icon">
                                 <path d="" />
                             </svg>
                         </div>
@@ -82,7 +81,7 @@
                                     <svg class="armour-icon" viewBox="0 0 100 100">
                                         <path d="" /></svg>
                                 </div>
-                            </div>  
+                            </div>
                             <div class="card-back">
                                 <div>
                                     <svg class="flag-icon" viewBox="0 0 100 100">
@@ -671,11 +670,21 @@
                 </div>
                 <!-- Blank Row -->
                 <div class="row no-gutters">
-                    <div class="col-10 offset-1">
+                    <div class="col blank-tile">
                         <p id="info-text">Welcome to Gridcannon. Press play to deal a new number grid.</p>
+                        <div class="col-6 offset-3">
+                            <input class="btn play-button" id="play-button" type="button" value="Play">
+                        </div>
+                        <div class="row">
+                            <div class="col-4 offset-2 remove-element"><input class="btn mull-button" id="mull-button"
+                                    type="button" value="Mulligan"></div>
+                            <div class="col-4 remove-element"><input class="btn mull-button" id="continue-button"
+                                    type="button" value="Continue"></div>
+                        </div>
                     </div>
+
                 </div>
-                <div class="row no-gutters">
+                <!--<div class="row no-gutters">
                     <div class="col-1">
                         <div class="blank-tile">
                         </div>
@@ -687,7 +696,7 @@
                             value="Mulligan"></div>
                     <div class="col-4 offset-2 remove-element"><input class="btn mull-button" id="continue-button"
                             type="button" value="Continue"></div>
-                </div>
+                </div> -->
 
                 <!-- Decks Area -->
                 <div class="row no-gutters ">

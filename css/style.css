@@ -140,12 +140,11 @@ body { /* Hide scrollbars */
 } */
 
 .blank-tile{
-    padding-top: 33%;
-	width: 100%;
-    margin-top: 10%;
-    margin-bottom: 10%;
-    visibility:hidden;
-    background-color: red;
+    /* visibility:hidden; */
+    margin-left: .75rem;
+    margin-right: .75rem;
+    background-color: transparent;
+    height: 5rem;
 }
 
 .slot-label, .armor-label{
@@ -319,9 +318,10 @@ target-icon path {
 }
 
 .gameboard-container{
-  position: absolute;
-      top: 50%;
-     transform: translate(0%,-50%);
+  position: relative;
+  margin-top: 3rem;
+      /* top: 50%;
+     transform: translate(0%,-50%); */
 }
 .gameboard{
     background-color: var(--color-gameboard-primary);
@@ -334,7 +334,7 @@ target-icon path {
     height: 109%;
     width: 94%;
     left: 3%;
-    top: -7%;
+    top: -2rem;
     position: absolute;
 }
 
@@ -353,28 +353,21 @@ target-icon path {
 .play-button, .mull-button{
     text-align: center;
     position: relative;
-    margin-bottom: 15%;
+    /* margin-bottom: 15%; */
     color:var(--color-card-blue-primary);
     /* background-color: var(--color-card-blue-secondary); */
     border: .05vh solid var(--color-card-blue-primary);
     /* border-bottom-width: 1.5vh; */
     display: block;
+    float: left;
     width: 100%;
     border-radius: .5rem;
     font-weight: 900;
     text-transform: uppercase;
-    font-size: 1rem;
+    font-size: .5rem;
     box-shadow: 0 .5rem var(--color-card-blue-primary);
 }
 
-.mull-button{
-    /* width: 48%;
-    float: left;
-    margin-left: 2%;
-    font-size: 1rem;
-    border-bottom-width: 1.5vh; */
-    /* position: absolute; */
-}
 
 .navbar-title{
     font-weight: 900;
@@ -386,8 +379,9 @@ target-icon path {
 #info-text{
     text-align: center;
     color: var(--color-gameboard-tertiary);
-    font-size: 0.8rem;
+    font-size: 0.5rem;
     font-weight: 900;
+    margin: 0.1rem;
 }
 
 .reset-button{
