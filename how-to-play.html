@@ -39,80 +39,115 @@
         </nav>
     </header>
 
-    <div id="gameboard" class="container-fluid p-0 grid">
-        <div class="row no-gutters">
-            <div class="col col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
-                <h2>Setup</h2>
-                <ol>
-                    <li>Start with a shuffled deck, including jokers.</li>
-                    <li>With the deck face-down, draw cards from the top and lay them out face-up in a 3×3 grid. If you
-                        draw any royals, aces or jokers during this, put them on a separate pile and keep drawing til
-                        you’ve made the grid of just number cards.</li>
-                    <li>If you did draw some royals, you now place them the same way we will when playing: put it
-                        outside the grid, adjacent to the grid card it’s most similar to. ‘Most similar’ means:<ol>
-                            <li>Highest value card of the same suit</li>
-                            <li>If none, highest value card of the same colour</li>
-                            <li>If none, highest value card</li>
-                            <li>If there’s a tie, or most similar card is on a corner, you can choose between the
-                                equally valid positions</li>
-                        </ol>
-                    </li>
-                    <li>Any aces and jokers you drew during set up, keep them face-up to one side. These are Ploys you can play whenever you like, rules below.</li>
-                    <li>Once you have a 3×3 grid of number cards, you may choose one to replace if you like: put it on the bottom of the draw pile and draw a new card to replace it.</li>
-                </ol>
-                <h2>The Goal</h2>
-                <p>Find and kill all the royals</p>
-                <h2>Play</h2>
-                <p>Draw the top card of the deck.</p>
+    <div class="container-fluid p-0 grid rules">
+
+        <h2>Moving & Placing Cards</h2>
+        <ul>
+            <li>Cards that can be moved have a white highlight around them.</li>
+            <li>To move a card (click/touch) on a moveable card and drag to have the card follow your (mouse/finger).
+            </li>
+            <li>When a card is moved, all valid moves are checked, any slot that the card can be dropped into will have
+                a black highlight.</li>
+            <li>When a card is dropped, if it is above a valid slot it will added to that slot, if a card is dropped
+                into an invalid slot or anywhere else on the board it will return to it's origin slot.</li>
+        </ul>
+
+        <h2>Setup</h2>
+        <ol>
+            <li>Press Play to deal a new numbered grid (The inner 3 x 3 grid).</li>
+            <li>To fill the inner grid cards are drawn from a shuffled deck until all 9 slots are filled with
+                numbered cards.(Any card with a value between 2-10)</li>
+            <li>If a card is drawn that isn't a numbered card between 2-10 it gets then it is placed into it's
+                associated deck, Royals to the hand, Aces & Jokers to their own decks.</li>
+            <li>Now place the all royal cards onto the royal grid slots(The outer 12 slots)</li>
+            <li>A royal must be placed adjacent to the most similar card on the numbered grid.</li>
+            <li>When all the royals have been placed, a card from the numbered grid may be swapped for a new card from
+                the deck. If the numbered grid has a lot of high value cards then this is a good option to open up more
+                possible moves.</li>
+            <li>The game setup is now finished.</li>
+        </ol>
+
+        <h2>The Goal</h2>
+        <ol>
+            <li>Find all the royals and place them on the board.</li>
+            <li>Defeat all the royals by using numbered cards to attack them.</li>
+        </ol>
+
+        <h2>Card Types</h2>
+        <ul>
+            <li>Numbered: These are used to make attacks on the royals, they can placed on the inner 3x3 grid on top of
+                any card of the same or lower value. If there is no valid move on the inner grid then the card's value
+                is added to the
+                armour of the most similar royal and the card is put into the discard deck and is no longer part of the
+                game. If you have a ploy left considering using the ploy to prevent adding armour to the royals. </li>
+            <li>Royals: These are the enemy cards and must be defeated to win the game, they can be placed in the outer
+                12 grid slots next the most similar numbered card.
+            </li>
+            <li>Ploys: Aces and Jokers are ploy cards that allow special moves, these can be placed into the associated
+                deck when drawn or used on the numbered grid straight away.</li>
+            <li>Aces(Extractions): These can be used to shuffle a stack of cards from the numbered grid back into the
+                deck, this leaves a blank slot on the grid that any numbered card can be played onto and gives you more
+                cards to play so you don't run out of moves. Drop an Ace on an numbered grid slot to extract it. The Ace
+                is then placed in the discard and no longer part of the game.</li>
+            <li>Jokers(Reassignments): These can be used to move the top card of a numbered slot to another numbered
+                slot, the reassigned top card must follow the normal rules for placing a numbered card and must be
+                placed on a slot with a card value of equal or lower value. Drop a Joker on a numbered grid slot to
+                reassign it. The Joker is the placed in the discard pile and is no longer part of the game.</li>
+        </ul>
+
+        <h2>Gameplay</h2>
+        <ul>
+            <li>Once setup is complete a card is drawn from the deck and put into hand.</li>
+            <li>Cards can now be played from the hand, aces and joker deck.</li>
+            <li>If a card is played from the hand then a new card is drawn from the deck and placed in the hand.</li>
+            <li>If a ploy is played from hand or from Aces or Jokers deck it is added to the discard deck and is no
+                longer part of the game.</li>
+        </ul>
+
+        <h2>Attacking the royals</h2>
+        <ol>
+            <li>To attack a royal a numbered card must be placed opposite it on the numbered grid, this means there are
+                2 numbered cards between the placed card and the royal card.</li>
+            <li>When a numbered card is placed opposite it attacks the royal for the sum of the 2 numbered cards
+                in-between.</li>
+            <li>If that sum is greater than the royals value (ie a King's value is 13) plus the royals armour then the
+                royal is defeated.</li>
+            <li>Each royal has it's own extra requirement for an attack to be successful.
                 <ul>
-                    <li>If it’s a royal: use placement rule above.</li>
-                    <li>If it has value 2-10: you must place it on the grid. It can go on any card with the same or lower value, regardless of suit.</li>
-                    <li>If it’s an ace or joker: keep it to one side, see Ploys.</li>
+                    <li>Kings require the attack cards to be the same suit as the king.</li>
+                    <li>Queens require the attack cards to be the same colour as the queen.</li>
+                    <li>Jacks allow the attack cards to be any suit or colour.</li>
                 </ul>
-                <h3>Killing royals:</h3>
-                <p>if you’re able to place a card on the grid opposite a royal – so there are two cards between – those two cards Attack the royal. The sum of their values is the must be at least as much as health of the royal to kill them: if it’s not, you can still place the card, but the royal is unaffected. The value of the card you just placed is not part of the Attack, only the two between.</p>
-                <ul>
-                    <li>Jacks: 11 health. The cards Attacking can be any suit.</li>
-                    <li>Queens: 12 health. The cards Attacking must match the colour of the queen to count.</li>
-                    <li>Kings: 13 health. The cards Attacking must match the suit of the king to count.</li>
-                </ul>
-                <h3>Ploys</h3>
-                <ul>
-                    <li>Aces are Extractions: at any time you can use up one of the aces you’ve drawn to pick up one stack of cards from the grid and put them face-down at the bottom of your draw pile. You can do this even after drawing a card and before placing it. Turn the ace face-down to remember you’ve used it.</li>
-                    <li>Jokers are Reassignments: at any time you can use up one you’ve drawn to move the top card of one stack on the grid to another position. The place you move it to must be a valid spot to play the card, and placing it can trigger an Attack the same way a normal play can. Turn the joker face-down to remember you’ve used it.</li>
-                </ul>
-                <h3>Armour</h3>
-                <p>If you cannot place a card: and you have no Ploys to use, you must add the card as Armour to the royal it’s most similar to (lowest value royal of same suit, failing that lowest of same colour, etc). It increases their health by the value of the card. So a King with a 3 as armour now has 13 + 3 = 16 health. You can add armour to a royal that already has armour – it stacks. If a royal ends up with 20+ health (or 19+ for a King) you lose.</p>
-                <h3>Winning</h3>
-                <p>If there are no living royals on the table: if every spot around the grid has a dead royal on it – all 12 – you’ve won! If not, just keep drawing cards until you find a royal, placing the cards in a face-up pile as you go. Once you find a royal, place it, then add the cards you cycled through to the bottom of your deck.</p>
-                <h3>Losing</h3>
-                <p>If the draw pile runs out: and you haven’t killed all the royals, and have no Ploys to use, you’ve lost.</p>
-                <h3>Scoring</h3>
-                <p>If you’ve killed all the royals without running out of cards, your score is how many Ploys you have left unspent. So the maximum score is 6.</p>
-            </div>
-        </div>
-    </div>
+            </li>
+        </ol>
+
+        <h2>Winning & Losing</h2>
+        <ul>
+            <li>The game is won if all the royals are defeated.</li>
+            <li>The game is lost if there are no cards left in the deck and no ploys left to play.</li>
+            <li>The game is lost if a royal becomes too powerful to defeat, this happens if a royal gains enough armour
+                that it's value plus armour exceeds 20, since the most an attack can be made for is 20.</li>
+        </ul>
 
 
-    <div class="container-fluid p-0">
 
-    </div>
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-    </script>
-    <!-- Interact.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.9.19/interact.min.js"
-        integrity="sha256-WHpZk1xU7OgvrZbu3BveBvwUUdQY1D3v5a5tG81r8eg=" crossorigin="anonymous"></script>
-    <!-- Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-    </script>
-    <!-- Bootstrap -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-    </script>
-    <!-- Game JS -->
-    <script src="js/script.js"></script>
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+        </script>
+        <!-- Interact.JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.9.19/interact.min.js"
+            integrity="sha256-WHpZk1xU7OgvrZbu3BveBvwUUdQY1D3v5a5tG81r8eg=" crossorigin="anonymous"></script>
+        <!-- Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+        </script>
+        <!-- Bootstrap -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+        </script>
+        <!-- Game JS -->
+        <script src="js/script.js"></script>
 </body>
