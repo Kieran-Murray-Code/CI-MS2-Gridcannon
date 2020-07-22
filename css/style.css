@@ -2,9 +2,11 @@
   --color-gameboard-primary: rgb(219, 219, 219);
   --color-gameboard-secondary: rgb(202, 202, 202);
   --color-gameboard-tertiary: rgb(175, 174, 174);
-  --color-card-blue-primary: rgb(172, 172, 172);
+  /* --color-card-blue-primary: rgb(172, 172, 172); */
+  --color-card-blue-primary: white;
   --color-card-blue-secondary: rgb(144, 144, 144);
-  --color-card-red-primary: rgb(240, 104, 127);
+  /* --color-card-red-primary: rgb(240, 104, 127); */
+  --color-card-red-primary: white;
   --color-card-red-secondary: rgb(211, 78, 128);
 
   --card-border-radius: 1rem;
@@ -13,7 +15,7 @@
 
 body {
   /* Hide scrollbars */
-  background-color: var(--color-card-blue-secondary);
+  background-color: var(--color-gameboard-tertiary);
 }
 
 .grid {
@@ -57,7 +59,7 @@ body {
 }
 
 .card-back {
-  background-color: var(--color-card-blue-primary);
+  background-color: var(--color-gameboard-secondary);
   /* border-bottom-width: .5rem; */
   backface-visibility: hidden;
   transform: rotateY(180deg);
@@ -367,7 +369,7 @@ target-icon path {
 }
 
 .card.draggable{
-    border-color: white;
+    border-color: green;
 }
 
 .play-button,
@@ -375,7 +377,7 @@ target-icon path {
     overflow: hidden;
   text-align: center;
   position: absolute;
-  background-color: var(--color-card-blue-primary);
+  background-color: var(--color-card-red-secondary);
   border: 0.05vh solid white;
   /* float: left; */
   width: 100%;

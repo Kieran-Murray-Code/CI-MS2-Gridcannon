@@ -856,6 +856,8 @@ function moveToGameActive() {
   console.log("2");
   hand.addCardToSlot(deck.drawCard());
   hand.topCardElement.classList.add("draggable");
+  acesDeck.topCardElement.classList.add("draggable");
+  jokerDeck.topCardElement.classList.add("draggable");
   for(let i = 0; i < gameManager.numberCardGrid.length; i ++){
     gameManager.numberCardGrid[i].topCardElement.classList.remove("draggable");
   }
