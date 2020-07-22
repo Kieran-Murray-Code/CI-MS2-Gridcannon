@@ -133,7 +133,10 @@ class numberedCardGridSlot extends gridSlot {
     this.cards.unshift(cardToAdd);
     this.topCardElement.setAttribute("data-card-type", this.cards[0].cardType);
     this.updateCardVisuals();
-    this.attackRoyals();
+    if(gameManager.state === "game-active"){
+      this.attackRoyals();
+    }
+    
   }
   attackRoyals() {
     let verticalRoyalGridSlot;
@@ -363,7 +366,6 @@ class royalCard extends card {
 // Variables
 const cardSuits = ["clubs", "spades", "hearts", "diamonds"];
 const numberOfJokers = 2;
-let canTakeMulligan = true;
 let royalCardGrid = [];
 let cardInHand;
 let cardInHandSlotType;
@@ -503,6 +505,7 @@ const gameManager = {
         } else if (cardToPlace.cardValue === 1) {
           acesDeck.addCardToSlot(cardToPlace);
         } else if (cardToPlace.cardValue > 10) {
+          console.log("1");
           hand.addCardToSlot(cardToPlace);
         } else {
           this.numberCardGrid[i].addCardToSlot(cardToPlace);
@@ -511,6 +514,7 @@ const gameManager = {
     }
     //If no royals were drawn in the initial board setup cycle for royal
     if (hand.cards.length === 0) {
+      console.log("Inital cycling");
       cycleForRoyal();
     }
 
@@ -680,7 +684,7 @@ const gameManager = {
           }
         }
       } else if (cardInHand.cardType === "numbered") {
-        if (canTakeMulligan === false) {
+        if (gameManager.state === "game-active") {
           let matchFound = false;
           for (let i = 0; i < gameManager.numberCardGrid.length; i++) {
             if (gameManager.numberCardGrid[i].cards.length > 0) {
@@ -763,7 +767,7 @@ const gameManager = {
             }
             lowestMatchingRoyalSlot.element.classList.add("dropzone");
           }
-        } else {
+        } else if (gameManager.state === "taking-a-mulligan") {
           deck.element.classList.add("dropzone");
         }
       } else if (cardInHand.cardType === "ace") {
@@ -812,43 +816,54 @@ function newGame() {
 $("#play-button").click(function () {
   gameManager.populateNumberedCardGrid();
   this.classList.add("remove-element");
-  $("#mull-button").removeClass("remove-element");
-  $("#continue-button").removeClass("remove-element");
-  $("#reset-icon").removeClass("remove-element");
-  $("#info-text").text(
-    "Would you like to swap one card on the grid for a new card?"
-  );
+  allowPlacingOfRoyals();
 });
 
+function allowPlacingOfRoyals() {
+  $("#reset-icon").removeClass("remove-element");
+  gameManager.state = "placing-royals";
+  $("#info-text").text("Now place all royals from your hand onto the board");
+  hand.topCardElement.classList.add("draggable");
+  $(".deck-name").removeClass("hide-element");
+  $(".deck").removeClass("hide-element");
+}
+
 $("#mull-button").click(function () {
-  gameManager.populateNumberedCardGrid();
   this.classList.add("remove-element");
   $("#continue-button").addClass("remove-element");
   for (let i = 0; i < gameManager.numberCardGrid.length; i++) {
     gameManager.numberCardGrid[i].topCardElement.classList.add("draggable");
   }
-  $(".deck-name").removeClass("hide-element")
+  $(".deck-name").removeClass("hide-element");
   $(".deck").removeClass("hide-element");
   $("#info-text").text(
     "Drag the card you wish to swap onto the deck and a new card will be put in it's place."
   );
+  gameManager.state = "taking-a-mulligan";
 });
 
 $("#continue-button").click(function () {
   this.classList.add("remove-element");
-  $("#mull-button").addClass("remove-element");
-  hand.topCardElement.classList.add("draggable");
-  $(".deck-name").removeClass("hide-element")
-  $(".deck").removeClass("hide-element");;
-  firstMoveTaken();
-  gameManager.state = "placing-royals";
+  moveToGameActive();
 });
 
+function moveToGameActive() {
+  $("#mull-button").addClass("remove-element");
+  $(".deck-name").removeClass("hide-element");
+  $(".deck").removeClass("hide-element");
+  gameManager.state = "game-active";
+  $("#info-text").text("Kill The Royals");
+  console.log("2");
+  hand.addCardToSlot(deck.drawCard());
+  hand.topCardElement.classList.add("draggable");
+  for(let i = 0; i < gameManager.numberCardGrid.length; i ++){
+    gameManager.numberCardGrid[i].topCardElement.classList.remove("draggable");
+  }
+}
 interact(".draggable").draggable({
   listeners: {
     start(event) {
       // event.target.style.transform = "translate(" + -50 + "%, " + -50 + "%)";
-
     },
     move(event) {
       event.target.style.transform.position.x += event.dx;
@@ -1077,6 +1092,7 @@ interact(".dropzone").dropzone({
       let replacementCard = deck.cards.shift();
       while (replacementCard.cardType != "numbered") {
         if (replacementCard.cardType === "royal") {
+          console.log("3");
           hand.addCardToSlot(replacementCard);
         } else if (replacementCard.cardType === "ace") {
           acesDeck.addCardToSlot(replacementCard);
@@ -1085,11 +1101,14 @@ interact(".dropzone").dropzone({
         }
         replacementCard = deck.cards.shift();
       }
-      gameManager.numberCardGrid[dropItemParentSlotIndex].cards.unshift(
+      gameManager.numberCardGrid[dropItemParentSlotIndex].addCardToSlot(
         replacementCard
       );
-      gameManager.numberCardGrid[dropItemParentSlotIndex].updateCardVisuals();
-      
+      // gameManager.numberCardGrid[dropItemParentSlotIndex].cards.unshift(
+      //   replacementCard
+      // );
+      // gameManager.numberCardGrid[dropItemParentSlotIndex].updateCardVisuals();
+      moveToGameActive();
     }
 
     for (let i = 0; i < gameManager.numberCardGrid.length; i++) {
@@ -1099,12 +1118,7 @@ interact(".dropzone").dropzone({
     for (let i = 0; i < royalCardGrid.length; i++) {
       royalCardGrid[i].overlayElement.classList.remove("target");
     }
-
-
     onSuccessfulMoveTaken();
-    if (canTakeMulligan) {
-      firstMoveTaken();
-    }
   },
   ondropdeactivate: function (event) {
     event.relatedTarget.style.transform = "translate(0,0)";
@@ -1113,7 +1127,9 @@ interact(".dropzone").dropzone({
     event.relatedTarget.setAttribute("data-y", 0);
     event.target.classList.remove("dropzone");
     event.target.classList.remove("drop-active");
-    setTimeout(() => {  dragging = false; }, 100);
+    setTimeout(() => {
+      dragging = false;
+    }, 100);
   },
 });
 
@@ -1132,52 +1148,53 @@ function onSuccessfulMoveTaken() {
   if there are no cards left check if the player has any ploys left to play. If there are no ploys left to play, the player loses the game.
   */
 
- lastCardPlayed = cardInHand;
-  let allRoyalsAreDefeated = true;
-  for (let i = 0; i < royalCardGrid.length; i++) {
-    if (royalCardGrid[i].cards.length > 0) {
-      if (
-        royalCardGrid[i].cards[0].cardValue + royalCardGrid[i].cards[0].armour >
-        20
-      ) {
-        gameOver();
-        $("#info-text").text("A royal has become too powerful, you lose!");
-      }
-      if (royalCardGrid[i].cards[0].isDefeated === false) {
-        allRoyalsAreDefeated = false;
-      }
-    } else {
-      // allRoyalsAreDefeated = false;
-    }
-  }
-  if (allRoyalsAreDefeated) {
-    if (numberOfRoyalsDefeated === 12) {
-      gameManager.state === "game-over-win";
-      $("#info-text").text("All royals are defeated, you win the game");
-    } else {
-      cycleForRoyal();
-    }
-  }
+
 
   if (gameManager.state === "placing-royals") {
     if (hand.cards.length === 0) {
-      acesDeck.topCardElement.classList.add("draggable");
-      jokerDeck.topCardElement.classList.add("draggable");
-      let newCard = deck.drawCard();
-      hand.addCardToSlot(newCard);
-      gameManager.state = "game-active";
-      // emptyDeck();
-      $("#info-text").text("Kill the royals!");
+      activateMulliganUI();
     }
   } else if (gameManager.state === "game-active") {
     $("#info-text").text = " ";
+    lastCardPlayed = cardInHand;
+    let allRoyalsAreDefeated = true;
+    for (let i = 0; i < royalCardGrid.length; i++) {
+      if (royalCardGrid[i].cards.length > 0) {
+        if (
+          royalCardGrid[i].cards[0].cardValue + royalCardGrid[i].cards[0].armour >
+          20
+        ) {
+          gameOver();
+          $("#info-text").text("A royal has become too powerful, you lose!");
+        }
+        if (royalCardGrid[i].cards[0].isDefeated === false) {
+          allRoyalsAreDefeated = false;
+        }
+      } else {
+        // allRoyalsAreDefeated = false;
+      }
+    }
+    if (allRoyalsAreDefeated) {
+      if (numberOfRoyalsDefeated === 12) {
+        gameManager.state === "game-over-win";
+        $("#info-text").text("All royals are defeated, you win the game");
+      } else {
+        console.log("All royals defeated, cycling");
+        cycleForRoyal();
+      }
+    }
     if (hand.cards.length === 0) {
       if (deck.cards.length > 0) {
         let newCard = deck.drawCard();
+        console.log("4");
         hand.addCardToSlot(newCard);
       } else {
         // Check if you have any Aces or Jokers left in stash.
-        if (acesDeck.cards.length > 0 || jokerDeck.cards.length > 0 || lastCardPlayed.suit === "joker") {
+        if (
+          acesDeck.cards.length > 0 ||
+          jokerDeck.cards.length > 0 ||
+          lastCardPlayed.suit === "joker"
+        ) {
           $("#info-text").text(
             "Your deck is empty but you still have some ploys left that might allow you to win"
           );
@@ -1193,12 +1210,24 @@ function onSuccessfulMoveTaken() {
     }
   }
 
-  hand.topCardElement.classList.add("draggable");
   deck.updateCardVisuals();
+}
+
+function activateMulliganUI() {
+  gameManager.state = "taking-a-mulligan";
+  hand.topCardElement.classList.remove("draggable");
+  $("#mull-button").removeClass("remove-element");
+  $("#continue-button").removeClass("remove-element");
+  $("#info-text").text(
+    "Would you like to swap one card on the grid for a new card?"
+  );
+  $(".deck-name").addClass("hide-element");
+  $(".deck").addClass("hide-element");
 }
 
 function cycleForRoyal() {
   do {
+    console.log("5");
     hand.addCardToSlot(deck.drawCard());
   } while (hand.cards[0].cardType != "royal");
 
@@ -1213,28 +1242,17 @@ function returnAllRoyalCards(card) {
 function returnAllNonRoyalCards(card) {
   return card.cardType != "royal";
 }
+
 function addAllRoyalsToHand() {
   let royalCards = deck.cards.filter(returnAllRoyalCards);
   deck.cards = deck.cards.filter(returnAllNonRoyalCards);
   hand.cards = hand.cards.concat(royalCards);
 }
 
-function firstMoveTaken() {
-  canTakeMulligan = false;
-  for (let i = 0; i < gameManager.numberCardGrid.length; i++) {
-    gameManager.numberCardGrid[i].topCardElement.classList.remove("draggable");
-  }
-
-  for (let i = 0; i < royalCardGrid.length; i++) {
-    royalCardGrid[i].element.classList.remove("hide-element");
-  }
-  gameManager.state = "placing-royals";
-  $("#info-text").text("Now place all royals from your hand onto the board");
-}
-
 function addAllAcesToHand() {
   for (let i = 0; i < deck.cards.length; i++) {
     if (deck.cards[i].cardType === "ace") {
+      console.log("6");
       hand.addCardToSlot(deck.cards[i]);
     }
   }
@@ -1243,17 +1261,17 @@ function addAllAcesToHand() {
 function addAllJokersToHand() {
   for (let i = 0; i < deck.cards.length; i++) {
     if (deck.cards[i].cardType === "joker") {
+      console.log("7");
       hand.addCardToSlot(deck.cards[i]);
     }
   }
 }
 
-function emptyDeck(){
+function emptyDeck() {
   for (let i = 0; i < deck.cards.length; i++) {
-    if(deck.cards[i].value === 0){
+    if (deck.cards[i].value === 0) {
       jokerDeck.addCardToSlot(deck.cards[i]);
-    }
-    else if (deck.cards[i].value === 1) {
+    } else if (deck.cards[i].value === 1) {
       acesDeck.addCardToSlot(deck.cards[i]);
     }
   }
@@ -1261,7 +1279,7 @@ function emptyDeck(){
   deck.cards = [];
 }
 
-function gameOver(){
+function gameOver() {
   hand.topCardElement.classList.remove("draggable");
   acesDeck.topCardElement.classList.remove("draggable");
   jokerDeck.topCardElement.classList.remove("draggable");
@@ -1327,7 +1345,7 @@ $("#reset-icon").click(function () {
   deck.shuffle();
   deck.updateCardVisuals();
 
-  $(".deck-name").addClass("hide-element")
+  $(".deck-name").addClass("hide-element");
   $(".deck").addClass("hide-element");
   $("#play-button").removeClass("remove-element");
   $("#mull-button").addClass("remove-element");
@@ -1339,6 +1357,5 @@ $("#reset-icon").click(function () {
   acesDeck.topCardElement.classList.remove("draggable");
   jokerDeck.topCardElement.classList.remove("draggable");
   hand.topCardElement.classList.remove("draggable");
-  canTakeMulligan = true;
   gameManager.state = "start";
 });

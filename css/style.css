@@ -491,3 +491,7 @@ height: 100%;
     font-size: .75rem;
     font-weight: 900;
 }
+
+.rules ol, h2, p , ul, h3 {
+  color: var(--color-gameboard-secondary);
+}
