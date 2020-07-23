@@ -1,99 +1,47 @@
-
-Access main [READEME](https://github.com/Kieran-Murray-Code/CI-MS2-Gridcannon/blob/master/README.md) file.
-
-## Testing
-
-  
-
-  
+  Access main [READEME](https://github.com/Kieran-Murray-Code/CI-MS2-Gridcannon/blob/master/README.md) file.
 
 ### Testing User Stories
 
-  
-
-  
-
 #### 1. As a fan of the Tom Francis I wish to learn how to play the game Gridcannon.
 
-  
-
 #### 2. As a player of the paper version of Gridcannon I wish to be able to play the game digitally when I do not have access to a deck of playing cards or the space to play.
-
-  
-
+ 
 #### 3. As a fan of solitaire card games Im looking for a new game to play.
 
   
-
 #### 4. As a fan of casual relaxing mobile games like Threes I'm looking for a similar but new experience.
 
   
-
-  
-
-### HTML & CSS Validation
-
-  
-
-  
-
+### HTML & CSS Validation  
 #### HTML
 
-  
+The HTML was put through through [https://validator.w3.org/](https://validator.w3.org/).
 
-  
+ - Warning recieved : Consider avoiding viewport values that prevent
+   users from resizing documents. (Warning ignored as this is the behaviour that I want.)
 
-The following error were found and fixed after running my **HTML** through [https://validator.w3.org/](https://validator.w3.org/)
-
-  
-
-  
-
-#### CSS
-
-  
-
-  
+#### CSS  
 
 The following errors were found when running were found when running my **CSS** through [https://jigsaw.w3.org/css-validator/validator](https://jigsaw.w3.org/css-validator/validator)
 
-  
+  - Parse Error on an -- variables that were used, this is a non issue as the validator just hasn't been updated to allow variables that are now fully accepted as CSS standard practice.
 
+- Unknown Vendor extension warnings, this is a non issue as these prefixes are required to improve browser compatibility.
+
+These errors have not been fixed as they are they are issue with the validator not being up tp date with current CSS spec.
   
 
 ### Browsers
-
-  
-
-  
-
 The following browsers were tested for compatiblity
-
-  
-
 - Google Chrome (Xiaomi Mi Mix 2s (Android) ,Honor 20 (Android), Windows 10 Laptop)
-
-  
-
 - Firefox (Windows 10 Laptop)
-
-  
-
 - Opera (Windows 10 Laptop)
-
-  
-
 - Microsoft Edge (Windows 10 Laptop)
-
-  
-
-- Internet Explorer 11 (Windows 10 Laptop)
-
-  
-
   
 
 #### Issues Found
+
+  
 
   
 

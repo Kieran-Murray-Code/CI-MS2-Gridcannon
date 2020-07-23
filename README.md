@@ -1,13 +1,6 @@
-
-  
-
-  
-
-  
-
-  
-
 # [GRIDCANNON - A SOLITAIRE CARD GAME]([https://kieran-murray-code.github.io/CI-MS2-Gridcannon/](https://kieran-murray-code.github.io/CI-MS2-Gridcannon/))
+
+  
 
   
 
@@ -21,35 +14,67 @@ This is an assignment project for [https://codeinstitute.net/](https://codeinsti
 
   
 
+  
+
 ## Table of Contents
+
+  
 
 1.  [UX](#ux)
 
+  
+
 *  [Design Choices](#design-choices)
+
+  
 
 *  [User Stories](#user-stories)
 
+  
+
 2.  [Features](#features)
+
+  
 
 *  [Common](#common)
 
+  
+
 *  [Play](#play)
+
+  
 
 3.  [Technologies Used](#techmologies-used)
 
+  
+
 *  [Languages](#languages)
+
+  
 
 *  [Libraries](#libraries)
 
+  
+
 *  [Tools](#tools)
+
+  
 
 4.  [Deploymet](#deployment)
 
+  
+
 6.  [Testing](#testing)
+
+  
 
 7.  [Credits](#credits)
 
+  
+
 8.  [Disclaimer](#disclaimer)
+
+  
 
   
 
@@ -65,7 +90,11 @@ This is an assignment project for [https://codeinstitute.net/](https://codeinsti
 
   
 
+  
+
 ### Design choices
+
+  
 
   
 
@@ -73,7 +102,11 @@ With a mobile first approach in mind I wanted to the UI of the game to be sharp 
 
   
 
+  
+
 ![Threes](http://asherv.com/threes/images/THREES_trailer.gif)
+
+  
 
   
 
@@ -87,7 +120,11 @@ I decided to go with SVG graphics and text so that everything would stay sharp a
 
   
 
+  
+
 ### User Stories
+
+  
 
   
 
@@ -95,11 +132,17 @@ I decided to go with SVG graphics and text so that everything would stay sharp a
 
   
 
+  
+
 2. As a player of the paper version of Gridcannon I wish to be able to play the game digitally when I do not have access to a deck of playing cards or the space to play.
 
   
 
+  
+
 3. As a fan of solitaire card games Im looking for a new game to play.
+
+  
 
   
 
@@ -109,7 +152,11 @@ I decided to go with SVG graphics and text so that everything would stay sharp a
 
   
 
+  
+
 ## Features:
+
+  
 
   
 
@@ -117,7 +164,11 @@ I decided to go with SVG graphics and text so that everything would stay sharp a
 
   
 
+  
+
 - Each page has a responsive navigation bar that collapses down to a hamburger menu when on small screen sizes. The navigation bar contains the game name and the site navigation links.
+
+  
 
   
 
@@ -125,7 +176,11 @@ I decided to go with SVG graphics and text so that everything would stay sharp a
 
   
 
+  
+
 ### How To Play
+
+  
 
   
 
@@ -133,7 +188,11 @@ I decided to go with SVG graphics and text so that everything would stay sharp a
 
   
 
+  
+
 - Fisher Yates shuffle algorithm is used to shuffle the deck to ensure a complete unique game on each replay. The deck is shuffled at the start of each game as well as anytime that cards are added back into the deck.
+
+  
 
   
 
@@ -141,7 +200,11 @@ I decided to go with SVG graphics and text so that everything would stay sharp a
 
   
 
+  
+
 - Any moveable cards are highlighted to show the user what can be interacted with so there is no confusion over what can and can't be moved.
+
+  
 
   
 
@@ -149,7 +212,11 @@ I decided to go with SVG graphics and text so that everything would stay sharp a
 
   
 
+  
+
 - All attacks are highlighted, when a user drags a numbered card onto a valid move on the number grid then the the valid move highlight switches from showing which slots the card can be dropped into to showing which royal card slots will be attacked.
+
+  
 
   
 
@@ -157,11 +224,19 @@ I decided to go with SVG graphics and text so that everything would stay sharp a
 
   
 
+  
+
 ### Features To Implement
 
- - Add audio sound effects.
- - Add music.
- - Add animations.
+  
+
+- Add audio sound effects.
+
+- Add music.
+
+- Add animations.
+
+  
 
   
 
@@ -171,7 +246,11 @@ I decided to go with SVG graphics and text so that everything would stay sharp a
 
   
 
+  
+
 Below are wireframes for the site developed in [https://balsamiq.com/](https://balsamiq.com/)
+
+  
 
   
 
@@ -179,11 +258,17 @@ Each images contains a wireframe for the mobile and desktop versions of the site
 
   
 
+  
+
 -  [Home Page](https://github.com/Kieran-Murray-Code/CI-MS1-Portishead-Website/blob/master/wireframes/MS1%20Home%20Page.png)
 
   
 
+  
+
 ## Technologies Used
+
+  
 
   
 
@@ -193,7 +278,11 @@ Each images contains a wireframe for the mobile and desktop versions of the site
 
   
 
+  
+
 -  [HTML5](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5)
+
+  
 
   
 
@@ -201,7 +290,11 @@ Each images contains a wireframe for the mobile and desktop versions of the site
 
   
 
+  
+
 -  [Javascript](https://www.javascript.com/)
+
+  
 
   
 
@@ -209,7 +302,11 @@ Each images contains a wireframe for the mobile and desktop versions of the site
 
   
 
+  
+
 -  [jQuery](https://jquery.com/)
+
+  
 
   
 
@@ -217,7 +314,11 @@ Each images contains a wireframe for the mobile and desktop versions of the site
 
   
 
+  
+
 ### Tools
+
+  
 
   
 
@@ -225,7 +326,11 @@ Each images contains a wireframe for the mobile and desktop versions of the site
 
   
 
+  
+
 -  [Bootstrap 4](https://getbootstrap.com/) - The project used the **Bootstrap 4** for a responsive grid system.
+
+  
 
   
 
@@ -233,27 +338,24 @@ Each images contains a wireframe for the mobile and desktop versions of the site
 
   
 
+  
+
 -  [Autoprefixer CSS](https://autoprefixer.github.io/) - The project used the **Autoprefixer CSS** to ensure CSS compatibility with all browsers.
+
+  
 
   
 
 -  [HTML Validator](https://validator.w3.org/) - The project used the **HTML Validator** to validate and find errors in the HTML.
 
-  
-
 -  [CSS Validator](https://jigsaw.w3.org/css-validator/) -The project used the **CSS Validator** to validate and find errors in the CSS.
-
-  
-
 -  [EsLint](https://eslint.org/) - EsLint was used to find and fix issues in the Javascript.
-
-  
-
 -  [icomoon](https://icomoon.io/) - icomoon was used was the graphically elements.
 
-  
-
 -  [Balsamiq](https://balsamiq.com) https://balsamiq.com) -The project used the **Balsamiq** to generate wireframes for the site.
+- [Stack Edit](https://stackedit.io/) - Used to edit the README.md & TESTS.md.
+
+  
 
   
 
@@ -263,7 +365,11 @@ Each images contains a wireframe for the mobile and desktop versions of the site
 
   
 
+  
+
 #### To deploy a live version of this site using Github the following steps are needed..
+
+  
 
   
 
@@ -271,7 +377,11 @@ Each images contains a wireframe for the mobile and desktop versions of the site
 
   
 
+  
+
 2. User Dropdown > Your Repositories.
+
+  
 
   
 
@@ -279,7 +389,11 @@ Each images contains a wireframe for the mobile and desktop versions of the site
 
   
 
+  
+
 4. From the repository top menu select [Settings](https://github.com/Kieran-Murray-Code/CI-MS2-Gridcannon/settings)
+
+  
 
   
 
@@ -287,7 +401,11 @@ Each images contains a wireframe for the mobile and desktop versions of the site
 
   
 
+  
+
 6. In the Github pages section, for Source select master branch.
+
+  
 
   
 
@@ -295,7 +413,11 @@ Each images contains a wireframe for the mobile and desktop versions of the site
 
   
 
+  
+
 8. In the Github pages section, for Custom Domain leave blank.
+
+  
 
   
 
@@ -303,7 +425,11 @@ Each images contains a wireframe for the mobile and desktop versions of the site
 
   
 
+  
+
 10. After the [Settings](https://github.com/Kieran-Murray-Code/CI-MS2-Gridcannon/settings) refreshes the Github Pages section will contain a link to the live site. [https://kieran-murray-code.github.io/CI-MS2-Gridcannon/](https://kieran-murray-code.github.io/CI-MS2-Gridcannon/).
+
+  
 
   
 
@@ -311,7 +437,11 @@ Currently there are no differences between the delayed branch and master branch.
 
   
 
+  
+
 #### To deploy a local version the following steps are required.
+
+  
 
   
 
@@ -319,7 +449,11 @@ Currently there are no differences between the delayed branch and master branch.
 
   
 
+  
+
 2. Use the above command in Git Bash in your IDE such as Visual Studio Code
+
+  
 
   
 
@@ -327,7 +461,11 @@ Currently there are no differences between the delayed branch and master branch.
 
   
 
+  
+
 4. Click on the Clone or Download button.
+
+  
 
   
 
@@ -335,7 +473,11 @@ Currently there are no differences between the delayed branch and master branch.
 
   
 
+  
+
 6. Use the command in step 1 in Git Bash, add the correct url and hit enter.
+
+  
 
   
 
@@ -343,37 +485,46 @@ Currently there are no differences between the delayed branch and master branch.
 
   
 
+  
+
 8. More information on cloning a Git Repository can be found [here](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
+
+  
 
   
 
 9. Once you have a local version pulled from Github, browse to that directory using your OS's file borwser, locate index.html in the root directory of the project and open it with your internet browser of choice.
 
+  
+
 ## Testing
+
 Testing documented is a separate [TESTS](https://github.com/Kieran-Murray-Code/CI-MS2-Gridcannon/blob/master/TESTS.md) file.
+  
 
 ## Credits
-
-  
-
-### Content
-
-  
-
-### Media
-
-  
-
-#### Home Page
-
-  
-
-### Code
-
-  
-
-### Acknowledgements
-
-  
+ - Game design by [Tom Francis](https://twitter.com/Pentadact) & [Chris Thursten](https://twitter.com/CThursten).
+ - [Gridcannon Rules](https://www.pentadact.com/2019-08-20-gridcannon-a-single-player-game-with-regular-playing-cards/).
+ - [Web version of Gridcannon ](https://herebemike.github.io/Gridcannon/site/) developed by [HereBeMike](https://twitter.com/HereBeMike).
 
 ## Disclaimer
+**For educational purposes.**
+
+Use of the Gridcannon rules allowed by Tom Francis is his original [post](https://www.pentadact.com/2019-08-20-gridcannon-a-single-player-game-with-regular-playing-cards/).
+
+> If you’d like to make/release/sell a game based on this Please do! I’d
+> suggest saying “Based on Gridcannon by Tom Francis” somewhere in the
+> credits – a link to this post would be cool if possible. I’d also
+> suggest not calling it just ‘Gridcannon’, but it’s fine to use that
+> word in the title. If you’re going to charge for it, maybe think about
+> if there’s something you’d like to add to the game. Could just be
+> theme/art/flash, or perhaps a mechanics change? Do you like that you
+> can’t really fail the game? Do you have a better idea for scoring it?
+> Should Jokers do something different? This is just a quick prototype,
+> it has lots room for improvement. And digital versions let you do
+> things I couldn’t with cards – prevent bad deals, know which stacks
+> have resets, start with a more specific grid setup, reward
+> achievements… Also a heads up that a nearly complete digital version
+> is up, free, and playable in browser 
+> [here](https://herebemike.github.io/Gridcannon/site/)  by 
+> [@HereBeMike](https://twitter.com/HereBeMike).
