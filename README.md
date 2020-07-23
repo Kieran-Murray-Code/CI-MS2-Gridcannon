@@ -1,7 +1,19 @@
 
   
 
+  
+
+  
+
+  
+
 # [GRIDCANNON - A SOLITAIRE CARD GAME]([https://kieran-murray-code.github.io/CI-MS2-Gridcannon/](https://kieran-murray-code.github.io/CI-MS2-Gridcannon/))
+
+  
+
+  
+
+  
 
   
 
@@ -9,7 +21,47 @@ This is an assignment project for [https://codeinstitute.net/](https://codeinsti
 
   
 
+## Table of Contents
+
+1.  [UX](#ux)
+
+*  [Design Choices](#design-choices)
+
+*  [User Stories](#user-stories)
+
+2.  [Features](#features)
+
+*  [Common](#common)
+
+*  [Play](#play)
+
+3.  [Technologies Used](#techmologies-used)
+
+*  [Languages](#languages)
+
+*  [Libraries](#libraries)
+
+*  [Tools](#tools)
+
+4.  [Deploymet](#deployment)
+
+6.  [Testing](#testing)
+
+7.  [Credits](#credits)
+
+8.  [Disclaimer](#disclaimer)
+
+  
+
+  
+
 ## UX:
+
+  
+
+  
+
+  
 
   
 
@@ -17,9 +69,22 @@ This is an assignment project for [https://codeinstitute.net/](https://codeinsti
 
   
 
-The minimal graphic style and colour pallette was inspired by [Threes](http://play.threesgame.com/) a puzzle game by Sirvo. ![enter image description here](http://asherv.com/threes/images/THREES_trailer.gif)
+With a mobile first approach in mind I wanted to the UI of the game to be sharp and readable on small phones, I had a look at a lot of mobile card games and found that I liked the look of [Threes](http://play.threesgame.com/) by Sirvo and decided that I wanted a similar minimal graphic style and colour pallette.
 
   
+
+![Threes](http://asherv.com/threes/images/THREES_trailer.gif)
+
+  
+
+  
+
+I decided to go with SVG graphics and text so that everything would stay sharp and clear no matter the screen size, all graphic elements being SVG based would also make loading times quick and mobile friendly.
+
+  
+
+  
+
   
 
 ### User Stories
@@ -28,11 +93,19 @@ The minimal graphic style and colour pallette was inspired by [Threes](http://pl
 
 1. As a fan of the Tom Francis I wish to learn how to play the game Gridcannon.
 
+  
+
 2. As a player of the paper version of Gridcannon I wish to be able to play the game digitally when I do not have access to a deck of playing cards or the space to play.
+
+  
 
 3. As a fan of solitaire card games Im looking for a new game to play.
 
+  
+
 4. As a fan of casual relaxing mobile games like Threes I'm looking for a similar but new experience.
+
+  
 
   
 
@@ -44,39 +117,54 @@ The minimal graphic style and colour pallette was inspired by [Threes](http://pl
 
   
 
- - Each page has a responsive navigation bar that collapses down to a hamburger menu when on small screen sizes. The navigation bar contains the game name and the site navigation links.
+- Each page has a responsive navigation bar that collapses down to a hamburger menu when on small screen sizes. The navigation bar contains the game name and the site navigation links.
 
   
 
 ### Home
 
   
-  
-  
 
 ### How To Play
 
   
-  
 
 ### Play
 
- - Fisher Yates shuffle algorithm is used to shuffle the deck to ensure a complete unqiue game on each replay. The deck is shuffled at the start of each game as well as anytime that cards are added back into the deck.
- - Inital setup is automated as much as possible to make the starting of  a new game quick and easy for the user. All the numbered cards drawn are placed on the 3x3 number grid until it is full, any royals drawn are placed in hand, any Aces drawn are placed in the Aces deck and any Jokers drawn are placed in the Jokers deck. Royals can not be automatically placed as some may have multiple correct slots and choosing which slot to place it in is part of the the gameplay.
- - Any moveable cards are highlighted to show the user what can be interacted with so there is no confusion over what can and can't be moved.
- - All valid moves are found and highlighted, when a user moves a card any slots that the card can be dropped into are highlighted.
- - All attacks are highlighted, when a user drags a numbered card onto a valid move on the number grid then the the valid move highlight switches from showing which slots the card can be dropped into to showing which royal card slots will be attacked.
- - Visual feedback for the number of cards in a slot, by clicking on a slot the ui for the number of cards gets toggled on/off.
+  
+
+- Fisher Yates shuffle algorithm is used to shuffle the deck to ensure a complete unique game on each replay. The deck is shuffled at the start of each game as well as anytime that cards are added back into the deck.
 
   
+
+- Inital setup is automated as much as possible to make the starting of a new game quick and easy for the user. All the numbered cards drawn are placed on the 3x3 number grid until it is full, any royals drawn are placed in hand, any Aces drawn are placed in the Aces deck and any Jokers drawn are placed in the Jokers deck. Royals can not be automatically placed as some may have multiple correct slots and choosing which slot to place it in is part of the the gameplay.
+
   
+
+- Any moveable cards are highlighted to show the user what can be interacted with so there is no confusion over what can and can't be moved.
+
   
+
+- All valid moves are found and highlighted, when a user moves a card any slots that the card can be dropped into are highlighted.
+
+  
+
+- All attacks are highlighted, when a user drags a numbered card onto a valid move on the number grid then the the valid move highlight switches from showing which slots the card can be dropped into to showing which royal card slots will be attacked.
+
+  
+
+- Visual feedback for the number of cards in a slot, by clicking on a slot the ui for the number of cards gets toggled on/off.
+
   
 
 ### Features To Implement
 
+ - Add audio sound effects.
+ - Add music.
+ - Add animations.
+
   
-  
+
   
 
 ### Wireframes
@@ -84,6 +172,8 @@ The minimal graphic style and colour pallette was inspired by [Threes](http://pl
   
 
 Below are wireframes for the site developed in [https://balsamiq.com/](https://balsamiq.com/)
+
+  
 
 Each images contains a wireframe for the mobile and desktop versions of the site.
 
@@ -99,100 +189,74 @@ Each images contains a wireframe for the mobile and desktop versions of the site
 
 ### Languages
 
+  
+
+  
+
 -  [HTML5](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5)
+
+  
 
 -  [CSS3](https://developer.mozilla.org/en-US/docs/Archive/CSS3)
 
+  
+
 -  [Javascript](https://www.javascript.com/)
+
+  
 
 ### Libraries
 
+  
+
 -  [jQuery](https://jquery.com/)
 
--  [InteractJS](https://interactjs.io/)
-
   
+
+-  [InteractJS](https://interactjs.io/) - The project used InteractJS for a mobile friendly drag and drop.
+
   
 
 ### Tools
 
+  
+
 -  [Visual Studio Code](https://code.visualstudio.com/) - The project used the **Visual Studio** IDE to develop the website linked with **Github** for version control.
+
+  
 
 -  [Bootstrap 4](https://getbootstrap.com/) - The project used the **Bootstrap 4** for a responsive grid system.
 
+  
+
 -  [Favicon.io](https://favicon.io/favicon-converter/) - The project used the **Favicon.io** the favicon icons or the site.
+
+  
 
 -  [Autoprefixer CSS](https://autoprefixer.github.io/) - The project used the **Autoprefixer CSS** to ensure CSS compatibility with all browsers.
 
+  
+
 -  [HTML Validator](https://validator.w3.org/) - The project used the **HTML Validator** to validate and find errors in the HTML.
 
+  
+
 -  [CSS Validator](https://jigsaw.w3.org/css-validator/) -The project used the **CSS Validator** to validate and find errors in the CSS.
+
+  
+
+-  [EsLint](https://eslint.org/) - EsLint was used to find and fix issues in the Javascript.
+
+  
+
+-  [icomoon](https://icomoon.io/) - icomoon was used was the graphically elements.
+
+  
 
 -  [Balsamiq](https://balsamiq.com) https://balsamiq.com) -The project used the **Balsamiq** to generate wireframes for the site.
 
   
 
-## Testing
-
-  
-
-### Testing User Stories
-
-  
-
-#### 1. As a fan of the Tom Francis I wish to learn how to play the game Gridcannon.
-
-#### 2. As a player of the paper version of Gridcannon I wish to be able to play the game digitally when I do not have access to a deck of playing cards or the space to play.
-
-#### 3. As a fan of solitaire card games Im looking for a new game to play.
-
-#### 4. As a fan of casual relaxing mobile games like Threes I'm looking for a similar but new experience.
-
-  
-  
-
-### HTML & CSS Validation
-
-  
-
-#### HTML
-
-  
-
-The following error were found and fixed after running my **HTML** through [https://validator.w3.org/](https://validator.w3.org/)
-
-  
-  
-
-#### CSS
-
-  
-
-The following errors were found when running were found when running my **CSS** through [https://jigsaw.w3.org/css-validator/validator](https://jigsaw.w3.org/css-validator/validator)
-
-  
-
-### Browsers
-
-  
-
-The following browsers were tested for compatiblity
-
-- Google Chrome (Xiaomi Mi Mix 2s (Android) ,Honor 20 (Android), Windows 10 Laptop)
-
-- Firefox (Windows 10 Laptop)
-
-- Opera (Windows 10 Laptop)
-
-- Microsoft Edge (Windows 10 Laptop)
-
-- Internet Explorer 11 (Windows 10 Laptop)
-
-  
-
-#### Issues Found
-
-  
   
 
 ## Deployment
@@ -281,9 +345,12 @@ Currently there are no differences between the delayed branch and master branch.
 
 8. More information on cloning a Git Repository can be found [here](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 
+  
+
 9. Once you have a local version pulled from Github, browse to that directory using your OS's file borwser, locate index.html in the root directory of the project and open it with your internet browser of choice.
 
-  
+## Testing
+Testing documented is a separate [TESTS](https://github.com/Kieran-Murray-Code/CI-MS2-Gridcannon/blob/master/TESTS.md) file.
 
 ## Credits
 
@@ -291,7 +358,6 @@ Currently there are no differences between the delayed branch and master branch.
 
 ### Content
 
-  
   
 
 ### Media
@@ -305,11 +371,9 @@ Currently there are no differences between the delayed branch and master branch.
 ### Code
 
   
-  
 
 ### Acknowledgements
 
-  
   
 
 ## Disclaimer
