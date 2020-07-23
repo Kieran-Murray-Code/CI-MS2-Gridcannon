@@ -53,38 +53,48 @@ class gridSlot {
 
         const suitIcon = this.topCardElement.getElementsByClassName('suit-icon')[0];
         const slotLabel = this.topCardElement.getElementsByClassName('slot-label')[0];
+        const armourLabel = this.topCardElement.getElementsByClassName('armour-label')[0];
 
-        suitIcon.classList.remove('club');
-        suitIcon.classList.remove('spade');
-        suitIcon.classList.remove('heart');
-        suitIcon.classList.remove('diamond');
-        suitIcon.classList.remove('joker');
+        suitIcon.classList.remove('icon-clubs');
+        suitIcon.classList.remove('icon-spades');
+        suitIcon.classList.remove('icon-heart');
+        suitIcon.classList.remove('icon-diamonds');
+        suitIcon.classList.remove('icon-star-half');
         suitIcon.classList.remove('red');
         suitIcon.classList.remove('black');
         slotLabel.classList.remove('red');
         slotLabel.classList.remove('black');
+        if (armourLabel) {
+          armourLabel.classList.remove('red');
+          armourLabel.classList.remove('black');
+        }
+
 
         this.topCardElement.classList.remove('black');
         this.topCardElement.classList.remove('red');
 
         if (this.cards[0].suit === 'clubs') {
-          suitIcon.classList.add('club');
+          suitIcon.classList.add('icon-clubs');
           this.topCardElement.classList.add('red');
           slotLabel.classList.add('red');
+          if (armourLabel) { armourLabel.classList.add('red'); }
         } else if (this.cards[0].suit === 'spades') {
-          suitIcon.classList.add('spade');
+          suitIcon.classList.add('icon-spades');
           this.topCardElement.classList.add('red');
           slotLabel.classList.add('red');
+          if (armourLabel) { armourLabel.classList.add('red'); }
         } else if (this.cards[0].suit === 'hearts') {
-          suitIcon.classList.add('heart');
+          suitIcon.classList.add('icon-heart');
           this.topCardElement.classList.add('black');
           slotLabel.classList.add('black');
+          if (armourLabel) { armourLabel.classList.add('black'); }
         } else if (this.cards[0].suit === 'diamonds') {
-          suitIcon.classList.add('diamond');
+          suitIcon.classList.add('icon-diamonds');
           this.topCardElement.classList.add('black');
           slotLabel.classList.add('black');
+          if (armourLabel) { armourLabel.classList.add('black'); }
         } else if (this.cards[0].suit === 'joker') {
-          suitIcon.classList.add('joker');
+          suitIcon.classList.add('icon-star-half');
           this.topCardElement.classList.add('black');
           slotLabel.classList.add('black');
         }
