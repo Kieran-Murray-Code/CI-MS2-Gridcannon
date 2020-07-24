@@ -5,7 +5,6 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable max-classes-per-file */
 /* eslint linebreak-style: ["error", "windows"] */
-
 // CLASSES
 class GridSlot {
   /* Base Grid Slot Class -Each slot on the grid can hold a stack of cards and has ui elements which
@@ -31,18 +30,15 @@ class GridSlot {
     const numberOfCardsText = this.overlayElement.getElementsByClassName(
       'number-of-cards',
     )[0];
-
     if (numberOfCardsText) {
       numberOfCardsText.textContent = this.cards.length;
     }
-
     if (this.topCardElement != null) {
       if (this.cards.length > 0) {
         this.topCardElement.classList.remove('hide-element');
         const cardValueText = this.topCardElement.getElementsByClassName(
           'card-value',
         )[0];
-
         if (this.cards[0].cardValue === 0) {
           cardValueText.textContent = 'J';
         } else if (this.cards[0].cardValue === 1) {
@@ -56,7 +52,6 @@ class GridSlot {
         } else {
           cardValueText.textContent = this.cards[0].cardValue;
         }
-
         const suitIcon = this.topCardElement.getElementsByClassName(
           'suit-icon',
         )[0];
@@ -66,7 +61,6 @@ class GridSlot {
         const armourLabel = this.topCardElement.getElementsByClassName(
           'armour-label',
         )[0];
-
         suitIcon.classList.remove('icon-clubs');
         suitIcon.classList.remove('icon-spades');
         suitIcon.classList.remove('icon-heart');
@@ -80,10 +74,8 @@ class GridSlot {
           armourLabel.classList.remove('red');
           armourLabel.classList.remove('black');
         }
-
         this.topCardElement.classList.remove('black');
         this.topCardElement.classList.remove('red');
-
         if (this.cards[0].suit === 'clubs') {
           suitIcon.classList.add('icon-clubs');
           this.topCardElement.classList.add('red');
@@ -117,7 +109,6 @@ class GridSlot {
           this.topCardElement.classList.add('black');
           slotLabel.classList.add('black');
         }
-
         if (this.cards[0].cardValue > 10) {
           const armorLabel = this.topCardElement.getElementsByClassName(
             'armour-label',
@@ -163,7 +154,7 @@ class RoyalCardGridSlot extends GridSlot {
 }
 class NumberedCardGridSlot extends GridSlot {
   // Numbered Grid Slot adds the functionality store opposite and adjacent royal slots
-// as well as the ability to attack royal slots.
+  // as well as the ability to attack royal slots.
   constructor() {
     super();
     this.oppositeRoyalCardGridSlots = [];
@@ -182,6 +173,11 @@ class NumberedCardGridSlot extends GridSlot {
   }
 
   attackRoyals() {
+    /* Calculate the attack damage of the slots between this slot and the opposite royal slots
+    , then check if the attack is valid by checking the colour and suit of the royal compared to
+    the attack slots, Kings require matching suit, Queens require matching colour, Jacks accept
+    anything. If the attack is valid and the attack damage is greater than the royals value plus
+    it's armour the the royal is defeated */
     let verticalRoyalGridSlot;
     let verticalRoyalCard;
     let horizontalRoyalGridSlot;
@@ -192,7 +188,6 @@ class NumberedCardGridSlot extends GridSlot {
     let verticalDamage = 0;
     let horizontalRoyalIndex;
     let horizontalDamage = 0;
-
     if (this.oppositeRoyalCardGridSlots[0] != null) {
       horizontalRoyalIndex = this.oppositeRoyalCardGridSlots[0];
       if (royalCardGrid[horizontalRoyalIndex]) {
@@ -211,7 +206,6 @@ class NumberedCardGridSlot extends GridSlot {
         }
       }
     }
-
     if (this.verticalAttackSlots.length != 0) {
       verticalAttackCards.unshift(
         gameManager.numberCardGrid[this.verticalAttackSlots[0]].cards[0],
@@ -221,7 +215,6 @@ class NumberedCardGridSlot extends GridSlot {
       );
       let verticalDamage01 = 0;
       let verticalDamage02 = 0;
-
       if (
         gameManager.numberCardGrid[this.verticalAttackSlots[0]].cards.length > 0
       ) {
@@ -234,10 +227,8 @@ class NumberedCardGridSlot extends GridSlot {
         verticalDamage02 = gameManager.numberCardGrid[this.verticalAttackSlots[1]].cards[0]
           .cardValue;
       }
-
       verticalDamage = verticalDamage01 + verticalDamage02;
     }
-
     if (this.horizontalAttackSlots.length != 0) {
       horizontalAttackCards.unshift(
         gameManager.numberCardGrid[this.horizontalAttackSlots[0]].cards[0],
@@ -247,7 +238,6 @@ class NumberedCardGridSlot extends GridSlot {
       );
       let horizontalDamage01 = 0;
       let horizontalDamage02 = 0;
-
       if (
         gameManager.numberCardGrid[this.horizontalAttackSlots[0]].cards.length
         > 0
@@ -264,7 +254,6 @@ class NumberedCardGridSlot extends GridSlot {
       }
       horizontalDamage = horizontalDamage01 + horizontalDamage02;
     }
-
     // Check if Royal is a Jack, King Queen or empty
     // If it's a Jack then then the attack power must be greater or equal to the value + armour
     // If it's a Queen then the two attack cards must equal the Queens colour
@@ -289,7 +278,6 @@ class NumberedCardGridSlot extends GridSlot {
         }
       }
     }
-
     if (horizontalRoyalCard) {
       if (horizontalAttackCards[0] && horizontalAttackCards[1]) {
         if (horizontalRoyalCard.royalType === 'jack') {
@@ -298,9 +286,9 @@ class NumberedCardGridSlot extends GridSlot {
           if (horizontalAttackCards[0] && horizontalAttackCards[1]) {
             if (
               horizontalRoyalCard.cardColour
-                === horizontalAttackCards[0].cardColour
+              === horizontalAttackCards[0].cardColour
               && horizontalRoyalCard.cardColour
-                === horizontalAttackCards[1].cardColour
+              === horizontalAttackCards[1].cardColour
             ) {
               horizontalRoyalGridSlot.applyDamage(horizontalDamage);
             }
@@ -317,7 +305,7 @@ class NumberedCardGridSlot extends GridSlot {
 }
 class DeckGridSlot extends GridSlot {
   // Deck grid slot adds the functionality to create a deck of cards, shuffle a deck of
-// cards as well as draw a card.
+  // cards as well as draw a card.
   shuffle() {
     // Fisher Yates shuffle: https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle.
     for (let i = this.cards.length - 1; i > 0; i -= 1) {
@@ -370,7 +358,6 @@ class DeckGridSlot extends GridSlot {
         this.cards.unshift(cardInstance);
       }
     }
-
     for (let i = 0; i < numberOfJokers; i += 1) {
       cardInstance = new Card();
       cardInstance.suit = 'joker';
@@ -453,7 +440,6 @@ const gameManager = {
   },
   generateNumberedCardGrid() {
     const numberedCardGridSlotElements = $('.card-slot.numbered');
-
     for (let i = 0; i < numberedCardGridSlotElements.length; i += 1) {
       this.numberCardGrid[i] = new NumberedCardGridSlot();
       this.numberCardGrid[i].element = numberedCardGridSlotElements[i];
@@ -464,38 +450,30 @@ const gameManager = {
         i
       ].element.getElementsByClassName('slot-highlight')[0];
     }
-
     this.numberCardGrid[0].oppositeRoyalCardGridSlots = [7, 2];
     this.numberCardGrid[0].adjacentRoyalGridSlots = [11, 8];
     this.numberCardGrid[0].verticalAttackSlots = [3, 6];
     this.numberCardGrid[0].horizontalAttackSlots = [1, 2];
-
     this.numberCardGrid[1].oppositeRoyalCardGridSlots = [null, 1];
     this.numberCardGrid[1].adjacentRoyalGridSlots = [10];
     this.numberCardGrid[1].verticalAttackSlots = [4, 7];
-
     this.numberCardGrid[2].oppositeRoyalCardGridSlots = [8, 0];
     this.numberCardGrid[2].adjacentRoyalGridSlots = [7, 9];
     this.numberCardGrid[2].verticalAttackSlots = [5, 8];
     this.numberCardGrid[2].horizontalAttackSlots = [0, 1];
-
     this.numberCardGrid[3].oppositeRoyalCardGridSlots = [5, null];
     this.numberCardGrid[3].adjacentRoyalGridSlots = [6];
     this.numberCardGrid[3].horizontalAttackSlots = [4, 5];
-
     this.numberCardGrid[5].oppositeRoyalCardGridSlots = [6, null];
     this.numberCardGrid[5].adjacentRoyalGridSlots = [5];
     this.numberCardGrid[5].horizontalAttackSlots = [3, 4];
-
     this.numberCardGrid[6].oppositeRoyalCardGridSlots = [3, 11];
     this.numberCardGrid[6].adjacentRoyalGridSlots = [2, 4];
     this.numberCardGrid[6].verticalAttackSlots = [0, 3];
     this.numberCardGrid[6].horizontalAttackSlots = [7, 8];
-
     this.numberCardGrid[7].oppositeRoyalCardGridSlots = [null, 10];
     this.numberCardGrid[7].adjacentRoyalGridSlots = [1];
     this.numberCardGrid[7].verticalAttackSlots = [1, 4];
-
     this.numberCardGrid[8].oppositeRoyalCardGridSlots = [4, 9];
     this.numberCardGrid[8].adjacentRoyalGridSlots = [0, 3];
     this.numberCardGrid[8].verticalAttackSlots = [2, 5];
@@ -535,20 +513,30 @@ const gameManager = {
     if (hand.cards.length === 0) {
       cycleForRoyal();
     }
-
     deck.updateCardVisuals();
   },
   findValidMoves() {
     if (cardInHand) {
+      // Check what type the card is that the player is moving
+      // to determine what slots could be valid.
       if (cardInHand.cardType === 'royal') {
+        /* With a royal in hand loop through the numbered card grid to find the card that is most
+        similar to the royal, check if there are free royal slots adjacent to that numbered slot.
+        If there are no free royal slots adjacent then find the next most similar card.
+        To find the most similar card:
+        1.First check for highest value card of the same suit as the royal.
+         2.If there are no cards with a matching suit then look for the highest value card of the
+         same colour as the royal.
+         3.If there are no cards with a matching colour then find the card with the highest value.
+        When the most similar card with free adjacent royal slots is found, make those slots
+        dropzones and highlight them as valid moves.
+         */
         let highestValueMatchingSlot = new NumberedCardGridSlot();
         for (let i = 0; i < this.numberCardGrid.length; i += 1) {
           if (i === 4) {
             continue;
           }
-
           let royalSlotAvailable = false;
-
           for (
             let j = 0;
             j < this.numberCardGrid[i].adjacentRoyalGridSlots.length;
@@ -561,7 +549,6 @@ const gameManager = {
               royalSlotAvailable = true;
             }
           }
-
           if (royalSlotAvailable === false) {
             continue;
           }
@@ -584,7 +571,11 @@ const gameManager = {
             }
           } else {
             const emptySlot = this.numberCardGrid[i];
-            for (let j = 0; j < emptySlot.adjacentRoyalGridSlots.length; j += 1) {
+            for (
+              let j = 0;
+              j < emptySlot.adjacentRoyalGridSlots.length;
+              j += 1
+            ) {
               if (
                 royalCardGrid[emptySlot.adjacentRoyalGridSlots[j]].cards
                   .length === 0
@@ -602,9 +593,7 @@ const gameManager = {
             if (i === 4) {
               continue;
             }
-
             let royalSlotAvailable = false;
-
             for (
               let j = 0;
               j < this.numberCardGrid[i].adjacentRoyalGridSlots.length;
@@ -617,11 +606,9 @@ const gameManager = {
                 royalSlotAvailable = true;
               }
             }
-
             if (royalSlotAvailable === false) {
               continue;
             }
-
             if (this.numberCardGrid[i].cards.length > 0) {
               if (
                 this.numberCardGrid[i].cards[0].cardColour
@@ -650,9 +637,7 @@ const gameManager = {
             if (i === 4) {
               continue;
             }
-
             let royalSlotAvailable = false;
-
             for (
               let j = 0;
               j < this.numberCardGrid[i].adjacentRoyalGridSlots.length;
@@ -665,7 +650,6 @@ const gameManager = {
                 royalSlotAvailable = true;
               }
             }
-
             if (royalSlotAvailable === false) {
               continue;
             }
@@ -685,7 +669,6 @@ const gameManager = {
             }
           }
         }
-
         for (
           let i = 0;
           i < highestValueMatchingSlot.adjacentRoyalGridSlots.length;
@@ -701,13 +684,19 @@ const gameManager = {
           }
         }
       } else if (cardInHand.cardType === 'numbered') {
+        /* If the card in hand is a numbered card loop through the numbered card grid to find any
+        cards that have an equal or lower value to the card in hand. Any slots that match become
+        dropzones and get highlighted for valid moves. If no valid move can found in the number
+        gird then find the royal that is that is most similar, make a dropzone and highlight it.
+         The numbered card must be dropped on the royal and it's value added to the royals armour
+         value. */
         if (gameManager.state === 'game-active') {
           let matchFound = false;
           for (let i = 0; i < gameManager.numberCardGrid.length; i += 1) {
             if (gameManager.numberCardGrid[i].cards.length > 0) {
               if (
                 gameManager.numberCardGrid[i].cards[0].cardValue
-                  <= cardInHand.cardValue
+                <= cardInHand.cardValue
                 && gameManager.numberCardGrid[i].cards[0] != cardInHand
               ) {
                 gameManager.numberCardGrid[i].element.classList.add('dropzone');
@@ -717,7 +706,6 @@ const gameManager = {
               gameManager.numberCardGrid[i].element.classList.add('dropzone');
             }
           }
-
           if (matchFound === false) {
             // Find the lowest royal of matching suit
             let lowestMatchingRoyalSlot;
@@ -746,7 +734,7 @@ const gameManager = {
                 if (royalCardGrid[i].cards != 0) {
                   if (
                     royalCardGrid[i].cards[0].cardColour
-                      === cardInHand.cardColour
+                    === cardInHand.cardColour
                     && royalCardGrid[i].cards[0].isDefeated === false
                   ) {
                     if (lowestMatchingRoyalSlot) {
@@ -785,9 +773,15 @@ const gameManager = {
             lowestMatchingRoyalSlot.element.classList.add('dropzone');
           }
         } else if (gameManager.state === 'taking-a-mulligan') {
+          /* Only if the player is swapping a card in the setup phase will the deck become a
+           dropzone. */
           deck.element.classList.add('dropzone');
         }
       } else if (cardInHand.cardType === 'ace') {
+        /* If the card in hand is an Ace then all slots on the numbered grid become dropzone
+        and highlighted as valid moves. The Ace was picked up from the Hand then the Aces deck
+        will also become a dropzone and highlighted as a valid move as Aces can be stored in
+        the aces deck to be played at a later time */
         if (cardInHandSlotType === 'hand') {
           acesDeck.element.classList.add('dropzone');
           for (let i = 0; i < this.numberCardGrid.length; i += 1) {
@@ -803,6 +797,10 @@ const gameManager = {
           }
         }
       } else if (cardInHand.cardType === 'joker') {
+        /* If the card in hand is an Joker then all slots on the numbered grid become dropzone
+        and highlighted as valid moves. The Ace was picked up from the Hand then the Joker deck
+        will also become a dropzone and highlighted as a valid move as Aces can be stored in
+        the aces deck to be played at a later time */
         if (cardInHandSlotType === 'hand') {
           jokerDeck.element.classList.add('dropzone');
         }
@@ -813,7 +811,6 @@ const gameManager = {
     }
   },
 };
-
 // VARIABLES
 const cardSuits = ['clubs', 'spades', 'hearts', 'diamonds']; // Parameters for generating the deck of cards.
 const numberOfJokers = 2; // Parameters for generating the deck of cards.
@@ -829,7 +826,6 @@ let hand = {};
 let numberOfRoyalsDefeated = 0;
 let dragging = false;
 let lastSlotClicked;
-
 // UI Buttons Events.
 $('#play-button').click(function onPlayClicked() {
   gameManager.populateNumberedCardGrid();
@@ -871,8 +867,8 @@ $('.card-slot').click(function onCardSlotClicked() {
   }
 });
 $('#reset-icon').click(function onResetClicked() {
+  // Reset the game back to its initial state without refreshing the browser.
   $(this).addClass('remove-element');
-
   lastSlotClicked = null;
   deck.element.classList.remove('clicked');
   // Cycle through the number grid and push all cards back into the deck.target
@@ -883,7 +879,6 @@ $('#reset-icon').click(function onResetClicked() {
     gameManager.numberCardGrid[i].topCardElement.classList.remove('draggable');
     gameManager.numberCardGrid[i].element.classList.remove('clicked');
   }
-
   // Cycle through the royal grid and push all cards back into the deck.target
   for (let i = 0; i < royalCardGrid.length; i += 1) {
     royalCardGrid[i].cards.armour = 0;
@@ -894,34 +889,28 @@ $('#reset-icon').click(function onResetClicked() {
     royalCardGrid[i].element.classList.remove('clicked');
     // royalCardGrid[i].element.classList.add("hide-element");
   }
-
   // Push the discard pile into the deck.
   Array.prototype.push.apply(deck.cards, discardDeck.cards);
   discardDeck.cards = [];
   discardDeck.updateCardVisuals();
   discardDeck.element.classList.remove('clicked');
-
   // Push the aces pile into the deck.
   Array.prototype.push.apply(deck.cards, acesDeck.cards);
   acesDeck.cards = [];
   acesDeck.updateCardVisuals();
   acesDeck.element.classList.remove('clicked');
-
   // Push the joker pile into the deck.
   Array.prototype.push.apply(deck.cards, jokerDeck.cards);
   jokerDeck.cards = [];
   jokerDeck.updateCardVisuals();
   jokerDeck.element.classList.remove('clicked');
-
   // Push the hand pile into the deck.
   Array.prototype.push.apply(deck.cards, hand.cards);
   hand.cards = [];
   hand.updateCardVisuals();
   hand.element.classList.remove('clicked');
-
   deck.shuffle();
   deck.updateCardVisuals();
-
   $('.deck-name').addClass('hide-element');
   $('.deck').addClass('hide-element');
   $('#play-button').removeClass('remove-element');
@@ -930,41 +919,12 @@ $('#reset-icon').click(function onResetClicked() {
   $('#info-text').text(
     'Welcome to Gridcannon. Press play to deal a new number grid.',
   );
-
   acesDeck.topCardElement.classList.remove('draggable');
   jokerDeck.topCardElement.classList.remove('draggable');
   hand.topCardElement.classList.remove('draggable');
   gameManager.state = 'start';
 });
-
-// Progress the setup phase of the game to requiring the player to place the
-// royals that were drawn when populating the number grid.
-function allowPlacingOfRoyals() {
-  $('#reset-icon').removeClass('remove-element');
-  gameManager.state = 'placing-royals';
-  $('#info-text').text('Now place all royals from your hand onto the board');
-  hand.topCardElement.classList.add('draggable');
-  $('.deck-name').removeClass('hide-element');
-  $('.deck').removeClass('hide-element');
-}
-// Complete the setup phase of the game and move the main game phase.
-// The Hand, Aces & Jokers deck are now unlocked.
-function moveToGameActive() {
-  $('#yes-button').addClass('remove-element');
-  $('.deck-name').removeClass('hide-element');
-  $('.deck').removeClass('hide-element');
-  gameManager.state = 'game-active';
-  $('#info-text').text('Kill The Royals');
-  hand.addCardToSlot(deck.drawCard());
-  hand.topCardElement.classList.add('draggable');
-  acesDeck.topCardElement.classList.add('draggable');
-  jokerDeck.topCardElement.classList.add('draggable');
-  for (let i = 0; i < gameManager.numberCardGrid.length; i += 1) {
-    gameManager.numberCardGrid[i].topCardElement.classList.remove('draggable');
-  }
-}
-
-// InjeractJS Drag & Drop Events
+// InteractJS Drag & Drop Events
 interact('.draggable').draggable({
   listeners: {
     move(event) {
@@ -974,7 +934,6 @@ interact('.draggable').draggable({
     },
   },
 });
-
 let clone = null;
 interact('.draggable').draggable({
   listeners: {
@@ -984,16 +943,14 @@ interact('.draggable').draggable({
         lastSlotClicked.removeClass('clicked');
         lastSlotClicked = null;
       }
-
       // Prevent Slot Click Event from happening while dragging a card.
       dragging = true;
-
+      // Create a clone of the card that is being moved to remain in the original position.
       clone = event.target.cloneNode(true);
       clone.classList.add('clone');
       clone.classList.remove('draggable');
       event.target.parentNode.appendChild(clone);
       clone = event.target.parentNode.getElementsByClassName('clone')[0];
-
       eventTarget.style.zIndex = 10;
       if (event.target.parentNode.getAttribute('data-slot-type') === 'hand') {
         cardInHand = hand.cards[0];
@@ -1016,19 +973,15 @@ interact('.draggable').draggable({
         ].cards[0];
         cardInHandSlotType = 'numbered';
       }
-
       gameManager.findValidMoves();
     },
-
     move: dragMoveListener,
-
     end(event) {
       const eventTarget = event.target;
       eventTarget.style.zIndex = 0;
     },
   },
 });
-
 function dragMoveListener(event) {
   const { target } = event;
   const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
@@ -1038,12 +991,9 @@ function dragMoveListener(event) {
   target.setAttribute('data-x', x);
   target.setAttribute('data-y', y);
 }
-
 interact('.dropzone').dropzone({
   accept: '.card',
-
   overlap: 0.75,
-
   ondropactivate(event) {
     event.target.classList.add('drop-active');
   },
@@ -1055,10 +1005,8 @@ interact('.dropzone').dropzone({
     const dropzoneElement = event.target;
     const dropSlotGridIndex = dropzoneElement.getAttribute('data-grid-index');
     const dropSlotType = dropzoneElement.getAttribute('data-slot-type');
-
     /* If the player drags a numbered card into a numbered card slot, turn off the valid
     moves highlights and highlight the royals that will be targeted withe the attack. */
-
     if (dropSlotType === 'numbered' && draggableElementType === 'numbered') {
       for (let i = 0; i < gameManager.numberCardGrid.length; i += 1) {
         gameManager.numberCardGrid[i].overlayElement.classList.add('mute');
@@ -1072,7 +1020,6 @@ interact('.dropzone').dropzone({
           );
         }
       }
-
       const attackSlotIndices = [
         ...gameManager.numberCardGrid[dropSlotGridIndex].verticalAttackSlots,
         ...gameManager.numberCardGrid[dropSlotGridIndex].horizontalAttackSlots,
@@ -1108,6 +1055,8 @@ interact('.dropzone').dropzone({
     }
   },
   ondrop(event) {
+    /* When a card is successfully dropped into a slot, remove it from it's origin slot add it to
+    the top of the drop slots card array and update the visuals of both slots. */
     const dropSlotGridIndex = event.currentTarget.getAttribute(
       'data-grid-index',
     );
@@ -1118,7 +1067,6 @@ interact('.dropzone').dropzone({
     const dropItemParentSlotType = event.relatedTarget.parentNode.getAttribute(
       'data-slot-type',
     );
-
     clone.remove();
     if (dropSlotType === 'royal') {
       if (dropItemParentSlotType === 'hand') {
@@ -1126,13 +1074,11 @@ interact('.dropzone').dropzone({
           royalCardGrid[dropSlotGridIndex].addCardToSlot(hand.cards.shift());
         } else {
           // Add Armour
-
           const armourValue = hand.cards[0].cardValue;
           royalCardGrid[dropSlotGridIndex].cards[0].armour += armourValue;
           discardDeck.addCardToSlot(hand.cards.shift());
           discardDeck.updateCardVisuals();
         }
-
         royalCardGrid[dropSlotGridIndex].updateCardVisuals();
         hand.updateCardVisuals();
       }
@@ -1142,7 +1088,9 @@ interact('.dropzone').dropzone({
         if (hand.cards[0].cardType === 'ace') {
           discardDeck.addCardToSlot(hand.cards.shift());
           hand.updateCardVisuals();
-          gameManager.numberCardGrid[dropSlotGridIndex].shuffleCardsIntoDeck(deck);
+          gameManager.numberCardGrid[dropSlotGridIndex].shuffleCardsIntoDeck(
+            deck,
+          );
         } else if (hand.cards[0].cardType === 'joker') {
           discardDeck.addCardToSlot(hand.cards.shift());
           hand.updateCardVisuals();
@@ -1157,7 +1105,9 @@ interact('.dropzone').dropzone({
       } else if (dropItemParentSlotType === 'aceDeck') {
         discardDeck.addCardToSlot(acesDeck.cards.shift());
         acesDeck.updateCardVisuals();
-        gameManager.numberCardGrid[dropSlotGridIndex].shuffleCardsIntoDeck(deck);
+        gameManager.numberCardGrid[dropSlotGridIndex].shuffleCardsIntoDeck(
+          deck,
+        );
       } else if (dropItemParentSlotType === 'jokerDeck') {
         discardDeck.addCardToSlot(jokerDeck.cards.shift());
         jokerDeck.updateCardVisuals();
@@ -1205,7 +1155,6 @@ interact('.dropzone').dropzone({
       );
       moveToGameActive();
     }
-
     for (let i = 0; i < gameManager.numberCardGrid.length; i += 1) {
       gameManager.numberCardGrid[i].overlayElement.classList.remove('mute');
       gameManager.numberCardGrid[i].overlayElement.classList.remove('target');
@@ -1228,45 +1177,38 @@ interact('.dropzone').dropzone({
     }, 100);
   },
 });
-
+//----------------------------------
 function cycleForRoyal() {
   // Draw cards from the deck until a royal card is drawn, all non royal cards are returned to the
   // bottom of the deck.
   do {
     hand.addCardToSlot(deck.drawCard());
   } while (hand.cards[0].cardType != 'royal');
-
   while (hand.cards.length > 1) {
     deck.cards.push(hand.cards.pop());
   }
 }
-
 function gameOver() {
   // When the player wins or loses the game prevent cards from being interacted with.
   hand.topCardElement.classList.remove('draggable');
   acesDeck.topCardElement.classList.remove('draggable');
   jokerDeck.topCardElement.classList.remove('draggable');
 }
-
 function onSuccessfulMoveTaken() {
   /* Check if there are no royals on board, if not cycle through the deck until a royal
   is drawn, placing all non royal cards on the bottom of the deck.
    */
-
   /* Check if all royals on board are defeated. If the number of defeated royals is equal to 12,
   the player wins the game, if not cycle through the deck until
     a royal is drawn, placing all non royals on the bottom of the deck.
   */
-
   /* If there are undefeated royals on the board check if a royal has armour that brings
   their health total (value + armour) above 20 ,if a royals health is above 20 they can't
   be defeated and the player loses the game.
-
   If there are undefeated royals on the board that can still be defeated check if there are cards
   left in the deck, if there are cards left draw a card,if there are no cards left check if the
   player has any ploys left to play. If there are no ploys left to play, the player loses the game.
   */
-
   if (gameManager.state === 'placing-royals') {
     if (hand.cards.length === 0) {
       activateMulliganUI();
@@ -1279,7 +1221,7 @@ function onSuccessfulMoveTaken() {
       if (royalCardGrid[i].cards.length > 0) {
         if (
           royalCardGrid[i].cards[0].cardValue
-            + royalCardGrid[i].cards[0].armour
+          + royalCardGrid[i].cards[0].armour
           > 20
         ) {
           gameOver();
@@ -1320,7 +1262,6 @@ function onSuccessfulMoveTaken() {
   }
   deck.updateCardVisuals();
 }
-
 function activateMulliganUI() {
   // Enter a state where the player can choose if they want to swap a card from the
   // grid for a new card in the deck.
@@ -1334,7 +1275,32 @@ function activateMulliganUI() {
   $('.deck-name').addClass('hide-element');
   $('.deck').addClass('hide-element');
 }
-
+function allowPlacingOfRoyals() {
+  // Progress the setup phase of the game to requiring the player to place the
+  // royals that were drawn when populating the number grid.
+  $('#reset-icon').removeClass('remove-element');
+  gameManager.state = 'placing-royals';
+  $('#info-text').text('Now place all royals from your hand onto the board');
+  hand.topCardElement.classList.add('draggable');
+  $('.deck-name').removeClass('hide-element');
+  $('.deck').removeClass('hide-element');
+}
+function moveToGameActive() {
+  // Complete the setup phase of the game and move the main game phase.
+  // The Hand, Aces & Jokers deck are now unlocked.
+  $('#yes-button').addClass('remove-element');
+  $('.deck-name').removeClass('hide-element');
+  $('.deck').removeClass('hide-element');
+  gameManager.state = 'game-active';
+  $('#info-text').text('Kill The Royals');
+  hand.addCardToSlot(deck.drawCard());
+  hand.topCardElement.classList.add('draggable');
+  acesDeck.topCardElement.classList.add('draggable');
+  jokerDeck.topCardElement.classList.add('draggable');
+  for (let i = 0; i < gameManager.numberCardGrid.length; i += 1) {
+    gameManager.numberCardGrid[i].topCardElement.classList.remove('draggable');
+  }
+}
 function newGame() {
   // Call all the functions to setup up the game board, this is only needed when the page is loaded
   // for the first time, after this the reset function will restore the game to a new game state.
@@ -1346,9 +1312,7 @@ function newGame() {
   gameManager.generateNumberedCardGrid();
   gameManager.generateRoyalCardGrid();
 }
-
 function onReady() {
   newGame();
 }
-
 $(document).ready(onReady);
