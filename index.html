@@ -12,11 +12,9 @@
     <!-- Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
     <title>Gridcannon A Game By Tom Francis</title>
-
 </head>
 
 <body>
-
     <header class="container-fluid p-0">
         <nav class="navbar navbar-expand-lg navbar-light">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
@@ -26,11 +24,8 @@
             <a class="navbar-title" href="#">Gridcannon</a>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
-                    </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="how-to-play.html">How To Play</a>
+                        <a class="nav-link" href="index.html">How To Play<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="play.html">Play</a>
@@ -39,28 +34,124 @@
             </div>
         </nav>
     </header>
-
-    <div id="gameboard" class="container-fluid p-0 grid">
-        <div class="row no-gutters">
-            <div class="col col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
-                <p>Gridcannon is a solitaire game that uses a traditional deck of cards with jokers. The game was made
-                    by Tom Francis and Chris Thursten in 2019. In the game you have a 3x3 grid of number cards and
-                    around it you have face cards. The face cards are called royals and the goal of the game is to
-                    assassinate all 12 of them. If you manage to do this you win the game. Number cards may only be
-                    played on matching or lower numbers. In order to kill a royal, you place a card opposite him/her -
-                    which means you have lit the charge on a cannon - and you use the two cards between the trigger and
-                    the royal, the "payload", to do that much damage. Payloads can include any suits when attacking
-                    jacks, but must match the color of any queens attacked and the suit of attacked kings. Aces and
-                    jokers provide you with special actions.</p>
-            </div>
+    <div class="row no-gutters">
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <p>Gridcannon is a solitaire game that uses a traditional deck of cards with jokers. The game was made
+                by Tom Francis and Chris Thursten in 2019.<br><br> In the game you have a 3x3 grid of number cards and
+                around it you have face cards. The face cards are called royals and the goal of the game is to
+                assassinate all 12 of them. If you manage to do this you win the game.</p>
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <h2>The Goal</h2>
+            <p>Find all the royal cards in the deck and place them in the royal slots on the board. Assassinate the
+                royals by using the numbered cards to attack them. </p>
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <h2>3x3 Inner Grid</h2>
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <img src="./assets/images/3x3 Number Grid.png" class="img-fluid gif mx-auto d-block mx-auto d-block">
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <p>The 3x3 inner grid it where numbered cards from 2-10 can be placed. Number cards can only be placed on
+                cards of equal or lower value.</p>
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <h2>12 Royal Slots</h2>
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <img src="./assets/images/12 Royals Grid.png" class="img-fluid gif mx-auto d-block">
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <p>The outer 12 grid slots are the royal slots were the face cards Jack, Queen & King can be placed. Royals
+                must be placed next to the numbered card most similar to it</p>
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <h2>Deck Area</h2>
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <img src="./assets/images/Deck Area.png" class="img-fluid gif mx-auto d-block">
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <p>The deck area had 5 different deck. Discard, Deck, Hand, Aces & Jokers.</p>
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <h2>Moving & Placing Cards</h2>
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <img src="./assets/gifs/Placing Royal.gif" class="img-fluid gif mx-auto d-block">
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <p>A card that can moved will have a green highlight around it. Drag the card to move, when you do all valid
+                slots
+                that the card can be moved to will highlighted with a black tint and outline. Drop a card unto a valid
+                slot to move
+                it there.</p>
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <h2>Targeting & Attacking</h2>
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <img src="./assets/gifs/Targetting Royal.gif" class="img-fluid gif mx-auto d-block">
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <p>Dragging a numbered card into a valid slot will highlight the attack that it will make if it is dropped
+                there.</p>
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <img src="./assets/gifs/Attacking A Royal.gif" class="img-fluid gif mx-auto d-block">
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <p>When dropped it will fire the payload at the royal slots opposite it. The payload is the sum of the 2
+                cards between the
+                dropped card and the royal. In this case 5 + 10 = 15 which is greater than the Jacks value of 11 .If a
+                valid attack with enough damage is
+                done the the royal is defeated and flips over. Kings require both payload card to the same suit as the
+                King, Queens require that both payload
+                cards are the same colour as the Queen. Jacks will accept any suit or colour in the payload.
+            </p>
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <h2>Armour</h2>
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <img src="./assets/gifs/Adding Armour.gif" class="img-fluid gif mx-auto d-block">
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <p>If a numbered card has no valid move then it must be added to the most similar Royal as armour.
+                Armour adds to the Royals value so a greater attack is required to defeat them. Using Ploy cards can
+                prevent the need to add armour.</p>
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <h2>Aces (Ploy 1)</h2>
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <img src="./assets/gifs/Using an Ace.gif" class="img-fluid gif mx-auto d-block">
+        </div>
+        <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+            <p>(Extractions): These can be used to shuffle a stack of cards from the numbered grid back into the
+                deck, this leaves a blank slot on the grid that any numbered card can be played onto.</p>
         </div>
     </div>
-
-
-    <div class="container-fluid p-0">
-
+    <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+        <h2>Jokers (Ploy 2)</h2>
+    </div>
+    <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+        <img src="./assets/gifs/Using a Joker.gif" class="img-fluid gif mx-auto d-block">
+    </div>
+    <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+        <p>(Reassignments): These can be used to move the top card of a numbered slot to another numbered
+            slot, the reassigned top card must follow the normal rules for placing a numbered card and must be
+            placed on a slot with a card value of equal or lower value.</p>
     </div>
 
+    <div class="col-10 offset-1 col-sm-8 offset-sm-2 col-lg-6 offset-lg-3">
+        <h2>Winning & Losing</h2>
+        <p>The game is won if all the royals are defeated.
+            The game is lost if there are no cards left in the deck and no ploys left to play.
+            The game is lost if a royal becomes too powerful to defeat, this happens if a royal gains enough armour
+            that it's value plus armour exceeds 20, since the most an attack can be made for is 20.</p>
+    </div>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">

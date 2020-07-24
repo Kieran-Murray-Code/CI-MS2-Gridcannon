@@ -102,16 +102,9 @@ With a mobile first approach in mind I wanted to the UI of the game to be sharp 
 
   
 
+
+<div align="center"> <img src="http://asherv.com/threes/images/THREES_trailer.gif"></div>
   
-
-![Threes](http://asherv.com/threes/images/THREES_trailer.gif)
-
-  
-
-  
-
-  
-
 I decided to go with SVG graphics and text so that everything would stay sharp and clear no matter the screen size, all graphic elements being SVG based would also make loading times quick and mobile friendly.
 
   
@@ -506,6 +499,8 @@ Testing documented is a separate [TESTS](https://github.com/Kieran-Murray-Code/C
  - Game design by [Tom Francis](https://twitter.com/Pentadact) & [Chris Thursten](https://twitter.com/CThursten).
  - [Gridcannon Rules](https://www.pentadact.com/2019-08-20-gridcannon-a-single-player-game-with-regular-playing-cards/).
  - [Web version of Gridcannon ](https://herebemike.github.io/Gridcannon/site/) developed by [HereBeMike](https://twitter.com/HereBeMike).
+
+[https://www.cufonfonts.com/font/aachen-std](https://www.cufonfonts.com/font/aachen-std)
 
 ## Disclaimer
 **For educational purposes.**
