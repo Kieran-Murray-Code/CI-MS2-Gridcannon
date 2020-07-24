@@ -548,3 +548,8 @@ h2 {
 .gif{
   margin-top: .5rem;
 }
+
+.youtube-embed {
+	border: solid .5rem var(--color-gameboard-primary);
+	margin-bottom: 5rem;
+}
