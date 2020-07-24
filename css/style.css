@@ -529,11 +529,11 @@ height: 100%;
     font-weight: 900;
 }
 
-p , ul{
+p {
   margin-top: 1rem;
   color: white;
   font-family: 'Roboto Mono', monospace;
-  font-size: 1rem;
+  font-size: 1.1rem;
   text-align: center;
 }
 
@@ -552,4 +552,25 @@ h2 {
 .youtube-embed {
 	border: solid .5rem var(--color-gameboard-primary);
 	margin-bottom: 5rem;
+}
+
+.nav-link{
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.navbar-title:hover{
+  text-decoration : none;
+  color: var(--color-gameboard-tertiary);
+}
+
+.navbar-nav .nav-item:not(:last-child) {
+  border-right: .2rem solid var(--color-gameboard-tertiary);
+}
+
+@media (max-width: 768px) {
+ .navbar-nav .nav-item:not(:last-child) {
+   border-right: none;
+ }
 }

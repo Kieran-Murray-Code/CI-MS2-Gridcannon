@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable no-undef */
 /* eslint-disable no-continue */
 /* eslint-disable no-use-before-define */
@@ -6,15 +7,13 @@
 /* eslint linebreak-style: ["error", "windows"] */
 
 // CLASSES
-/* Base Grid Slot Class -Each slot on the grid can hold a stack of cards and has ui elements which
+class GridSlot {
+  /* Base Grid Slot Class -Each slot on the grid can hold a stack of cards and has ui elements which
   show the top card of the stack as well as an overlay for
   highlight valid moves and giving user info. It has functions for adding cards to the stack as
    well
   update the visuals when a new card has been added.
 */
-let numberOfRoyalsDefeated = 0;
-
-class GridSlot {
   constructor() {
     this.cards = [];
     this.element = null;
@@ -144,6 +143,7 @@ class GridSlot {
   }
 }
 class RoyalCardGridSlot extends GridSlot {
+  // Royal Grid slot adds the functionality to take damage.
   applyDamage(damage) {
     if (damage >= this.cards[0].cardValue + this.cards[0].armour) {
       this.element.classList.add('flipped');
@@ -161,9 +161,9 @@ class RoyalCardGridSlot extends GridSlot {
     }
   }
 }
-// Numbered Grid Slot adds the functionality store opposite and adjacent royal slots
-// as well as the ability to attack royal slots.
 class NumberedCardGridSlot extends GridSlot {
+  // Numbered Grid Slot adds the functionality store opposite and adjacent royal slots
+// as well as the ability to attack royal slots.
   constructor() {
     super();
     this.oppositeRoyalCardGridSlots = [];
@@ -315,11 +315,11 @@ class NumberedCardGridSlot extends GridSlot {
     }
   }
 }
-// Deck grid slot adds the functionality to create a deck of cards, shuffle a deck of
-// cards as well as draw a card.
 class DeckGridSlot extends GridSlot {
-  // Ficher Yates shuffle.
+  // Deck grid slot adds the functionality to create a deck of cards, shuffle a deck of
+// cards as well as draw a card.
   shuffle() {
+    // Fisher Yates shuffle: https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle.
     for (let i = this.cards.length - 1; i > 0; i -= 1) {
       const randomIndex = Math.floor(Math.random() * (i + 1));
       const firstCard = this.cards[i];
@@ -362,7 +362,6 @@ class DeckGridSlot extends GridSlot {
             cardInstance.royalType = 'king';
           }
         }
-
         if (cardSuits[i] === 'clubs' || cardSuits[i] === 'spades') {
           cardInstance.cardColour = 'black';
         } else {
@@ -381,12 +380,27 @@ class DeckGridSlot extends GridSlot {
     }
   }
 }
-// Royal Grid slot adds the functionality to take damage.
-
-let deck = new DeckGridSlot();
+class Card {
+  // Card base class.
+  constructor() {
+    this.suit = '';
+    this.cardValue = 0;
+    this.cardType = '';
+    this.cardColour = '';
+  }
+}
+class RoyalCard extends Card {
+  // Royal card adds armour and the ability to be defeated.
+  constructor() {
+    super();
+    this.royalType = '';
+    this.armour = 0;
+    this.isDefeated = false;
+  }
+}
+// OBJECTS
 const gameManager = {
   state: 'start',
-
   numberCardGrid: [],
   deckSetup() {
     deck.initialise();
@@ -524,7 +538,6 @@ const gameManager = {
 
     deck.updateCardVisuals();
   },
-
   findValidMoves() {
     if (cardInHand) {
       if (cardInHand.cardType === 'royal') {
@@ -801,28 +814,7 @@ const gameManager = {
   },
 };
 
-// Card base class.
-class Card {
-  constructor() {
-    this.suit = '';
-    this.cardValue = 0;
-    this.cardType = '';
-    this.cardColour = '';
-  }
-}
-
-// Royal card adds armour and the ability to be defeated.
-class RoyalCard extends Card {
-  constructor() {
-    super();
-    this.royalType = '';
-    this.armour = 0;
-    this.isDefeated = false;
-  }
-}
-
 // VARIABLES
-
 const cardSuits = ['clubs', 'spades', 'hearts', 'diamonds']; // Parameters for generating the deck of cards.
 const numberOfJokers = 2; // Parameters for generating the deck of cards.
 let royalCardGrid = [];
@@ -832,28 +824,18 @@ let lastCardPlayed;
 const jokerDeck = new GridSlot();
 const acesDeck = new GridSlot();
 const discardDeck = new GridSlot();
+let deck = new DeckGridSlot();
 let hand = {};
-
+let numberOfRoyalsDefeated = 0;
 let dragging = false;
 let lastSlotClicked;
 
-// Interaction Events
-
+// UI Buttons Events.
 $('#play-button').click(function onPlayClicked() {
   gameManager.populateNumberedCardGrid();
   this.classList.add('remove-element');
   allowPlacingOfRoyals();
 });
-
-function allowPlacingOfRoyals() {
-  $('#reset-icon').removeClass('remove-element');
-  gameManager.state = 'placing-royals';
-  $('#info-text').text('Now place all royals from your hand onto the board');
-  hand.topCardElement.classList.add('draggable');
-  $('.deck-name').removeClass('hide-element');
-  $('.deck').removeClass('hide-element');
-}
-
 $('#yes-button').click(function onYesClicked() {
   this.classList.add('remove-element');
   $('#no-button').addClass('remove-element');
@@ -867,12 +849,122 @@ $('#yes-button').click(function onYesClicked() {
   );
   gameManager.state = 'taking-a-mulligan';
 });
-
 $('#no-button').click(function onNoClicked() {
   this.classList.add('remove-element');
   moveToGameActive();
 });
+$('.card-slot').click(function onCardSlotClicked() {
+  if (dragging === false) {
+    if (lastSlotClicked) {
+      if (lastSlotClicked.is($(this))) {
+        $(this).toggleClass('clicked');
+        lastSlotClicked = null;
+      } else {
+        lastSlotClicked.toggleClass('clicked');
+        $(this).toggleClass('clicked');
+        lastSlotClicked = $(this);
+      }
+    } else {
+      $(this).toggleClass('clicked');
+      lastSlotClicked = $(this);
+    }
+  }
+});
+$('#reset-icon').click(function onResetClicked() {
+  $(this).addClass('remove-element');
 
+  lastSlotClicked = null;
+  deck.element.classList.remove('clicked');
+  // Cycle through the number grid and push all cards back into the deck.target
+  for (let i = 0; i < gameManager.numberCardGrid.length; i += 1) {
+    Array.prototype.push.apply(deck.cards, gameManager.numberCardGrid[i].cards);
+    gameManager.numberCardGrid[i].cards = [];
+    gameManager.numberCardGrid[i].updateCardVisuals();
+    gameManager.numberCardGrid[i].topCardElement.classList.remove('draggable');
+    gameManager.numberCardGrid[i].element.classList.remove('clicked');
+  }
+
+  // Cycle through the royal grid and push all cards back into the deck.target
+  for (let i = 0; i < royalCardGrid.length; i += 1) {
+    royalCardGrid[i].cards.armour = 0;
+    Array.prototype.push.apply(deck.cards, royalCardGrid[i].cards);
+    royalCardGrid[i].cards = [];
+    royalCardGrid[i].updateCardVisuals();
+    royalCardGrid[i].element.classList.remove('flipped');
+    royalCardGrid[i].element.classList.remove('clicked');
+    // royalCardGrid[i].element.classList.add("hide-element");
+  }
+
+  // Push the discard pile into the deck.
+  Array.prototype.push.apply(deck.cards, discardDeck.cards);
+  discardDeck.cards = [];
+  discardDeck.updateCardVisuals();
+  discardDeck.element.classList.remove('clicked');
+
+  // Push the aces pile into the deck.
+  Array.prototype.push.apply(deck.cards, acesDeck.cards);
+  acesDeck.cards = [];
+  acesDeck.updateCardVisuals();
+  acesDeck.element.classList.remove('clicked');
+
+  // Push the joker pile into the deck.
+  Array.prototype.push.apply(deck.cards, jokerDeck.cards);
+  jokerDeck.cards = [];
+  jokerDeck.updateCardVisuals();
+  jokerDeck.element.classList.remove('clicked');
+
+  // Push the hand pile into the deck.
+  Array.prototype.push.apply(deck.cards, hand.cards);
+  hand.cards = [];
+  hand.updateCardVisuals();
+  hand.element.classList.remove('clicked');
+
+  deck.shuffle();
+  deck.updateCardVisuals();
+
+  $('.deck-name').addClass('hide-element');
+  $('.deck').addClass('hide-element');
+  $('#play-button').removeClass('remove-element');
+  $('#yes-button').addClass('remove-element');
+  $('#no-button').addClass('remove-element');
+  $('#info-text').text(
+    'Welcome to Gridcannon. Press play to deal a new number grid.',
+  );
+
+  acesDeck.topCardElement.classList.remove('draggable');
+  jokerDeck.topCardElement.classList.remove('draggable');
+  hand.topCardElement.classList.remove('draggable');
+  gameManager.state = 'start';
+});
+
+// Progress the setup phase of the game to requiring the player to place the
+// royals that were drawn when populating the number grid.
+function allowPlacingOfRoyals() {
+  $('#reset-icon').removeClass('remove-element');
+  gameManager.state = 'placing-royals';
+  $('#info-text').text('Now place all royals from your hand onto the board');
+  hand.topCardElement.classList.add('draggable');
+  $('.deck-name').removeClass('hide-element');
+  $('.deck').removeClass('hide-element');
+}
+// Complete the setup phase of the game and move the main game phase.
+// The Hand, Aces & Jokers deck are now unlocked.
+function moveToGameActive() {
+  $('#yes-button').addClass('remove-element');
+  $('.deck-name').removeClass('hide-element');
+  $('.deck').removeClass('hide-element');
+  gameManager.state = 'game-active';
+  $('#info-text').text('Kill The Royals');
+  hand.addCardToSlot(deck.drawCard());
+  hand.topCardElement.classList.add('draggable');
+  acesDeck.topCardElement.classList.add('draggable');
+  jokerDeck.topCardElement.classList.add('draggable');
+  for (let i = 0; i < gameManager.numberCardGrid.length; i += 1) {
+    gameManager.numberCardGrid[i].topCardElement.classList.remove('draggable');
+  }
+}
+
+// InjeractJS Drag & Drop Events
 interact('.draggable').draggable({
   listeners: {
     move(event) {
@@ -1137,107 +1229,9 @@ interact('.dropzone').dropzone({
   },
 });
 
-$('.card-slot').click(function onCardSlotClicked() {
-  if (dragging === false) {
-    if (lastSlotClicked) {
-      if (lastSlotClicked.is($(this))) {
-        $(this).toggleClass('clicked');
-        lastSlotClicked = null;
-      } else {
-        lastSlotClicked.toggleClass('clicked');
-        $(this).toggleClass('clicked');
-        lastSlotClicked = $(this);
-      }
-    } else {
-      $(this).toggleClass('clicked');
-      lastSlotClicked = $(this);
-    }
-  }
-});
-
-$('#reset-icon').click(function onResetClicked() {
-  $(this).addClass('remove-element');
-
-  lastSlotClicked = null;
-  deck.element.classList.remove('clicked');
-  // Cycle through the number grid and push all cards back into the deck.target
-  for (let i = 0; i < gameManager.numberCardGrid.length; i += 1) {
-    Array.prototype.push.apply(deck.cards, gameManager.numberCardGrid[i].cards);
-    gameManager.numberCardGrid[i].cards = [];
-    gameManager.numberCardGrid[i].updateCardVisuals();
-    gameManager.numberCardGrid[i].topCardElement.classList.remove('draggable');
-    gameManager.numberCardGrid[i].element.classList.remove('clicked');
-  }
-
-  // Cycle through the royal grid and push all cards back into the deck.target
-  for (let i = 0; i < royalCardGrid.length; i += 1) {
-    royalCardGrid[i].cards.armour = 0;
-    Array.prototype.push.apply(deck.cards, royalCardGrid[i].cards);
-    royalCardGrid[i].cards = [];
-    royalCardGrid[i].updateCardVisuals();
-    royalCardGrid[i].element.classList.remove('flipped');
-    royalCardGrid[i].element.classList.remove('clicked');
-    // royalCardGrid[i].element.classList.add("hide-element");
-  }
-
-  // Push the discard pile into the deck.
-  Array.prototype.push.apply(deck.cards, discardDeck.cards);
-  discardDeck.cards = [];
-  discardDeck.updateCardVisuals();
-  discardDeck.element.classList.remove('clicked');
-
-  // Push the aces pile into the deck.
-  Array.prototype.push.apply(deck.cards, acesDeck.cards);
-  acesDeck.cards = [];
-  acesDeck.updateCardVisuals();
-  acesDeck.element.classList.remove('clicked');
-
-  // Push the joker pile into the deck.
-  Array.prototype.push.apply(deck.cards, jokerDeck.cards);
-  jokerDeck.cards = [];
-  jokerDeck.updateCardVisuals();
-  jokerDeck.element.classList.remove('clicked');
-
-  // Push the hand pile into the deck.
-  Array.prototype.push.apply(deck.cards, hand.cards);
-  hand.cards = [];
-  hand.updateCardVisuals();
-  hand.element.classList.remove('clicked');
-
-  deck.shuffle();
-  deck.updateCardVisuals();
-
-  $('.deck-name').addClass('hide-element');
-  $('.deck').addClass('hide-element');
-  $('#play-button').removeClass('remove-element');
-  $('#yes-button').addClass('remove-element');
-  $('#no-button').addClass('remove-element');
-  $('#info-text').text(
-    'Welcome to Gridcannon. Press play to deal a new number grid.',
-  );
-
-  acesDeck.topCardElement.classList.remove('draggable');
-  jokerDeck.topCardElement.classList.remove('draggable');
-  hand.topCardElement.classList.remove('draggable');
-  gameManager.state = 'start';
-});
-
-function moveToGameActive() {
-  $('#yes-button').addClass('remove-element');
-  $('.deck-name').removeClass('hide-element');
-  $('.deck').removeClass('hide-element');
-  gameManager.state = 'game-active';
-  $('#info-text').text('Kill The Royals');
-  hand.addCardToSlot(deck.drawCard());
-  hand.topCardElement.classList.add('draggable');
-  acesDeck.topCardElement.classList.add('draggable');
-  jokerDeck.topCardElement.classList.add('draggable');
-  for (let i = 0; i < gameManager.numberCardGrid.length; i += 1) {
-    gameManager.numberCardGrid[i].topCardElement.classList.remove('draggable');
-  }
-}
-
 function cycleForRoyal() {
+  // Draw cards from the deck until a royal card is drawn, all non royal cards are returned to the
+  // bottom of the deck.
   do {
     hand.addCardToSlot(deck.drawCard());
   } while (hand.cards[0].cardType != 'royal');
@@ -1248,6 +1242,7 @@ function cycleForRoyal() {
 }
 
 function gameOver() {
+  // When the player wins or loses the game prevent cards from being interacted with.
   hand.topCardElement.classList.remove('draggable');
   acesDeck.topCardElement.classList.remove('draggable');
   jokerDeck.topCardElement.classList.remove('draggable');
@@ -1323,11 +1318,12 @@ function onSuccessfulMoveTaken() {
       }
     }
   }
-
   deck.updateCardVisuals();
 }
 
 function activateMulliganUI() {
+  // Enter a state where the player can choose if they want to swap a card from the
+  // grid for a new card in the deck.
   gameManager.state = 'taking-a-mulligan';
   hand.topCardElement.classList.remove('draggable');
   $('#yes-button').removeClass('remove-element');
@@ -1340,6 +1336,8 @@ function activateMulliganUI() {
 }
 
 function newGame() {
+  // Call all the functions to setup up the game board, this is only needed when the page is loaded
+  // for the first time, after this the reset function will restore the game to a new game state.
   gameManager.deckSetup();
   gameManager.handSetup();
   gameManager.acesDeckSetup();
