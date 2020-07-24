@@ -389,6 +389,8 @@ class RoyalCard extends Card {
 const gameManager = {
   state: 'start',
   numberCardGrid: [],
+
+  /* Inital Slot Setup, caching of relevant DOM elements  */
   deckSetup() {
     deck.initialise();
     deck.shuffle();
@@ -450,6 +452,7 @@ const gameManager = {
         i
       ].element.getElementsByClassName('slot-highlight')[0];
     }
+    /* Store the indices of the royal slots */
     this.numberCardGrid[0].oppositeRoyalCardGridSlots = [7, 2];
     this.numberCardGrid[0].adjacentRoyalGridSlots = [11, 8];
     this.numberCardGrid[0].verticalAttackSlots = [3, 6];
@@ -495,6 +498,8 @@ const gameManager = {
     }
   },
   populateNumberedCardGrid() {
+    /* Draw cards and add number cards to the 3x3 inner grid until it full, sort all non 
+    number cards drawn into the correct slots */
     for (let i = 0; i < this.numberCardGrid.length; i += 1) {
       while (this.numberCardGrid[i].cards.length === 0) {
         const cardToPlace = deck.drawCard();
