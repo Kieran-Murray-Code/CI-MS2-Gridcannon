@@ -1,5 +1,5 @@
 
-[GRIDCANNON - A SOLITAIRE CARD GAME]([https://kieran-murray-code.github.io/CI-MS2-Gridcannon/](https://kieran-murray-code.github.io/CI-MS2-Gridcannon/))
+# [GRIDCANNON - PLAY HERE](https://kieran-murray-code.github.io/CI-MS2-Gridcannon/index.html)
 
   
 
